@@ -4,9 +4,6 @@
       layout:decorate="~{fragment/default_layout}">
 
 <div layout:fragment="content">
-
-
-
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -22,14 +19,12 @@
     </div>
     <!-- Breadcrumb End -->
 
-
     <!-- Product Section Begin -->
     <section class="product-page spad">
 
         <div class="container-fluid" >
             <div class="row">
                 <div class="col-1"></div>
-
 
                 <div class="col-lg-2 col-md-6 col-sm-8">
                     <div class="product__sidebar">
@@ -45,23 +40,15 @@
                                     <div class="sidebar_text_div">
                                         <a href="/meal/history"><h6 class="sidebar_text">주문내역</h6></a>
                                     </div>
-                                  <!--  <div class="sidebar_text_div">
-                                        <a href="/meal/mealbasket"><h6 class="sidebar_text">장바구니</h6></a>
-                                    </div>-->
                                     <div class="sidebar_text_div">
                                         <a th:href="@{/login/modify(ubId=${session.ubCommonDTOLogin.ubId})}"><h6 class="sidebar_text">정보수정</h6></a>
                                     </div>
                                     <div class="sidebar_text_div">
                                         <a href="/logout"><h6 class="sidebar_text">로그아웃</h6></a>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
-
-
-
 
                         <div class="product__sidebar__myprofile">
                             <div class="section-title">
@@ -78,7 +65,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="col-lg-6"  >
                     <div class="product__page__content">
@@ -97,7 +83,6 @@
                                 <div class="member-info">
                                     <h2 th:text="${Rinfo.restaurantName}"></h2>
                                     <div class="contact-info">
-
                                         <p th:text="${Rinfo.restaurantAddress}"></p>
                                     </div>
                                 </div>
@@ -112,9 +97,7 @@
 
                         <hr class="horizontal-line">
 
-
                         <div>
-
                             <br/>
                             <div class="calendar_div">
                             <table class="scriptCalendar" style="margin-top: -80px">
@@ -135,42 +118,26 @@
                             </table>
                         </div>
                         </div>
-
-
-
-
-
                     </div>
                 </div>
 
                 <div class="col-lg-3">
-
                     <h2>New 예약요청</h2>
-
-
                     <div id="reservationInfoContainer"></div>
-
-
                 </div>
-
             </div>
 
             <hr class="horizontal-line2">
 
-
             <div class="col-lg-12"  >
-
                 <div class="section-upcommingReservation">
                     <h4>예정된 예약 <span th:text="${date}"></span></h4> <br>
-<!--                    <button class="btn view-all" onclick="viewAllReservations()">전체보기</button>-->
-<!--                    <a th:href="/viewAllReservations" ><button class="btn view-all" >전체보기</button></a>-->
                     <a th:href="@{/viewAllReservations(selectedDate=${date})}" class="btn view-all" >전체보기</a>
                     <div class="swiper">
                         <!-- Additional required wrapper -->
                         <div class="swiper-wrapper">
                             <th:block th:each="list:${list} ">
                                 <div class="swiper-slide" >
-
                                     <div class="swiper-section">
                                             <img class="profilePhoto_img" th:src="@{/login/display(fileName=${list.profilePhoto})}">
                                             <div class="slide_text_area" >
@@ -181,17 +148,12 @@
                                     </div>
                                 </div>
                             </th:block>
-
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
         </div>
     </section>
-
 
     <script layout:fragment="script">
         document.addEventListener("DOMContentLoaded", function() {
@@ -460,11 +422,8 @@
                 type: "GET",
                 url: "/getNotYetReservationDate",
                 dataType : 'json',
-                // data : {
-                //     "restaurantId" : restaurantId,
-                // },
                 success: function(data){
-                    console.log("data"+data);
+
                     if(data.length > 0) {
                         $.each(data, function (index, reservation) {
                             // 예약 정보를 HTML 요소로 만들기
@@ -473,8 +432,6 @@
                             reservationInfo += "<p >예약번호: " + reservation.reservationId + "</p>";
                             reservationInfo += "<p>인원수: " + reservation.reservationNum + "</p>";
                             reservationInfo += "<p>날짜: " + formattedDate + "</p>";
-                            /*reservationInfo += "<p>요청사항: " + reservation.reservationRequest + "</p>";*/
-
                             reservationInfo += "<button class='btn accept' onclick='acceptReservation(" + reservation.reservationId + ")'>승인</button>";
                             reservationInfo += "<button class='btn reject' onclick='rejectReservation(" + reservation.reservationId + ")'>거절</button>";
                             reservationInfo += "</div>";
@@ -505,7 +462,6 @@
                 data: {"reservationId": reservationId},
 
                 success: function(response){
-                    console.log(response);
                     location.reload();
                 },
                 error: function(){
@@ -521,7 +477,6 @@
                 url: "/rejectReservation",
                 data: {"reservationId":4 },
                 success: function(response){
-                    console.log(response);
                     location.reload();
                 },
                 error: function(){
@@ -529,9 +484,6 @@
                 }
             });
         }
-
-
-
 
     </script>
 </div>

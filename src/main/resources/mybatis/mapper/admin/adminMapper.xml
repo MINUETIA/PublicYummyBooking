@@ -37,7 +37,7 @@
         where ad_id like concat('%', #{adId}, '%')
     </select>
 
-    <!-- 프랜차이즈 리스트 dto 두개조인 resultType은 HashMap -->
+    <!-- 프랜차이즈 리스트 dto 두개 join, resultType은 HashMap -->
     <select id="classificationNumber3" resultType="HashMap">
         select
         ub.ub_id as ubId,
@@ -142,21 +142,5 @@
         WHERE
             ub_id = ${ubId}
     </update>
-
-    <!-- 로그인 -->
-    <!--<select id="getSelectOne" parameterType="AdminAccountDTO" resultType="AdminAccountDTO">
-        select ad_id as adId, ad_pw as adPw
-        from admin_account
-        where ad_id = #{ad_id}
-        and ad_pw = #{ad_pw}
-    </select>-->
-
-    <!-- 비밀번호 찾기 - 현재 이멜 컬럼이 없어서 불가능 -->
-    <!--<select id="findPw" resultType="AdminAccountDTO">
-        select ad_id as adId, ad_email as adEmail
-        from admin_account
-        where ad_id = #{ad_id}
-        and ad_email = #{ad_email}
-    </select>-->
 
 </mapper>

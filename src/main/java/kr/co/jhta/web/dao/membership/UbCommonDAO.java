@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UbCommonDAO {
+
     public UbCommonDTO findByUserId(String userId);
     public void join(UbCommonDTO dto);
     public void signup(UbCommonDTO dto);

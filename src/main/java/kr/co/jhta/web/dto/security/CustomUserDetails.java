@@ -11,7 +11,6 @@ public class CustomUserDetails implements UserDetails {
 
     private AdminAccountDTO adminAccountDTO;
 
-    // alt + inser키 해당 클래스 생성자 생성 단축키, 초기화시킴
     public CustomUserDetails(AdminAccountDTO adminAccountDTO) {
         this.adminAccountDTO = adminAccountDTO;
     }
@@ -19,7 +18,7 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        // 추가 - role을 찾아서 리턴해주는 메소드
+        // role을 찾아서 리턴해주는 메소드
         Collection<GrantedAuthority> collection = new ArrayList<>();
 
         collection.add(new GrantedAuthority() {
@@ -29,7 +28,8 @@ public class CustomUserDetails implements UserDetails {
             }
         });
 
-        return collection; // 컬렉션 안의 role을 보내줌
+        // 컬렉션 안의 role을 보내줌
+        return collection;
     }
 
     @Override

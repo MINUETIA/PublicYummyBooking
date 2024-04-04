@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ProductionDAO {
+
     List<HashMap<String, Object>> getAllProduction();
 
     List<HashMap<String, Object>> getAllProductionByDate(String day);

@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public class CustomOAuth2User implements OAuth2User {
+
     private final OAuth2Response oAuth2Response;
     private final String role;
 
@@ -40,7 +41,6 @@ public class CustomOAuth2User implements OAuth2User {
     }
 
     public String getUsername() {
-        System.out.println(oAuth2Response.getProvider()+"_"+oAuth2Response.getProviderId());
         return oAuth2Response.getProvider()+"_"+oAuth2Response.getProviderId();
     }
 }

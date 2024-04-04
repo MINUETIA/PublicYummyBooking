@@ -3,55 +3,51 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragment/default_layoutForMeal}">
 
+    <th:block layout:fragment="content">
 
-<th:block layout:fragment="content">
+        <script>
+            $(function (){
 
-    <script>
-        $(function (){
+                $(".btnMeal").on("click", function (){
+                    if(getCookie("cart") != null ) {
+                        var items = getCookie("cart") + "," + $(this).next().val();
+                        setCookie("cart", items, 1);
+                    }else{
+                        setCookie("cart",$(this).next().val(), 1);
+                    }
+                })
+                $(".btn-outline-success").on("click", function (){
+                    if(getCookie("cart") == null ) {
+                        swal("장바구니에 상품을 담아주세요.")
+                    }else {
+                        location.href = "/meal/mealbasket?mealId=" + getCookie("cart");
+                    }
+                })
 
-            $(".btnMeal").on("click", function (){
-                if(getCookie("cart") != null ) {
-                    var items = getCookie("cart") + "," + $(this).next().val();
-                    setCookie("cart", items, 1);
-                }else{
-                    setCookie("cart",$(this).next().val(), 1);
-                }
+                 function setCookie(name, value, exp) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + exp*24*60*60*1000);
+                    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+                };
+
+                function getCookie(name) {
+                    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+                    return value? value[2] : null;
+                };
             })
-            $(".btn-outline-success").on("click", function (){
-                if(getCookie("cart") == null ) {
-                    swal("장바구니에 상품을 담아주세요.")
-                }else {
-                    location.href = "/meal/mealbasket?mealId=" + getCookie("cart");
-                }
-            })
+        </script>
 
-             function setCookie(name, value, exp) {
-                var date = new Date();
-                date.setTime(date.getTime() + exp*24*60*60*1000);
-                document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-            };
+        <section class="product-page spad">
+            <div class="container-xxl">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-8">
+                        <div class="product__sidebar">
+                            <div class="product__sidebar__view">
+                                <div class="section-title">
+                                    <h5>결과 내 검색</h5>
+                                </div>
 
-            function getCookie(name) {
-                var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-                return value? value[2] : null;
-            };
-        })
-    </script>
-
-    <section class="product-page spad">
-        <div class="container-xxl">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-8">
-                    <div class="product__sidebar">
-                        <div class="product__sidebar__view">
-
-                            <div class="section-title">
-                                <h5>결과 내 검색</h5>
-                            </div>
-
-
-                            <div class="product__sidebar__comment__item" >
-
+                                <div class="product__sidebar__comment__item" >
                                     <ul>
                                         <li><input type="checkbox" class="search-filter" name="checkTheme" />국물 요리</li>
                                         <li><input type="checkbox" class="search-filter" name="checkTheme" />스테이크</li>
@@ -59,87 +55,68 @@
                                         <li><input type="checkbox" class="search-filter" name="checkTheme" />해산물</li>
                                         <li><input type="checkbox" class="search-filter" name="checkTheme" />간편식</li>
                                     </ul>
-
+                                </div>
                             </div>
-
                         </div>
-
-
                     </div>
-                </div>
 
-
-                <div class="col-lg-9">
-                    <div class="product__page__content">
-
-                        <div class="product__page__title">
-                            <div class="row">
-                                <div class="col-lg-9 col-md-8 col-sm-6">
-                                    <div class="section-title">
-                                        <h4 th:if="${keyWord} !=null">검색 : [[${keyWord}]]</h4>
-                                        <h4 th:if="${keyWord} ==null">검색 : 전체</h4>
-                                        <input id="searchType" type="hidden" th:value="${searchType}">
-                                        <input id="searchKeyWord" type="hidden" th:value="${keyWord}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="product__page__filter">
-                                        정렬
-                                        <select id="orderbyselectBox" onchange="selectBoxChange(this.value)" >
-                                            <option>정렬 방법</option>
-                                            <option value="review">리뷰수</option>
-                                            <option value="avg">별점순</option>
-                                        </select>
-                                    </div>
-                                    <div class="product__page__filter">
-                                        <input class="btn btn-outline-success" type="button" value="장바구니 페이지">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <th:block th:each="dto : ${list}">
-                            <div class="row filtertype" >
-
-                                <div class="col-lg-4 col-md-6 col-sm-6">
-                                    <div class="product__item">
-                                        <div class="product__item__pic set-bg" th:data-setbg="${dto.mealPhoto1}" style="height: 180px"> </div>
-
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="product__item__text">
-                                        <ul>
-                                            <li></li>
-                                        </ul>
-                                        <div class="titles" style="display: flex; justify-content: space-between">
-                                            <div style="display: flex; align-items: flex-end">
-                                            <h3><a th:href="@{/meal/mealDetails(productId=${dto.productId})}">[[${dto.mealName}]]</a></h3>
-                                            <h5 style=" margin-left: 10px" th:text="${#numbers.formatInteger(dto.mealPrice, 3, 'COMMA') + '원'}"></h5>
-                                             </div>
-                                            <input type="button" class="btnMeal btn-outline-dark" value="장바구니" >
-                                            <input type="hidden" th:value="${dto.productId}">
+                    <div class="col-lg-9">
+                        <div class="product__page__content">
+                            <div class="product__page__title">
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-8 col-sm-6">
+                                        <div class="section-title">
+                                            <h4 th:if="${keyWord} !=null">검색 : [[${keyWord}]]</h4>
+                                            <h4 th:if="${keyWord} ==null">검색 : 전체</h4>
+                                            <input id="searchType" type="hidden" th:value="${searchType}">
+                                            <input id="searchKeyWord" type="hidden" th:value="${keyWord}">
                                         </div>
-                                        <span style="display:block;">[[${dto.mealDescription}]]</span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6">
+                                        <div class="product__page__filter">
+                                            정렬
+                                            <select id="orderbyselectBox" onchange="selectBoxChange(this.value)" >
+                                                <option>정렬 방법</option>
+                                                <option value="review">리뷰수</option>
+                                                <option value="avg">별점순</option>
+                                            </select>
+                                        </div>
+                                        <div class="product__page__filter">
+                                            <input class="btn btn-outline-success" type="button" value="장바구니 페이지">
+                                        </div>
                                     </div>
                                 </div>
-
                             </div>
-                        </th:block>
+
+                            <th:block th:each="dto : ${list}">
+                                <div class="row filtertype" >
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="product__item">
+                                            <div class="product__item__pic set-bg" th:data-setbg="${dto.mealPhoto1}" style="height: 180px"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li></li>
+                                            </ul>
+                                            <div class="titles" style="display: flex; justify-content: space-between">
+                                                <div style="display: flex; align-items: flex-end">
+                                                <h3><a th:href="@{/meal/mealDetails(productId=${dto.productId})}">[[${dto.mealName}]]</a></h3>
+                                                <h5 style=" margin-left: 10px" th:text="${#numbers.formatInteger(dto.mealPrice, 3, 'COMMA') + '원'}"></h5>
+                                                 </div>
+                                                <input type="button" class="btnMeal btn-outline-dark" value="장바구니" >
+                                                <input type="hidden" th:value="${dto.productId}">
+                                            </div>
+                                            <span style="display:block;">[[${dto.mealDescription}]]</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-        </div>
-
-    </section>
-
-
-</th:block>
-
-
+        </section>
+    </th:block>
 </html>

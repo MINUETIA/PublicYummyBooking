@@ -42,18 +42,11 @@ public class RestaurantDetails {
     @RequestMapping("/reservation")
     public String reservation(@RequestParam Long ubId ,@RequestParam String datepicker, @RequestParam String timepicker, @RequestParam int guests, @RequestParam Long restaurantId, @RequestParam String request){
 
-        System.out.println("timepicker : " +timepicker);
         String reservationTime = datepicker+" "+timepicker+":00";
-        System.out.println("reservationTime : " + reservationTime);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.println("formatter : " + formatter);
+
         // 문자열 -> Date
-
-
         LocalDateTime date = LocalDateTime.parse(reservationTime, formatter);
-        System.out.println("date2 : " + date);
-
-
 
         ReservationDTO reservationDTO = new ReservationDTO();
         reservationDTO.setReservationDate(date);
@@ -63,11 +56,6 @@ public class RestaurantDetails {
         reservationDTO.setUbId(ubId);
 
         service.reservation(reservationDTO);
-
-
-
-
-
 
         return "redirect:/mypage";
     }

@@ -18,37 +18,13 @@
         <table>
             <tr>
                 <th>구매서등록일</th>
-                <td><input type="text" id="start" name="start" >  <input type="button" value="검색" id="searchBtn">
                 <td>
-<!--                    <input type="text" name="end" id="end">-->
-                </td>
-                <th>
-<!--                    날짜-->
-                </th>
-                <td>
-<!--                    <select name="year" id="year" >-->
-<!--                        <option value="" >&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
-<!--                        <option value="1" >미입고</option>-->
-<!--                        <option value="2" >입고</option>-->
-<!--                    </select>-->
-                </td>
-                <td>
-<!--                    <select name="month" id="month" >-->
-<!--                        <option value="" >&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
-<!--                        <option value="1" >미입고</option>-->
-<!--                        <option value="2" >입고</option>-->
-<!--                    </select>-->
-                </td>
+                    <input type="text" id="start" name="start" >  <input type="button" value="검색" id="searchBtn">
+                <td></td>
+                <th></th>
+                <td></td>
+                <td></td>
             </tr>
-<!--            <tr>-->
-<!--                <th>거래처</th>-->
-<!--                <td><input type="text" name="code" id="code" placeholder="CODE"></td>-->
-
-<!--                <td>-->
-<!--                    <input type="text" name="name"  placeholder="NAME">-->
-
-<!--                </td>-->
-<!--            </tr>-->
         </table>
     </form>
     <script type="text/javascript" th:inline="javascript">
@@ -64,7 +40,6 @@
                 return id_num + id_str;
             }
 
-
             //--->create data table > start
             var tbl = '';
             tbl +='<table class="table table-hover" id="chead">'
@@ -72,7 +47,6 @@
             //--->create table header > start
             tbl +='<thead >';
             tbl +='<tr>';
-            // tbl +='<th>번호</th>';
             tbl +='<th>입출고날짜</th>';
             tbl +='<th>구분</th>';
             tbl +='<th>거래처</th>';
@@ -87,6 +61,7 @@
 
             //--->create table body > start
             tbl +='<tbody>';
+
             //--->create table body rows > start
             $.each(ajax_data, function(index, val)
             {
@@ -95,11 +70,9 @@
 
                 //loop through ajax row data
                 tbl +='<tr row_id="'+row_id+'">';
-                // tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val['num']+'</div></td>';
                 tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val['receiveDate']+'</div></td>';
                 tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val['inputoutput']+'</div></td>';
                 tbl +='<td ><div class="row_data" edit_type="click" col_name="lname">'+val['vendorname']+'</div></td>';
-                // tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['standardType']+'</div></td>';
                 tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['materialId']+'</div></td>';
                 tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['materialName']+'</div></td>';
                 tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['standardType']+'</div></td>';
@@ -130,10 +103,8 @@
 
             //out put table data
             $(document).find('.tbl_user_data').html(tbl);
-
             $(document).find('.btn_save').hide();
             $(document).find('.btn_cancel').hide();
-
 
             //--->make div editable > start
             $(document).on('click', '.row_data', function(event)
@@ -185,7 +156,6 @@
 
             })
             //--->save single field data > end
-
 
             //--->button > edit > start
             $(document).on('click', '.btn_edit', function(event)
@@ -249,7 +219,6 @@
             });
             //--->button > cancel > end
 
-
             //--->save whole row entery > start
             $(document).on('click', '.btn_save', function(event)
             {
@@ -258,14 +227,12 @@
 
                 var row_id = tbl_row.attr('row_id');
 
-
                 //hide save and cacel buttons
                 tbl_row.find('.btn_save').hide();
                 tbl_row.find('.btn_cancel').hide();
 
                 //show edit button
                 tbl_row.find('.btn_edit').show();
-
 
                 //make the whole row editable
                 tbl_row.find('.row_data')
@@ -329,7 +296,6 @@
             });
             //--->save whole row entery > end
 
-
         });
         $(function(){
             //   $('.jquery-datepicker').datepicker();
@@ -364,7 +330,6 @@
                 tbl +='</td>';
                 tbl +='</tr>';
 
-
                 // $("#chead").appendTo(tbl);
                 var tbody = $("#chead").children()[1];
                 $(tbody).prepend(tbl);
@@ -373,7 +338,6 @@
                 $(".btn_cancel").hide()
 
             })
-
 
             $("#start").removeAttr("style");
             $("#start").datepicker({
@@ -402,19 +366,6 @@
                 }
             });
 
-            // $("#end").datepicker({
-            //     dateFormat: "yyyy",
-            //     language: "kr",
-            //     showOtherMonths: true,
-            //     selectOtherMonths: true,
-            //     changeMonth: true,
-            //     changeYear: true,
-            //     onSelect: function ()
-            //     {
-            //         this.focus();
-            //     }
-            // });
-
             $("#month").on("change", function(){
                 $("#frm").submit();
             })
@@ -430,48 +381,9 @@
                     "&start="+[[${start}]] + "&end="+[[${end}]] +
                     "&status="+ [[${status}]];
 
-
                 location.href=url+params;
 
-
             })
-
-
-            // $(".btn_save").on("click", function(){
-            // console.log("버튼눌림");
-            // var tdArr = new Array();
-            // let tr = $(this).parent().parent();
-            // let td = tr.children();
-            //
-            // console.log("클릭한 row의 모든 데이터 : " + tr.text());
-            //
-            // td.each(function(i){
-            //     tdArr.push(td.eq(i).text());
-            // });
-            //
-            // let data = {
-            //     "purchaseno" :  td.eq(2).text(),
-            //     "vendorname" : td.eq(1).text(),
-            //     "cnt": td.eq(7).text(),
-            //     "price": td.eq(8).text(),
-            //     "sprice": td.eq(9).text(),
-            //     "type" : td.eq(5).text()
-            // }
-            //
-            // console.log(data);
-            //
-            // $.ajax({
-            //     url : "/admin/purchase/modify",
-            //     data : data,
-            //     type: "GET",
-            //     dataType: "json",
-            //     success : function (data){
-            //         location.reload(true);
-            //     }
-            // })
-            // });
-
-
         })
     </script>
 
@@ -485,9 +397,6 @@
 
 <th:block layout:fragment="css">
     <style>
-        /*#ui-datepicker-div{*/
-        /*    background-color: red;*/
-        /*}*/
 
         .ui-datepicker-div {
             z-index: 1600 !important; /* has to be larger than 1050 */
@@ -495,12 +404,6 @@
 
     </style>
 
-</th:block>
-
-<th:block layout:fragment="javascript">
-    <script>
-
-    </script>
 </th:block>
 </div>
 </html>

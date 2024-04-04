@@ -3,13 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{adminFragment/layout3}">
 
-
     <div class="fragment_content" id="topdiv" layout:fragment="content" style="margin-left: 10px; margin-right: 10px;">
         <div style="text-align: center; margin-top:20px;">
             <h2 style="color: black; margin-bottom: 30px;"><b>경영정보</b></h2>
         </div>
 
-    <!--    <canvas id="doughnut-chart2"  ></canvas>-->
         <div class="space">
             <div class="chart">
                 <canvas id="bar-chart" width="500" height="300"></canvas>
@@ -57,8 +55,6 @@
                     }
                 });
 
-
-
                 new Chart(document.getElementById("bar-chart"), {
                     type: 'bar',
                     data: {
@@ -102,7 +98,6 @@
                         }
                     }
                 });
-
 
                 new Chart(document.getElementById("bar-chart-grouped"), {
                     type: 'bar',
@@ -152,55 +147,23 @@
                         }
                     }
                 });
-
-                // new Chart(document.getElementById("doughnut-chart2"), {
-                //     type: 'doughnut',
-                //     data: {
-                //         labels: [[${productList}]],
-                //
-                //         datasets: [
-                //             {
-                //                 label: "판매수량",
-                //                 backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
-                //                 // data: [2478,5267,734,784,433]
-                //                 data: [[${data}]]
-                //             }
-                //         ]
-                //     },
-                //     options: {
-                //         title: {
-                //             display: true,
-                //             text: 'Predicted world population (millions) in 2050'
-                //         }
-                //     }
-                // });
-
             })
         </script>
 
-
         <th:block layout:fragment="css">
 
-        <style>
+            <style>
 
-            #topdiv, div#topdiv  {
-                background-color: #F2F7FB;
-            }
-            canvas {
-                background-color: white;
+                #topdiv, div#topdiv  {
+                    background-color: #F2F7FB;
+                }
+                canvas {
+                    background-color: white;
+                }
 
+            </style>
 
-            }
-
-        </style>
-
-    </th:block>
-
-    <th:block layout:fragment="javascript">
-        <script>
-
-        </script>
-    </th:block>
+        </th:block>
     </div>
 </html>
 

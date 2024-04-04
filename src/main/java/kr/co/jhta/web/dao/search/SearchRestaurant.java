@@ -15,6 +15,7 @@ public interface SearchRestaurant {
    public List<RestrantByTheme> restaurantTheme(List restrauntId);
 
    public List<RestrantByTheme> themeFilter();
+
    public List<HashMap<String, Object>> themeByRestaurant(HashMap<String, Object> parameters);
 
    public List<RestrantByTheme> findBytheme(List theme);

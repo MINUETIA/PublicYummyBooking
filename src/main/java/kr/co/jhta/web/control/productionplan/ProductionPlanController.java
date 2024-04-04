@@ -16,6 +16,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/productionplan")
 public class ProductionPlanController {
+
     @Autowired
     private ProductionPlanService productionPlanService;
     @Autowired
@@ -27,8 +28,6 @@ public class ProductionPlanController {
                         @RequestParam(value = "productId", defaultValue = "noid")String productId,
                         @RequestParam(value = "start", defaultValue = "2000-01-01")String start,
                         @RequestParam(value = "end", defaultValue = "9999-12-31")String end){
-
-
 
         List<HashMap<String, Object>> list = productionPlanService.getAllByCondition(factory, production,  productId, start, end);
         list.stream().forEach(x -> {
@@ -51,8 +50,8 @@ public class ProductionPlanController {
             @RequestParam(value = "plandate", defaultValue = "9999-12-31")String plandate,
             @RequestParam(value = "cnt", defaultValue = "0")int cnt,
             @RequestParam(value = "factory", defaultValue = "1")int factory){
-        // 이름으로 벤더번호 가져오기
 
+        // 이름으로 벤더번호 가져오기
         HashMap<String, Object> map = new HashMap<>();
         map.put("productionId", productionId);
         map.put("production", production);
@@ -60,12 +59,10 @@ public class ProductionPlanController {
         map.put("plandate", plandate);
         map.put("cnt", cnt);
         map.put("factory", factory);
-        System.out.println("map : " + map);
 
         productionPlanService.apply(map);
 
         return "OK";
-
 
     }
 

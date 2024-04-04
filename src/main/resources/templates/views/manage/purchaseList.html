@@ -84,6 +84,7 @@
 
                 //--->create table body > start
                 tbl +='<tbody>';
+
                 //--->create table body rows > start
                 $.each(ajax_data, function(index, val)
                 {
@@ -106,7 +107,6 @@
                     tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['total']+'</div></td>';
                     tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['modifydate']+'</div></td>';
                     tbl +='<td colspan="2"><div class="row_data" edit_type="click" col_name="email">'+val['modifier']+'</div></td>';
-
 
                     //--->edit options > start
                     tbl +='<td>';
@@ -156,7 +156,6 @@
                     $(this).focus();
                 })
                 //--->make div editable > end
-
 
                 //--->save single field data > start
                 $(document).on('focusout', '.row_data', function(event)
@@ -261,14 +260,12 @@
 
                     var row_id = tbl_row.attr('row_id');
 
-
                     //hide save and cacel buttons
                     tbl_row.find('.btn_save').hide();
                     tbl_row.find('.btn_cancel').hide();
 
                     //show edit button
                     tbl_row.find('.btn_edit').show();
-
 
                     //make the whole row editable
                     tbl_row.find('.row_data')
@@ -332,7 +329,6 @@
                 });
                 //--->save whole row entery > end
 
-
             });
             $(function(){
              //   $('.jquery-datepicker').datepicker();
@@ -377,7 +373,6 @@
 
                 })
 
-
                 $("#start").removeAttr("style");
                 $("#start").datepicker({
                     dateFormat: "yy-mm-dd",
@@ -420,47 +415,9 @@
                         "&start="+[[${start}]] + "&end="+[[${end}]] +
                         "&status="+ [[${status}]];
 
-
                     location.href=url+params;
 
-
                 })
-
-
-                // $(".btn_save").on("click", function(){
-                    // console.log("버튼눌림");
-                    // var tdArr = new Array();
-                    // let tr = $(this).parent().parent();
-                    // let td = tr.children();
-                    //
-                    // console.log("클릭한 row의 모든 데이터 : " + tr.text());
-                    //
-                    // td.each(function(i){
-                    //     tdArr.push(td.eq(i).text());
-                    // });
-                    //
-                    // let data = {
-                    //     "purchaseno" :  td.eq(2).text(),
-                    //     "vendorname" : td.eq(1).text(),
-                    //     "cnt": td.eq(7).text(),
-                    //     "price": td.eq(8).text(),
-                    //     "sprice": td.eq(9).text(),
-                    //     "type" : td.eq(5).text()
-                    // }
-                    //
-                    // console.log(data);
-                    //
-                    // $.ajax({
-                    //     url : "/admin/purchase/modify",
-                    //     data : data,
-                    //     type: "GET",
-                    //     dataType: "json",
-                    //     success : function (data){
-                    //         location.reload(true);
-                    //     }
-                    // })
-                // });
-
 
             })
         </script>
@@ -475,22 +432,12 @@
 
     <th:block layout:fragment="css">
         <style>
-            /*#ui-datepicker-div{*/
-            /*    background-color: red;*/
-            /*}*/
-
             .ui-datepicker-div {
                 z-index: 1600 !important; /* has to be larger than 1050 */
             }
 
         </style>
 
-    </th:block>
-
-    <th:block layout:fragment="javascript">
-        <script>
-
-        </script>
     </th:block>
     </div>
 </html>

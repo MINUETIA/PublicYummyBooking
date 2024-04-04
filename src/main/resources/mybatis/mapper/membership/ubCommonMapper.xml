@@ -26,6 +26,7 @@
         <result property="longitude" column="longitude" />
         <result property="businessAddCheck" column="business_add_check" />
     </resultMap>
+
     <select id="findByUbId" resultType="UbCommonDTO" parameterType="Long">
         select
             ub_id as ubId,
@@ -47,6 +48,7 @@
         from ub_common
         where ub_id = #{ubId}
     </select>
+
     <select id="findByUserId" resultType="UbCommonDTO" parameterType="String">
         select
             ub_id as ubId,
@@ -68,6 +70,7 @@
         from ub_common
         where user_id = #{userId}
     </select>
+
     <select id="findByUserIdAndPw" resultType="UbCommonDTO" parameterType="String">
         select
             ub_id as ubId,
@@ -91,21 +94,20 @@
             and user_pw = #{userPw}
     </select>
 
-
-
-
     <insert id="join" parameterType="UbCommonDTO">
         insert into ub_common
             (user_id, email, join_date)
         values
             (#{userId}, #{email}, now())
     </insert>
+
     <insert id="signup" parameterType="UbCommonDTO">
         insert into ub_common
             (user_id, user_pw, name, join_date)
         values
             (#{userId}, #{userPw}, #{name}, now())
     </insert>
+
     <insert id="signupAll" parameterType="UbCommonDTO">
         insert into ub_common
             (user_id, user_pw, name, join_date, classification_number,
@@ -116,6 +118,7 @@
             #{email}, #{introduction}, #{address}, #{securityRole}, #{latitude},
             #{longitude}, #{UAgreement}, #{phone}, #{birthdate}, #{followOnOff}, #{businessAddCheck})
     </insert>
+
     <update id="updateUserDetail" parameterType="UbCommonDTO">
         update ub_common set
             name = #{name},
@@ -131,6 +134,7 @@
             follow_on_off = #{followOnOff}
         where user_id = #{userId}
     </update>
+
     <update id="modify" parameterType="UbCommonDTO">
         update ub_common set
             user_pw = #{userPw},
@@ -146,4 +150,5 @@
             longitude = #{longitude}
         where ub_id = #{ubId}
     </update>
+
 </mapper>

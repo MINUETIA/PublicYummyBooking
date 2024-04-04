@@ -11,7 +11,6 @@ import java.util.List;
 @Mapper
 public interface WareHouseDAO {
 
-
     public List<HashMap<String, Object>> getAll();
 
     List<HashMap<String, Object>> getOne(int no);

@@ -43,16 +43,14 @@
 
         <script layout:fragment="script">
             function del(num){
-                //let adminId = num;
+
                 $.ajax({
                     url: 'accountDelete',
                     type: "POST",
                     data: {
-                        //"adminId" : adminId
                         "num" : num
                     },
                     success: function (data){
-                        console.log('삭제성공');
                         location.reload();
                     }
                 });
@@ -60,7 +58,8 @@
 
             $("#searchId").on("keyup",function(key) {
 
-                if (key.keyCode == 13) { // 엔터가 입력이 되면
+                // 엔터가 입력이 되면
+                if (key.keyCode == 13) {
                     let searchText = $("#searchId").val();
 
                     $.ajax({
@@ -72,7 +71,7 @@
                         success: function (data){
                             str = "";
 
-                            $.each(data, function(index, item) { // data =item
+                            $.each(data, function(index, item) {
                                 $(".trList").empty();
                                 let date = item.adCDate.substring(0,10);
 

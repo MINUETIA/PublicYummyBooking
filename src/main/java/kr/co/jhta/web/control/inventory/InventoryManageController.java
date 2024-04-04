@@ -14,9 +14,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/inventory")
 public class InventoryManageController {
+
     @Autowired
     private InventoryManageService inventoryManageService;
-
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "day", defaultValue = "0") String day){

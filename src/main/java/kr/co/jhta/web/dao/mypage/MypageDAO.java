@@ -13,9 +13,7 @@ import java.util.List;
 @Repository
 public interface MypageDAO {
 
-
     public List<HashMap<String,Object>> getReservationHistory(Long ub_id);
-
 
     public List<HashMap<String,Object>> getLastBookingHistory(Long ub_id);
 
@@ -32,7 +30,6 @@ public interface MypageDAO {
     void rejectBooking(Long reservationId);
 
     List<HashMap<String, Object>> getCancelledBookingHistory(Long ubId);
-
 
     List<UbCommonDTO> getProfileInfo(Long ubId);
 

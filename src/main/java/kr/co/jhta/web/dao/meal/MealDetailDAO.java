@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MealDetailDAO {
+
     public ProductDTO getMealDTO(Long productId);
 }

@@ -7,121 +7,113 @@
     <th:block th:replace="fragment/header :: headerFragment"></th:block>
 
     <!-- css, js 불러오기 -->
-    <!-- th:replace="폴더 / 파일명 :: 이름" ==> 폴더 / 파일명에서 :: 이름 인것으로 대체 해줘 -->
     <th:block th:replace="fragment/config :: configFragment"></th:block>
 </head>
 <body>
-<!--네비-->
-<th:block th:replace="fragment/topformeal :: topFragment"></th:block>
+    <!--네비-->
+    <th:block th:replace="fragment/topformeal :: topFragment"></th:block>
 
-<!-- 내용 -->
-<th:block layout:fragment="content">
-    <th:block layout:fragment="javascript">
-        <script th:inline="javascript">
-            function updatePrice() {
-                const inputElement = document.getElementById('cnt');
-                const outputElement = document.getElementById('totalPrice');
-                const inputValue = inputElement.value*[[${meal.mealPrice}]];
-                outputElement.innerText = "총 가격 : " + inputValue + "원";
-            }
+    <!-- 내용 -->
+    <th:block layout:fragment="content">
+        <th:block layout:fragment="javascript">
+            <script th:inline="javascript">
+                function updatePrice() {
+                    const inputElement = document.getElementById('cnt');
+                    const outputElement = document.getElementById('totalPrice');
+                    const inputValue = inputElement.value*[[${meal.mealPrice}]];
+                    outputElement.innerText = "총 가격 : " + inputValue + "원";
+                }
 
-            $(function (){
+                $(function (){
 
-                let mealId = [];
-                $(".btn-outline-warning").on("click",function (){
+                    let mealId = [];
+                    $(".btn-outline-warning").on("click",function (){
 
-                    if(getCookie("cart")!=null) {
-                        var items = getCookie("cart") + "," + $(this).next().val();
-                        setCookie("cart", items, 1);
-                    }else{
-                        setCookie("cart", $(this).next().val(),1);
-                    }
-                    console.log("cookie : "+getCookie("cart"));
+                        if(getCookie("cart")!=null) {
+                            var items = getCookie("cart") + "," + $(this).next().val();
+                            setCookie("cart", items, 1);
+                        }else{
+                            setCookie("cart", $(this).next().val(),1);
+                        }
+                        console.log("cookie : "+getCookie("cart"));
+                    })
+
+                    $(".btn-outline-success").on("click", function (){
+                        if(getCookie("cart") == null ) {
+                            swal("장바구니에 상품을 담아주세요.")
+                        }else {
+                            location.href = "/meal/mealbasket?mealId=" + getCookie("cart");
+                        }
+                    })
+
+                    function setCookie(name, value, exp) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + exp*24*60*60*1000);
+                        document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+                    };
+
+                    function getCookie(name) {
+                        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+                        return value? value[2] : null;
+                    };
+
                 })
-
-                $(".btn-outline-success").on("click", function (){
-                    if(getCookie("cart") == null ) {
-                        swal("장바구니에 상품을 담아주세요.")
-                    }else {
-                        location.href = "/meal/mealbasket?mealId=" + getCookie("cart");
-                    }
-                })
-
-                function setCookie(name, value, exp) {
-                    var date = new Date();
-                    date.setTime(date.getTime() + exp*24*60*60*1000);
-                    document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-                };
-
-                function getCookie(name) {
-                    var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-                    return value? value[2] : null;
-                };
-
-
-            })
-
-
-
-
-        </script>
-    </th:block>
-<div class="container">
-    <div class="mealInfo row">
-        <div class="mealDetails col-sm-8 mt-5">
-            <h4 th:text="${meal.mealName}"></h4>
-            <div class="mealPhoto row">
-                <div class="col-sm-6 mr-4">
-                    <img class="mainPhoto" th:src="${meal.mealPhoto1}" alt="">
-                </div>
-                <div class="col-sm-5 col-lg-5">
-                    <div>
-                        <img class="mainPhoto2 ml-2 mb-2" th:src="${meal.mealPhoto2}" alt="">
-                    </div>
-                    <div>
-                        <img class="mainPhoto3 mt-1 ml-2" th:src="${meal.mealPhoto3}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mealOrderWrap row justify-content-center col-sm-4">
-            <div class="mealOrder col-md-8 mt-4" style="top: 100px">
-                <h4>장바구니 담기</h4>
-
-                    <div class="form-group mt-4">
-                        <label for="cnt">수량 :</label>
-                        <input type="number" class="form-control" name="cnt" id="cnt" min="1" max="100" value="1" onchange="updatePrice()">
-                        <th:block th:if="${session.ubCommonDTOLogin != null}">
-                           <input type="hidden" name="ubId" th:value="${session.ubCommonDTOLogin.ubId}">
-                        </th:block>
-                    </div>
-                    <div class="form-group mt-4">
-                        <p th:text="|가격(개당) : ${meal.mealPrice}원|"></p>
-                        <p th:text="|용량 : ${meal.mealWeight}g|"></p>
-                        <hr class="my-4">
-                        <div class="totalPrice" id="totalPrice" th:text="|총 가격 : ${meal.mealPrice} 원|">
-
+            </script>
+        </th:block>
+        <div class="container">
+            <div class="mealInfo row">
+                <div class="mealDetails col-sm-8 mt-5">
+                    <h4 th:text="${meal.mealName}"></h4>
+                    <div class="mealPhoto row">
+                        <div class="col-sm-6 mr-4">
+                            <img class="mainPhoto" th:src="${meal.mealPhoto1}" alt="">
                         </div>
-
-                            <input type="button" value="담기" class="btn btn-outline-warning mt-4" style="margin-left: 60px; width: 150px">
-                        <input type="hidden" name="" th:value="${meal.productId}">
-                        <input style="margin-top: 5px; margin-left: 60px; width: 150px" class="btn btn-outline-success" type="button" value="장바구니 페이지">
+                        <div class="col-sm-5 col-lg-5">
+                            <div>
+                                <img class="mainPhoto2 ml-2 mb-2" th:src="${meal.mealPhoto2}" alt="">
+                            </div>
+                            <div>
+                                <img class="mainPhoto3 mt-1 ml-2" th:src="${meal.mealPhoto3}" alt="">
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="mealOrderWrap row justify-content-center col-sm-4">
+                    <div class="mealOrder col-md-8 mt-4" style="top: 100px">
+                        <h4>장바구니 담기</h4>
 
+                            <div class="form-group mt-4">
+                                <label for="cnt">수량 :</label>
+                                <input type="number" class="form-control" name="cnt" id="cnt" min="1" max="100" value="1" onchange="updatePrice()">
+                                <th:block th:if="${session.ubCommonDTOLogin != null}">
+                                   <input type="hidden" name="ubId" th:value="${session.ubCommonDTOLogin.ubId}">
+                                </th:block>
+                            </div>
+                            <div class="form-group mt-4">
+                                <p th:text="|가격(개당) : ${meal.mealPrice}원|"></p>
+                                <p th:text="|용량 : ${meal.mealWeight}g|"></p>
+                                <hr class="my-4">
+                                <div class="totalPrice" id="totalPrice" th:text="|총 가격 : ${meal.mealPrice} 원|">
+                                </div>
+                                    <input type="button" value="담기" class="btn btn-outline-warning mt-4" style="margin-left: 60px; width: 150px">
+                                <input type="hidden" name="" th:value="${meal.productId}">
+                                <input style="margin-top: 5px; margin-left: 60px; width: 150px" class="btn btn-outline-success" type="button" value="장바구니 페이지">
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="about mt-5">
+                <h4>About</h4>
+                <div class="" th:text="${meal.mealDescription}"></div>
             </div>
         </div>
-    </div>
-    <div class="about mt-5">
-        <h4>About</h4>
-        <div class="" th:text="${meal.mealDescription}"></div>
-    </div>
-</div>
 
-</th:block>
+        </th:block>
 
-<!-- 푸터 -->
-<th:block th:replace="fragment/footer :: footerFragment"></th:block>
-<script src="/js/main.js"></script>
+        <!-- 푸터 -->
+        <th:block th:replace="fragment/footer :: footerFragment"></th:block>
+        <script src="/js/main.js"></script>
 </body>
 
 <style>

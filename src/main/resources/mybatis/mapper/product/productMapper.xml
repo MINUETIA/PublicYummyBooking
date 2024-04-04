@@ -38,4 +38,5 @@
         where ub_id = #{ubId}
         order by sale.saledate desc
     </select>
+
 </mapper>

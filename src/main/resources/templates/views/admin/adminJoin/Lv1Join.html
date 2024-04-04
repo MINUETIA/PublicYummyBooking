@@ -168,7 +168,6 @@
                     },
                     success : function(data){
                         alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.");
-                        console.log("인증코드 : " + data);
                         chkEmailConfirm(data, certificateNum, certificate);
                     }
                 })
@@ -178,6 +177,7 @@
             function chkEmailConfirm(data, certificateNum, certificate){
                 $("#certificateNum").on("keyup", function(){
                     if (data != certificateNum.val()) {
+
                         emconfirmchk = false;
                         $(".emconfirmchkOk").remove();
                         $(".emconfirmchk").remove();

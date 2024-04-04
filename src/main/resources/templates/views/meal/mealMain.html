@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- css, js 불러오기 -->
-    <!-- th:replace="폴더 / 파일명 :: 이름" ==> 폴더 / 파일명에서 :: 이름 인것으로 대체 해줘 -->
     <th:block th:replace="~{fragment/config :: configFragment}"></th:block>
 
     <body>
@@ -114,16 +113,12 @@
                                     background-size: 80% auto;
                                     background-position: center;
                                     float: right;
-                                    /*margin-top: 100px;
-                                    margin-right: 100px;*/
                                 }
 
                                 .swiper-button-prev {
                                     background: url(/img/upload/left.png) no-repeat;
                                     background-size: 80% auto;
                                     background-position: center;
-                                    /*margin-top: 100px;
-                                    margin-left: 100px;*/
                                 }
                                 .swiper-button-next::after,
                                 .swiper-button-prev::after {
@@ -132,20 +127,6 @@
                             </style>
                         </th:block>
                         <div>
-                            <!--<section class="hero">
-                                <div>
-                                    <div class="search_section">
-                                        <div class="vanner">
-                                                <div class="img_part" style="width: 100%;">
-                                                    <img style="border-radius: 20px; background-color: #fde045; width: 100%" src="../img/upload/meal1.png"  height="500px">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                &lt;!&ndash;</div>&ndash;&gt;
-                            </section>-->
-                            <!-- Hero Section End -->
-
                             <!-- Product Section Begin -->
                             <section class="product spad" style="position: relative; padding-top: 30px; padding-bottom: 20px;">
                                 <div class="middle">
@@ -212,38 +193,37 @@
                                 </div>
                             </section>
                             <section class="product spad" style="position: relative; padding-top: 0; padding-bottom: 20px;">
-                            <div class="middle">
-                                <div>
-                                    <div class="swiper-button-prev" style="margin-left: 95px;"></div>
-                                    <div class="swiper-button-next" style="margin-right: 95px;"></div>
+                                <div class="middle">
+                                    <div>
+                                        <div class="swiper-button-prev" style="margin-left: 95px;"></div>
+                                        <div class="swiper-button-next" style="margin-right: 95px;"></div>
 
-                                    <div class="row">
-                                        <div class="col-lg-8 col-md-8 col-sm-8">
-                                            <div class="section-title">
-                                                <h4>New Restaurants</h4>
-                                                <a href="/theme" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <div class="section-title">
+                                                    <h4>New Restaurants</h4>
+                                                    <a href="/theme" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper">
+                                            <!--  Additional required wrapper  -->
+                                            <div class="swiper-wrapper">
+                                                <th:block th:each="list:${list}">
+                                                    <div class="swiper-slide">
+                                                        <a href="#">
+                                                            <img class="theme1_img" th:src="${list.mealPhoto1}">
+                                                            <div class="theme1_text">
+                                                                <h3 class="theme1_restaurantName" th:text="${list.mealName}"></h3>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </th:block>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="swiper">
-                                        <!--  Additional required wrapper  -->
-                                        <div class="swiper-wrapper">
-                                            <th:block th:each="list:${list}">
-                                                <div class="swiper-slide">
-                                                    <a href="#">
-                                                        <img class="theme1_img" th:src="${list.mealPhoto1}">
-                                                        <div class="theme1_text">
-                                                            <h3 class="theme1_restaurantName" th:text="${list.mealName}"></h3>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </th:block>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-
-                        </section>
+                            </section>
                         </div>
 
                         <script layout:fragment="script">
@@ -261,7 +241,6 @@
                                     // If we need pagination
                                     pagination: {
                                         el: '.swiper-pagination',
-                                        //type:'bullets',
                                         clickable:true,
                                     },
 

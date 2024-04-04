@@ -73,7 +73,6 @@
                 $("#email1").val("");
 
                 // id 중복검사
-                //function check_id(){
                 $("#ad_id").on("focusout", function(){
                     $("#pw").val("");
                     $("#email1").val("");
@@ -159,7 +158,6 @@
                     },
                     success : function(data){
                         alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.");
-                        console.log("인증코드 : " + data);
                         chkEmailConfirm(data, certificateNum, certificate);
                     }
                 });

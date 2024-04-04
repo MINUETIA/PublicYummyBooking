@@ -13,14 +13,11 @@ import java.util.List;
 @Repository
 public interface AdminDAO {
 
-    public AdminAccountDTO findOne(String username);// username이 아니라 ad_id 값을 변경해둬서 ad_id로 찾음
+    public AdminAccountDTO findOne(String username);
 
     public void addOne(AdminAccountDTO dto);
 
-
-
     public List<AdminAccountDTO> selectAll();
-
 
     public void deleteId(int num);
 

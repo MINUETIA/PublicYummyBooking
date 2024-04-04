@@ -15,9 +15,14 @@ import java.util.List;
 @Mapper
 public interface RestaurantDetailsDAO {
     public RestaurantDTO selectRestaurantOne(int restaurantId);
+
     public List<RestaurantMenuDTO> restaurantMenuList(int restaurantId);
+
     public EvaluationDTO starRating(int restaurantId);
+
     public List<RestaurantOpeningDTO> operatingTime(int restaurantId);
+
     public void addReservation(ReservationDTO reservationDTO);
+
     public List<RestrantByTheme> getTheme(int reservationDTO);
 }

@@ -20,15 +20,12 @@
     </div>
     <!-- Breadcrumb End -->
 
-
-
     <!-- Product Section Begin -->
     <section class="product-page spad">
 
         <div class="container-fluid" >
             <div class="row">
                 <div class="col-1"></div>
-
 
                 <div class="col-lg-2 col-md-6 col-sm-8">
                     <div class="product__sidebar">
@@ -54,9 +51,8 @@
                             <div class="product__sidebar__comment">
                                 <div class="section-title">
                                     <div class="sidebar_text_div">
-                                    <a href="/calendar"><h6 class="sidebar_text">예약현황</h6></a>
+                                        <a href="/calendar"><h6 class="sidebar_text">예약현황</h6></a>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -75,7 +71,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-lg-8">
                     <div class="product__page__content">
 
@@ -83,7 +78,6 @@
                             <div class="row">
                                 <div class="col-lg-10 col-md-8 col-sm-6" style="height:400px">
                                     <div class="section-title" style=" height:380px; width: 1000px">
-
 
                                         <!-- Container for the profile section -->
                                         <div class="profile-section" style="width: 1000px; height: 250px; border-radius: 10px; border: 1px solid #ccc; padding: 20px;">
@@ -104,8 +98,6 @@
                                             <div style="clear: both;"></div>
                                         </div>
 
-                                        <!-- Add the rest of your content here -->
-
                                         <div class="swiper">
                                             <!-- Additional required wrapper -->
                                             <div class="swiper-wrapper">
@@ -119,22 +111,17 @@
                                                                     <p class="theme1_restaurantName" th:text="${list.restaurantName}"></p>
                                                                     <p class="theme1_restaurantName" th:text="${list.reservationDate}"></p>
                                                                     <p class="theme1_restaurantName" th:text="${list.reservationNum}"></p>
-
                                                                 </div>
                                                             </a>
                                                         </div>
-
                                                     </div>
                                                 </th:block>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="product__page__title">
                             <div class="row">
@@ -147,59 +134,32 @@
                                             <div class="swiper-wrapper">
                                                 <th:block th:each="list:${list} ">
                                                     <div class="swiper-slide" >
-
                                                         <a href="#">
                                                             <img class="theme2_img" th:src="${list.restaurantMainPhoto}">
                                                             <div class="theme2_text">
                                                                 <p class="theme1_restaurantName" th:text="${list.restaurantName}"></p>
                                                                 <p class="theme1_restaurantName" th:text="${list.reservationDate}"></p>
                                                                 <p class="theme1_restaurantName" th:text="${list.reservationNum}"></p>
-
                                                             </div>
                                                         </a>
                                                     </div>
                                                 </th:block>
-
-
-
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="product__pagination">
-                 <a href="#" class="current-page">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-                 <a href="#">4</a>
-                 <a href="#">5</a>
-                 <a href="#"><i class="fa fa-angle-double-right"></i></a>
-             </div>-->
         </div>
     </section>
     <!-- Product Section End -->
-
-
-
-
-
-
-
 </div>
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/mypage.css}">
 </th:block>
-
 
 </html>

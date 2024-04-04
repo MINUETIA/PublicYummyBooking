@@ -21,14 +21,12 @@
     </div>
     <!-- Breadcrumb End -->
 
-
     <!-- Product Section Begin -->
     <section class="product-page spad">
 
         <div class="container-fluid" >
             <div class="row">
                 <div class="col-1"></div>
-
 
                 <div class="col-lg-2 col-md-6 col-sm-8">
                     <div class="product__sidebar">
@@ -62,7 +60,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="col-lg-8" >
                     <div class="product__page__content">
@@ -100,7 +97,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="swiper-button-prev"></div>
                                     <div class="swiper-button-next"></div>
 
@@ -122,7 +118,6 @@
                                                                         <p class="ongoing_restaurantLoc" th:text="${list.location}"></p>
                                                                         <p class="ongoing_reservationDate" th:text="${list.reservationDate}"></p>
                                                                         <p class="ongoing_reservationNum" th:text="${list.reservationNum}+'명'"></p>
-
                                                                     </div>
                                                                 </a>
                                                             </div>
@@ -132,17 +127,12 @@
                                                 <th:block th:if="${list == null or #lists.isEmpty(list)}">
                                                     <p style="margin-top: 10px">진행중인 예약이 없습니다.</p>
                                                 </th:block>
-
-
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="product__page__title">
                             <div class="row">
@@ -159,12 +149,10 @@
                                                                 <div class="last_text">
                                                                     <div class="first-line" style="display: flex">
                                                                         <p class="last_restaurantName" th:text="|${Llist.restaurantName},|"></p>
-                                                                        &nbsp;
                                                                         <p class="last_restaurantLoc" th:text="${Llist.location}"></p>
                                                                     </div>
                                                                     <div class="second-line" style="display: flex">
                                                                         <p class="last_reservationDate" th:text="${Llist.reservationDate}"></p>
-                                                                        &nbsp;
                                                                         <p class="last_reservationNum" th:text="${Llist.reservationNum}+'명'"></p>
                                                                     </div>
                                                                 </div>
@@ -178,6 +166,7 @@
                                                     <button class="loadMoreBtn" id="loadMoreBtn" style="display: none;">더보기</button>
                                                 </div>
                                             </th:block>
+
                                             <th:block th:if="${Llist == null or #lists.isEmpty(Llist)}">
                                                 <p>지난 예약이 없습니다.</p>
                                             </th:block>
@@ -198,12 +187,10 @@
                                                     <div class="cancelled_text">
                                                         <div class="first-line" style="display: flex">
                                                             <p class="cancelled_restaurantName" th:text="|${Clist.restaurantName}|"></p>
-                                                            &nbsp;
                                                             <p class="cancelled_restaurantLoc" th:text="${Clist.location}"></p>
                                                         </div>
                                                         <div class="second-line" style="display: flex">
                                                             <p class="cancelled_reservationDate" th:text="${Clist.reservationDate}"></p>
-                                                            &nbsp;
                                                             <p class="cancelled_reservationNum" th:text="${Clist.reservationNum}+'명'"></p>
                                                         </div>
                                                     </div>
@@ -216,27 +203,14 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="product__pagination">
-                     <a href="#" class="current-page">1</a>
-                     <a href="#">2</a>
-                     <a href="#">3</a>
-                     <a href="#">4</a>
-                     <a href="#">5</a>
-                     <a href="#"><i class="fa fa-angle-double-right"></i></a>
-                 </div>-->
             </div>
     </section>
     <!-- Product Section End -->
 
     <script layout:fragment="script">
-
-
 
         //slider js
         const swiper = new Swiper('.swiper', {
@@ -244,18 +218,9 @@
             slidesPerView: 2,
             spaceBetween: 30,
             direction: 'horizontal',
-
             loop: true,
-
-            /*   autoplay: {
-                   delay: 2500,
-                   disableOnInteraction: false,
-               },*/
-
-            // If we need pagination
             pagination: {
                 el: '.swiper-pagination',
-                //type:'bullets',
                 clickable:true,
             },
 
@@ -266,17 +231,14 @@
             },
         });
 
-
-
-
-
         document.addEventListener('DOMContentLoaded', function() {
             const loadMoreBtn = document.getElementById('loadMoreBtn');
             const pastReservations = document.getElementById('pastReservations');
             const reservationItems = pastReservations.querySelectorAll('.reservation-item');
-
             const totalReservations = reservationItems.length;
-            let visibleReservations = 3; // 초기에 보이는 예약 항목 수
+
+            // 초기에 보이는 예약 항목 수
+            let visibleReservations = 3;
 
             // "더보기" 버튼을 보여주는 함수
             function showLoadMoreBtn() {
@@ -305,15 +267,10 @@
             }
         });
     </script>
-
-
 </div>
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/mypage.css}">
 </th:block>
-
-
-
 
 </html>

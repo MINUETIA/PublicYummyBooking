@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface PurchaseDAO {
+
     public List<HashMap<String, Object>> getAllPurchase();
 
     List<HashMap<String, Object>> getAllPurchaseByStatus(int status);

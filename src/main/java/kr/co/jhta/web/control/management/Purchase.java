@@ -22,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin/purchase")
 public class Purchase {
-    private final PurchaseService purchaseService;
 
+    private final PurchaseService purchaseService;
 
     @GetMapping("/list")
     public String search(Model model,
@@ -32,7 +32,6 @@ public class Purchase {
                          @RequestParam(value = "code", defaultValue = "PS0000")String code,
                          @RequestParam(value = "start", defaultValue = "2000-01-01")String start,
                          @RequestParam(value = "end", defaultValue = "9999-12-31")String end  ) {
-
 
         model.addAttribute("name", name);
         model.addAttribute("code", code);
@@ -84,12 +83,6 @@ public class Purchase {
                          @RequestParam(value = "end", defaultValue = "9999-12-31")String end
                          ) throws IOException {
 
-        System.out.println("status : " + status);
-        System.out.println("name : " + name);
-        System.out.println("code : " + code);
-        System.out.println("start : " + start);
-        System.out.println("end : " + end);
-
 
         List<HashMap<String, Object>> list = null;
         list= purchaseService.getAll();
@@ -114,9 +107,6 @@ public class Purchase {
 
         }
 
-
-
-
         Workbook workbook = new HSSFWorkbook();
         Sheet sheet = workbook.createSheet("구매입고 등록");
         int rowNo = 0;
@@ -135,7 +125,6 @@ public class Purchase {
         headerRow.createCell(10).setCellValue("부가세");
         headerRow.createCell(11).setCellValue("수정일");
         headerRow.createCell(12).setCellValue("수정자");
-
 
         int no = 0;
         for (HashMap<String, Object> map : list) {
@@ -162,47 +151,36 @@ public class Purchase {
         workbook.write(response.getOutputStream());
         workbook.close();
 
+    }
 
+    @GetMapping("/modify")
+    @ResponseBody
+    public String modify(
+            @RequestParam(value = "type", defaultValue = "0") int type,
+            @RequestParam(value = "vendorname", defaultValue = "noname")String name,
+            @RequestParam(value = "purchaseno", defaultValue = "0")String purchaseno,
+            @RequestParam(value = "price", defaultValue = "0")int price,
+            @RequestParam(value = "cnt", defaultValue = "0")int cnt,
+            @RequestParam(value = "sprice", defaultValue = "0")int sprice){
+
+        // 이름으로 벤더번호 가져오기
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("type", type);
+        map.put("purchaseno", purchaseno);
+        map.put("price", price);
+        map.put("cnt", cnt);
+        map.put("sprice", sprice);
+
+        boolean result = purchaseService.getOne(purchaseno);
+
+        if(result){
+            System.out.println(map);
+            purchaseService.modifyData(map);
+        }else {
+            purchaseService.insertOne(map);
         }
 
-
-
-        @GetMapping("/modify")
-        @ResponseBody
-        public String modify(
-                @RequestParam(value = "type", defaultValue = "0") int type,
-                @RequestParam(value = "vendorname", defaultValue = "noname")String name,
-                @RequestParam(value = "purchaseno", defaultValue = "0")String purchaseno,
-                @RequestParam(value = "price", defaultValue = "0")int price,
-                @RequestParam(value = "cnt", defaultValue = "0")int cnt,
-                @RequestParam(value = "sprice", defaultValue = "0")int sprice){
-                // 이름으로 벤더번호 가져오기
-
-            HashMap<String, Object> map = new HashMap<>();
-                map.put("name", name);
-                map.put("type", type);
-                map.put("purchaseno", purchaseno);
-                map.put("price", price);
-                map.put("cnt", cnt);
-                map.put("sprice", sprice);
-            System.out.println("map : " + map);
-
-            boolean result = purchaseService.getOne(purchaseno);
-            System.out.println("result : " + result);
-            if(result){
-                System.out.println(map);
-                purchaseService.modifyData(map);
-            }else {
-                purchaseService.insertOne(map);
-            }
-
-            return "OK";
-
-
-        }
-
-
-
-
-
+        return "OK";
+    }
 }

@@ -15,13 +15,12 @@ public class ProductCotroller {
     @Autowired
     ProductDAO productDAO;
 
-
     @RequestMapping("/products")
     public String productlist(Model model){
 
-       List< HashMap<String, Object>> stringObjectHashMap = productDAO.selectAllproducts();
-model.addAttribute("list",stringObjectHashMap );
-        System.out.println(stringObjectHashMap);
+        List< HashMap<String, Object>> stringObjectHashMap = productDAO.selectAllproducts();
+        model.addAttribute("list",stringObjectHashMap );
+
         return "views/product/products";
     }
 }

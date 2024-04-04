@@ -27,9 +27,8 @@ public class MealController {
 
     @GetMapping("/main")
     public String MealHome(Model model, HttpServletRequest req){
-        List<ProductDTO> list = productService.select10NewMealKits();
-        System.out.println("meal controller >>>> " + list);
 
+        List<ProductDTO> list = productService.select10NewMealKits();
         model.addAttribute("list",list);
 
         return "views/meal/mealMain";
@@ -37,46 +36,42 @@ public class MealController {
 
     @GetMapping("/keyword")
     public  String mealSearch(@RequestParam String keyWord, Model model){
-        System.out.println(keyWord);
 
         model.addAttribute("list", productService.selectKeyWord(keyWord));
         model.addAttribute("keyWord",keyWord);
+
         return "views/product/products";
     }
 
     @GetMapping("/mealbasket")
     public  String mealBasket(@RequestParam List<Integer> mealId, Model model){
 
-        System.out.println(mealId);
         List<ProductDTO> productDTOS = productService.selectMealBasket(mealId);
-
         model.addAttribute("list", productDTOS );
+
         return "views/meal/mealBasket";
     }
 
     @GetMapping("/mealPayment")
     public String mealPayment(@RequestParam String mealName,
                               @RequestParam String sumPrice, Model model){
-        System.out.println(mealName);
-        System.out.println(sumPrice);
         model.addAttribute("mealName", mealName);
         model.addAttribute("sumPrice", sumPrice);
+
         return "views/meal/mealPayment";
     }
 
     @GetMapping("/history")
     public String mealHistroy(HttpServletRequest req, Model model){
+
         Long ubId = ((UbCommonDTO) req.getSession().getAttribute("ubCommonDTOLogin")).getUbId();
         List<SaleHistoryDTO> saleHistoryDTOS = productService.selectSaleHistory(ubId);
-
-        System.out.println(saleHistoryDTOS);
 
         Map<LocalDateTime, List<SaleHistoryDTO>> collect = saleHistoryDTOS.stream()
                 .collect(groupingBy(SaleHistoryDTO::getSaledate));
 
-
-        System.out.println(collect);
         model.addAttribute("list",collect );
+
         return "views/meal/saleHistory";
     }
 }

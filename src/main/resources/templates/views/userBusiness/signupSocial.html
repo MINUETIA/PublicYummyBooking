@@ -2,195 +2,175 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragment/default_layout}">
-<th:block layout:fragment="content">
 
-    <script th:inline="javascript">
-        let flag;
-        function findAddr(){
-            new daum.Postcode({
-                oncomplete: function(data) {
+    <th:block layout:fragment="content">
 
-                    console.log(data);
+        <script th:inline="javascript">
+            let flag;
+            function findAddr(){
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var roadAddr = data.roadAddress; // 도로명 주소 변수
+                        var jibunAddr = data.jibunAddress; // 지번 주소 변수
 
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-                    // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    var roadAddr = data.roadAddress; // 도로명 주소 변수
-                    var jibunAddr = data.jibunAddress; // 지번 주소 변수
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
-
-                    if(roadAddr !== ''){
-                        $("input[name=address]").val(roadAddr);
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        if(roadAddr !== ''){
+                            $("input[name=address]").val(roadAddr);
+                        }
+                        else if(jibunAddr !== ''){
+                            $("input[name=address]").val(jibunAddr);
+                        }
                     }
-                    else if(jibunAddr !== ''){
-                        $("input[name=address]").val(jibunAddr);
-                    }
-                }
-            }).open();
-        }
-        $(()=>{
-            /*$("#submit").on("click",()=>{
+                }).open();
+            }
+
+            function check(){
                 concatPhoneNumber()
                 acceptanceOfChoiceCheck();
-                if ( mandatoryConsentCheck() ) {
-                    console.log(mandatoryConsentCheck());
-                    $("#frm").attr("method", "get");
-                    $("#frm").attr("action", "signupDetail");
-                    $("#frm").submit();
-                    console.dir($("#frm"));
+                if( mandatoryConsentCheck() != true){
+                    return false;
                 }
-
-            })*/
-        })
-
-        function check(){
-            concatPhoneNumber()
-            acceptanceOfChoiceCheck();
-            if( mandatoryConsentCheck() != true){
-                return false;
-            }
-            return true;
-        }
-
-
-        function mandatoryConsentCheck() {
-            for ( let i = 0; i < $("input[name=mandatoryConsent]").length; i++ ) {
-                flag = $("input[name=mandatoryConsent]")[i].checked;
-                if ( !flag) {
-                    alert("필수 동의는 모두 체크해야합니다.");
-                    break;
-                }
-            }
-            if ( flag ) {
                 return true;
             }
-        }
 
-        function acceptanceOfChoiceCheck() {
-            let checkArray = [];
-            let isChecked = 1;
-            let uAgreement = 0;
-            for ( let i = 0; i < $("input[name=acceptanceOfchoice]").length; i++ ) {
-                if ( $("input[name=acceptanceOfchoice]")[i].checked ) {
-                    checkArray.push(isChecked);
-                } else {
-                    checkArray.push(0);
+            function mandatoryConsentCheck() {
+                for ( let i = 0; i < $("input[name=mandatoryConsent]").length; i++ ) {
+                    flag = $("input[name=mandatoryConsent]")[i].checked;
+                    if ( !flag) {
+                        alert("필수 동의는 모두 체크해야합니다.");
+                        break;
+                    }
                 }
-                isChecked *= 10;
+                if ( flag ) {
+                    return true;
+                }
             }
-            for ( let i = 0; i < checkArray.length; i++ ) {
-                uAgreement += checkArray[i];
+
+            function acceptanceOfChoiceCheck() {
+                let checkArray = [];
+                let isChecked = 1;
+                let uAgreement = 0;
+                for ( let i = 0; i < $("input[name=acceptanceOfchoice]").length; i++ ) {
+                    if ( $("input[name=acceptanceOfchoice]")[i].checked ) {
+                        checkArray.push(isChecked);
+                    } else {
+                        checkArray.push(0);
+                    }
+                    isChecked *= 10;
+                }
+                for ( let i = 0; i < checkArray.length; i++ ) {
+                    uAgreement += checkArray[i];
+                }
+                $("#uAgreement").val(uAgreement);
             }
-            $("#uAgreement").val(uAgreement);
-        }
-        function concatPhoneNumber() {
-            $("#phone").val($("#phone1").val()+"-"+$("#phone2").val()+"-"+$("#phone3").val());
-        }
-    </script>
+            function concatPhoneNumber() {
+                $("#phone").val($("#phone1").val()+"-"+$("#phone2").val()+"-"+$("#phone3").val());
+            }
+        </script>
 
+        <!-- Page Preloder -->
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
 
-
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
-
-<!-- Normal Breadcrumb Begin -->
-<section class="normal-breadcrumb set-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="normal__breadcrumb__text">
-                    <h2>Sign Up</h2>
-                    <p>Welcome to the Yummy Booking.</p>
+        <!-- Normal Breadcrumb Begin -->
+        <section class="normal-breadcrumb set-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="normal__breadcrumb__text">
+                            <h2>Sign Up</h2>
+                            <p>Welcome to the Yummy Booking.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!-- Normal Breadcrumb End -->
+        </section>
+        <!-- Normal Breadcrumb End -->
 
-<!-- Signup Section Begin -->
-<section class="signup spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="login__form">
-                    <h3>Sign Up</h3>
-                    <form action="/login/signupSocial" method="post" id="frm">
-                            <input type="text" name="userId" th:value="${session.snsId}">
-                        <div>
-                            <input class="classificationNumber" type="radio" name="classificationNumber" value="3"> 개인
-                            <input class="classificationNumber" type="radio" name="classificationNumber" value="4"> 사업자
+        <!-- Signup Section Begin -->
+        <section class="signup spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="login__form">
+                            <h3>Sign Up</h3>
+                            <form action="/login/signupSocial" method="post" id="frm">
+                                    <input type="text" name="userId" th:value="${session.snsId}">
+                                <div>
+                                    <input class="classificationNumber" type="radio" name="classificationNumber" value="3"> 개인
+                                    <input class="classificationNumber" type="radio" name="classificationNumber" value="4"> 사업자
+                                </div>
+                                <div>
+                                    <input type="radio" name="followOnOff" value="1"> FOLLOW ON
+                                    <input type="radio" name="followOnOff" value="0"> FOLLOW OFF
+                                </div>
+                                <div class="input__item">
+                                    <input type="text" placeholder="Your Name" name="name">
+                                    <span class="icon_profile"></span>
+                                </div>
+                                <div class="input__item">
+                                    <input type="text" placeholder="Cell Phone Number1" id="phone1">
+                                    <input type="text" placeholder="Cell Phone Number2" id="phone2">
+                                    <input type="text" placeholder="Cell Phone Number3" id="phone3">
+                                    <input type="hidden" name="phone" id="phone">
+                                    <span><i class="fa-solid fa-phone"></i></span>
+                                </div>
+                                <div class="input__item">
+                                    <!--<input type="date" name="birthdate">-->
+                                    <input type="date" class="form-control" id="datepicker" name="datepicker">
+                                    <span><i class="fa-solid fa-cake-candles"></i></span>
+                                </div>
+                                <div class="input__item">
+                                    <input type="text" name="introduction" placeholder="Introduction">
+                                    <span><i class="fa-solid fa-info"></i></span>
+                                </div>
+                                <div class="input__item">
+                                    <input type="button" onclick="findAddr()" value="우편번호 찾기"><br>
+                                    <input type="text" name="address" placeholder="Address" readonly>
+                                    <input type="text" name="addressDetail" placeholder="AddressDetail">
+                                    <span><i class="fa-solid fa-location-dot"></i></span>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="mandatoryConsent">필수 동의 1<br/>
+                                    <input type="checkbox" name="mandatoryConsent">필수 동의 2<br/>
+                                    <input type="checkbox" name="acceptanceOfchoice">선택 동의 1<br/>
+                                    <input type="checkbox" name="acceptanceOfchoice">선택 동의 2<br/>
+                                    <input type="checkbox" name="acceptanceOfchoice">선택 동의 3
+                                    <input type="hidden" name="uAgreement" id="uAgreement">
+                                </div>
+                                <input type="submit" class="site-btn" id="submit" onclick="return check();" value="Sign In Now">
+                            </form>
                         </div>
-                        <div>
-                            <input type="radio" name="followOnOff" value="1"> FOLLOW ON
-                            <input type="radio" name="followOnOff" value="0"> FOLLOW OFF
-                        </div>
-                        <div class="input__item">
-                            <input type="text" placeholder="Your Name" name="name">
-                            <span class="icon_profile"></span>
-                        </div>
-                        <div class="input__item">
-                            <input type="text" placeholder="Cell Phone Number1" id="phone1">
-                            <input type="text" placeholder="Cell Phone Number2" id="phone2">
-                            <input type="text" placeholder="Cell Phone Number3" id="phone3">
-                            <input type="hidden" name="phone" id="phone">
-                            <span><i class="fa-solid fa-phone"></i></span>
-                        </div>
-                        <div class="input__item">
-                            <!--<input type="date" name="birthdate">-->
-                            <input type="date" class="form-control" id="datepicker" name="datepicker">
-                            <span><i class="fa-solid fa-cake-candles"></i></span>
-                        </div>
-                        <div class="input__item">
-                            <input type="text" name="introduction" placeholder="Introduction">
-                            <span><i class="fa-solid fa-info"></i></span>
-                        </div>
-                        <div class="input__item">
-                            <input type="button" onclick="findAddr()" value="우편번호 찾기"><br>
-                            <input type="text" name="address" placeholder="Address" readonly>
-                            <input type="text" name="addressDetail" placeholder="AddressDetail">
-                            <span><i class="fa-solid fa-location-dot"></i></span>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="mandatoryConsent">필수 동의 1<br/>
-                            <input type="checkbox" name="mandatoryConsent">필수 동의 2<br/>
-                            <input type="checkbox" name="acceptanceOfchoice">선택 동의 1<br/>
-                            <input type="checkbox" name="acceptanceOfchoice">선택 동의 2<br/>
-                            <input type="checkbox" name="acceptanceOfchoice">선택 동의 3
-                            <input type="hidden" name="uAgreement" id="uAgreement">
-                        </div>
-                        <input type="submit" class="site-btn" id="submit" onclick="return check();" value="Sign In Now">
-                    </form>
+                    </div>
                 </div>
             </div>
+        </section>
+        <!-- Signup Section End -->
+
+        <!-- Search model Begin -->
+        <div class="search-model">
+            <div class="h-100 d-flex align-items-center justify-content-center">
+                <div class="search-close-switch"><i class="icon_close"></i></div>
+                <form class="search-model-form">
+                    <input type="text" id="search-input" placeholder="Search here.....">
+                </form>
+            </div>
         </div>
-    </div>
-</section>
-<!-- Signup Section End -->
+        <!-- Search model end -->
 
-<!-- Search model Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch"><i class="icon_close"></i></div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
-        </form>
-    </div>
-</div>
-<!-- Search model end -->
+        <!-- Js Plugins -->
+        <script src="/js/jquery-3.3.1.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/player.js"></script>
+        <script src="/js/jquery.nice-select.min.js"></script>
+        <script src="/js/mixitup.min.js"></script>
+        <script src="/js/jquery.slicknav.js"></script>
+        <script src="/js/owl.carousel.min.js"></script>
+        <script src="/js/main.js"></script>
 
-<!-- Js Plugins -->
-<script src="/js/jquery-3.3.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/player.js"></script>
-<script src="/js/jquery.nice-select.min.js"></script>
-<script src="/js/mixitup.min.js"></script>
-<script src="/js/jquery.slicknav.js"></script>
-<script src="/js/owl.carousel.min.js"></script>
-<script src="/js/main.js"></script>
-
-
-</th:block>
+    </th:block>
 </html>

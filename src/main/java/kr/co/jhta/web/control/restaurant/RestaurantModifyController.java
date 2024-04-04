@@ -42,7 +42,6 @@ public class RestaurantModifyController {
 
     @PostMapping("/addMenu")
     public String addMenu(@RequestParam String name, @RequestParam int price, @RequestParam("restaurantId") int restaurantId,  RedirectAttributes ra){
-        System.out.println("restaurantId : "+restaurantId);
         RestaurantMenuDTO dto = new RestaurantMenuDTO();
         dto.setMenuName(name);
         dto.setMenuPrice(price);
@@ -55,9 +54,8 @@ public class RestaurantModifyController {
     }
     @PostMapping("/removeMenu")
     public String removeMenu(RedirectAttributes ra, @RequestParam Long restaurantMenuId,@RequestParam("restaurantId") int restaurantId){
-        System.out.println("RestaurantMenuId : "+restaurantMenuId);
-        modifyService.deleteMenu(restaurantMenuId);
 
+        modifyService.deleteMenu(restaurantMenuId);
         ra.addAttribute("restaurantId", restaurantId);
         return "redirect:/restaurantModify";
     }
@@ -86,7 +84,6 @@ public class RestaurantModifyController {
         dto.setOpeningInfoWeek(openingInfoWeek);
 
         modifyService.changeTime(dto);
-
 
         ra.addAttribute("restaurantId", restaurantId);
         return "redirect:/restaurantModify";

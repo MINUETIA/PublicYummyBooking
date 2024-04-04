@@ -15,8 +15,10 @@ import java.util.List;
 
 @RequestMapping("/admin/warehouse")
 public class  WareHouseController {
+
     @Autowired
     private WareHouseService wareHouseService;
+
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value = "no",defaultValue = "0")int no){
         List<HashMap<String, Object>> list = wareHouseService.getAll();
@@ -29,8 +31,5 @@ public class  WareHouseController {
 
         return "views/warehouse/list";
     }
-
-
-
 
 }

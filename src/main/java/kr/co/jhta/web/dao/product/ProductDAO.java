@@ -15,7 +15,10 @@ public interface ProductDAO {
     public List<HashMap<String, Object>> selectAllproducts();
 
     List<ProductDTO> select10NewMealKits();
+
     List<ProductDTO> selectKeyWord(String keyWord);
+
     List<ProductDTO> selectMealBasket(List<Integer> mealId);
+
     List<SaleHistoryDTO> selectSaleHistory(Long ubId);
 }

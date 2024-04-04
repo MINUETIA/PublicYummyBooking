@@ -3,11 +3,13 @@
         "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.jhta.web.dao.restaurant.RestaurantDetailsDAO">
+
     <select id="selectRestaurantOne" resultType="RestaurantDTO" parameterType="int">
         select restaurant_id as restaurantId, restaurant_name as restaurantName, restaurant_branch_num as restaurantBranchNum, restaurant_manager_name as restaurantMangerName, restaurant_user_id as restaurantUserId, restaurant_pw as restaurantPw, restaurant_description as restaurantDescription, restaurant_manager_hp as restaurantManagerHp, restaurant_deposit_code as restaurantDepositCode, restaurant_waiting_code as restaurantWaitingCode, restaurant_address as restaurantAddress, restaurant_latitude as restaurantLatitude, restaurant_longitude as restaurantLongitude, restaurant_regdate as restaurantRegdate, restaurant_main_photo as restaurantMainPhoto, ub_id as ubId
         from restaurant
         where restaurant_id=#{restaurant_id}
     </select>
+
     <select id="restaurantMenuList" resultType="RestaurantMenuDTO" parameterType="int">
         select restaurant_menu_id as restaurantMenuId, menu_name as menuName, menu_price as menuPrice, menu_description as menuDescription, menu_c_date as MenuCDate, menu_m_date as menuMDate, restaurant_id as restaurantId
         from restaurant_menu
@@ -30,14 +32,17 @@
         from restaurant_opening
         where restaurant_id= #{restaurant_id}
     </select>
+
     <insert id="addReservation" parameterType="ReservationDTO">
         insert into reservation (reservation_date, reservation_num, reservation_status, reservation_request, reservation_c_date, ub_id, restaurant_id)
         value (#{reservationDate},#{reservationNum},#{reservationStatus},#{reservationRequest},now(), #{ubId},#{restaurantId})
     </insert>
+
     <select id="getTheme" parameterType="int" resultType="RestrantByTheme">
         SELECT restaurant_theme.restaurant_id, comm_theme.theme_name, comm_theme.theme_classify_code, comm_theme.theme_id
         FROM restaurant_theme
         JOIN comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
         WHERE restaurant_theme.restaurant_id = #{restaurantId}
     </select>
+
 </mapper>

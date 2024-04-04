@@ -3,6 +3,7 @@
         "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.co.jhta.web.dao.meal.MealDetailDAO">
+
     <select id="getMealDTO" parameterType="Long" resultType="productDTO">
         select product_id as productId, meal_name as mealName, meal_price as mealPrice, meal_regist as mealRegist, meal_cnt as mealCnt,
         meal_manufacture_day as mealManufactureDay, meal_description as mealDescription, meal_weight as mealWeight, meal_photo1 as mealPhoto1, meal_photo2 as mealPhoto2,

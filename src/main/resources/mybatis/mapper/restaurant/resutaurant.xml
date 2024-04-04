@@ -10,7 +10,6 @@
         order by restaurant_regdate desc limit 10
     </select>
 
-
     <select id="select10hotRestaurants" resultType="RestaurantDTO">
         select restaurant_name as restaurantName,restaurant_id as restaurantId,restaurant_description as restaurantDescription,restaurant_address as restaurantAddress,restaurant_regdate as restaurantRegdate,restaurant_main_photo as restaurantMainPhoto
         from restaurant r
@@ -22,7 +21,6 @@
             limit 10
         ) res on r.restaurant_id = res.restaurantId;
     </select>
-
 
     <select id="recommandations" resultType="RestaurantDTO">
         select restaurant_name as restaurantName ,restaurant_id as restaurantId,restaurant_description as restaurantDescription,restaurant_address as restaurantAddress,restaurant_regdate as restaurantRegdate,restaurant_main_photo as restaurantMainPhoto

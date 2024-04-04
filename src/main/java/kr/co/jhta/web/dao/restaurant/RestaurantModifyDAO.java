@@ -10,7 +10,10 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface RestaurantModifyDAO {
     public void addMenu(RestaurantMenuDTO dto);
+
     public void removeMenu(Long restaurantMenuId);
+
     public void updateAdd(RestaurantDTO dto);
+
     public void updateTime(RestaurantOpeningDTO dto);
 }

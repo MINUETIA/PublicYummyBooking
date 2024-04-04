@@ -20,15 +20,12 @@
     </div>
     <!-- Breadcrumb End -->
 
-
-
     <!-- Product Section Begin -->
     <section class="product-page spad">
 
         <div class="container-fluid" >
             <div class="row">
                 <div class="col-1"></div>
-
 
                 <div class="col-lg-2 col-md-6 col-sm-8">
                     <div class="product__sidebar__myprofile">
@@ -49,21 +46,16 @@
                                 <h5>예약현황</h5>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
 
-
                 <div class="col-lg-8">
                     <div class="product__page__content">
-
                         <div class="product__page__title">
                             <div class="row">
                                 <div class="col-lg-10 col-md-8 col-sm-6">
                                     <div class="section-title">
                                         <h4>진행예정 예약</h4> <br>
-
                                         <div class="swiper">
                                             <!-- Additional required wrapper -->
                                             <div class="swiper-wrapper">
@@ -77,53 +69,26 @@
                                                                     <p class="theme1_restaurantName" th:text="|예약자명:${list.name}|"></p>
                                                                     <p class="theme1_restaurantName" th:text="|시간:${list.reservationDate}|"></p>
                                                                     <p class="theme1_restaurantName" th:text="|인원:${list.reservationNum}명|"></p>
-
                                                                 </div>
                                                             </a>
                                                         </div>
-
                                                     </div>
                                                 </th:block>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="product__pagination">
-                 <a href="#" class="current-page">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-                 <a href="#">4</a>
-                 <a href="#">5</a>
-                 <a href="#"><i class="fa fa-angle-double-right"></i></a>
-             </div>-->
         </div>
     </section>
-    <!-- Product Section End -->
-
-
-
-
-
-
-
 </div>
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/mypage.css}">
 </th:block>
-
 
 </html>

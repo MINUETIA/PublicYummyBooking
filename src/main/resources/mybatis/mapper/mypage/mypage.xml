@@ -18,7 +18,6 @@
         ORDER BY r.reservation_date ASC
     </select>
 
-
     <select id="getLastBookingHistory" resultType="Hashmap" parameterType="Long">
         SELECT r.restaurant_id as restaurantId, r.reservation_id as reservationId, r.reservation_date as reservationDate ,
         r.ub_id as ubId, r.reservation_num as reservationNum,
@@ -32,9 +31,7 @@
         AND ub.ub_id = #{ub_id}
         AND r.reservation_date &lt; NOW()
         ORDER BY r.reservation_date ASC
-
     </select>
-
 
     <select id="getCancelledBookingHistory" resultType="Hashmap" parameterType="Long">
         SELECT r.restaurant_id as restaurantId, r.reservation_id as reservationId, r.reservation_date as reservationDate ,
@@ -48,11 +45,7 @@
         r.reservation_status = 3
         AND ub.ub_id = #{ub_id}
         ORDER BY r.reservation_date ASC
-
-
     </select>
-
-
 
     <select id="locationByRestaurantId" resultType="kr.co.jhta.web.dto.RestrantByTheme" parameterType="java.util.List">
         select restaurant_theme.restaurant_id,comm_theme.theme_name,comm_theme.theme_classify_code
@@ -64,9 +57,6 @@
             ${restaurantId}
         </foreach>
     </select>
-
-
-
 
     <select id="getBookingStatus"  resultType="Hashmap" parameterType="Long">
         SELECT
@@ -88,7 +78,6 @@
         AND r.restaurant_id = ${restaurantId}
     </select>
 
-
     <select id="getBookingStatusForCalendar"  resultType="Hashmap" parameterType="java.util.Map">
         SELECT
         res.reservation_date as reservationDate,
@@ -107,7 +96,6 @@
         AND r.restaurant_id = ${restaurantId}
     </select>
 
-
     <select id="checkBookingRequest"  parameterType="Long" resultType="Hashmap">
         SELECT reservation_id as reservationId , reservation_num as  reservationNum ,
                 reservation_date as reservationDate, reservation_request as reservationRequest
@@ -117,18 +105,15 @@
         and reservation_status = 0
     </select>
 
-
     <update id="acceptBooking" parameterType="Long" >
         UPDATE reservation SET reservation_status=1
         where reservation_id=#{reservationId}
     </update>
 
-
     <update id="rejectBooking" parameterType="Long" >
         UPDATE reservation SET reservation_status=3
         where reservation_id=#{reservationId}
     </update>
-
 
     <select id="getProfileInfo" parameterType="Long" resultType="UbCommonDTO">
         SELECT ub_id as ubId,name,email,phone,profile_photo as profilePhoto, join_date as joinDate
@@ -136,13 +121,11 @@
         WHERE ub_id = #{ub_id}
     </select>
 
-
     <select id="restaurantInfo" parameterType="Long" resultType="RestaurantDTO">
         SELECT restaurant_name as restaurantName,restaurant_address as restaurantAddress, restaurant_main_photo as restaurantMainPhoto
         FROM restaurant
         WHERE restaurant_id = #{restaurantId}
     </select>
-
 
     <select id="getRestaurantIdByUbId" resultType="Long" parameterType="Long">
         SELECT restaurant_id as restaurantId

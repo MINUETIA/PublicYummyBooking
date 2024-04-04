@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
         "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="kr.co.jhta.web.dao.warehouse.WareHouseDAO">
+
     <select id="getAll"  resultType="Hashmap">
         SELECT
             warehouse_no as no, warehouse_name as warehouseName, warehouse_size as size,
@@ -11,7 +11,6 @@
         FROM
             warehouse
     </select>
-
 
     <select id="getOne"  parameterType="int" resultType="Hashmap">
         SELECT
@@ -22,6 +21,5 @@
         WHERE
             warehouse_no = #{no}
     </select>
-
 
 </mapper>
