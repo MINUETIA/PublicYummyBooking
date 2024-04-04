@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <!-- 헤더 -->
+    <th:block th:replace="adminFragment/header :: headerFragment"></th:block>
+
+    <body>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- topbar -->
+            <th:block th:replace="adminFragment/top :: topFragment"></th:block>
+
+            <!-- 사이드바-->
+            <th:block th:replace="adminFragment/sidebar :: sidebarFragment"></th:block>
+
+            <div id="content">
+                <!-- 내용 -->
+                <th:block layout:fragment="content">
+
+                </th:block>
+
+            </div>
+        </div>
+
+        <!-- 푸터 -->
+        <th:block th:replace="adminFragment/footer :: footerFragment"></th:block>
+    </body>
+
+</html>

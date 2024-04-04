@@ -1,0 +1,41 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- header fragment -->
+<div th:fragment="headerFragment">
+    <head>
+        <meta charset="UTF-8">
+        <title>YummyBooking</title>
+
+        <!-- 구글 jquery CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+        <!-- 부트스트랩 추가 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+        <!-- modal -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+        <!-- jquery-ui -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+        <!-- daum 주소찾기 -->
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+        <!-- char.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- css, js 불러오기 -->
+        <!-- th:replace="폴더 / 파일명 :: 이름" ==> 폴더 / 파일명에서 :: 이름 인것으로 대체 해줘 -->
+        <!--<th:block th:replace="adminFragment/config :: configFragment"></th:block>-->
+
+        <!-- 각 페이지에서 사용할 css, js를 위한 자리 - 이름만 정의함 -->
+        <!--<th:block layout:fragment="css"></th:block>
+        <th:block layout:fragment="script"></th:block>-->
+    </head>
+</div>

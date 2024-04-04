@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.web.dao.search.SearchRestaurant">
+
+    <select id="getRestraunt" resultType="Hashmap" parameterType="java.util.HashMap">
+        SELECT restaurant.restaurant_id, restaurant.restaurant_name, restaurant.restaurant_address, restaurant.restaurant_description, restaurant.restaurant_main_photo,
+        TRUNCATE(avg(review.review_service + review.review_teast + review.review_mood)/3, 1) avgscore, COUNT(distinct review.review_id) review_count
+        FROM review
+        RIGHT JOIN restaurant on restaurant.restaurant_id = review.restaurant_id
+        LEFT JOIN restaurant_menu on restaurant_menu.restaurant_id = restaurant.restaurant_id
+        WHERE restaurant.restaurant_name like CONCAT('%', #{keyword}, '%')
+            or restaurant.restaurant_address LIKE CONCAT('%', #{keyword}, '%')
+            or restaurant_menu.menu_name like CONCAT('%', #{keyword}, '%')
+        GROUP BY restaurant_id
+        <trim prefix="ORDER BY">
+            <if test="orderby == 'review'">
+                review_count desc
+            </if>
+            <if test="orderby == 'avg'">
+                avgscore desc
+            </if>
+        </trim>
+    </select>
+
+    <select id="allRestaurantTheme" resultType="kr.co.jhta.web.dto.RestrantByTheme" parameterType="java.util.List">
+        SELECT restaurant_theme.restaurant_id, comm_theme.theme_name, comm_theme.theme_classify_code, comm_theme.theme_id
+        FROM restaurant_theme
+        JOIN comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
+    </select>
+
+    <select id="restaurantTheme" resultType="kr.co.jhta.web.dto.RestrantByTheme" parameterType="java.util.List">
+        SELECT restaurant_theme.restaurant_id, comm_theme.theme_name, comm_theme.theme_classify_code, comm_theme.theme_id
+        FROM restaurant_theme
+        JOIN comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
+        WHERE restaurant_theme.restaurant_id in
+        <foreach collection="list" item="restaurantId" index="index" open="(" close=")" separator=",">
+            #{restaurantId}
+        </foreach>
+    </select>
+
+    <select id="themeFilter" resultType="kr.co.jhta.web.dto.RestrantByTheme">
+        SELECT comm_theme.theme_name, comm_theme.theme_classify_code, comm_theme.theme_id, count(comm_theme.theme_id) num
+        FROM restaurant_theme
+        JOIN comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
+        group by comm_theme.theme_id
+    </select>
+
+    <select id="themeByRestaurant" resultType="Hashmap" parameterType="java.util.HashMap">
+        SELECT restaurant.restaurant_id, restaurant.restaurant_name, restaurant.restaurant_address, restaurant.restaurant_description, restaurant.restaurant_main_photo,
+        TRUNCATE(avg(review.review_service + review.review_teast + review.review_mood)/3, 1) avgscore, COUNT(review.review_id) review_count
+        FROM review
+        RIGHT JOIN restaurant on restaurant.restaurant_id = review.restaurant_id
+        WHERE restaurant.restaurant_id in
+        <foreach collection="restaurantId" item="restaurantId" index="index" open="(" close=")" separator=",">
+            #{restaurantId}
+        </foreach>
+        GROUP BY restaurant_id
+        <trim prefix="ORDER BY">
+            <if test="orderby == 'review'">
+                review_count desc
+            </if>
+            <if test="orderby == 'avg'">
+                avgscore desc
+            </if>
+        </trim>
+    </select>
+
+    <select id="findBytheme" resultType="kr.co.jhta.web.dto.RestrantByTheme" parameterType="java.util.List">
+        SELECT restaurant_theme.restaurant_id, comm_theme.theme_name, comm_theme.theme_classify_code, comm_theme.theme_id
+        FROM restaurant_theme
+        JOIN comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
+        where comm_theme.theme_id in
+        <foreach collection="list" item="theme" index="index" open="(" close=")" separator=",">
+            #{theme}
+        </foreach>
+    </select>
+
+    <select id="themeIdconvertName" resultType="kr.co.jhta.web.dto.RestrantByTheme" parameterType="java.util.List">
+        SELECT  comm_theme.theme_name
+        FROM restaurant_theme
+        JOIN comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
+        where comm_theme.theme_id in
+        <foreach collection="list" item="themeId" index="index" open="(" close=")" separator=",">
+            #{themeId}
+        </foreach>
+        group by  comm_theme.theme_name
+    </select>
+</mapper>

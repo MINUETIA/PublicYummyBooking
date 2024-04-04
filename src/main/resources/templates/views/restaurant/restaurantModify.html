@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layout}">
+
+
+<div layout:fragment="content">
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="./cate">Categories</a>
+                        <span>Modify</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+    <!-- Product Section Begin -->
+    <section class="product-page spad">
+
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-1"></div>
+
+
+                <div class="col-lg-2 col-md-6 col-sm-8">
+                    <div class="product__sidebar__myprofile">
+                        <div class="section-title">
+                            <a href="/mypage"><h5>마이페이지</h5></a>
+                        </div>
+                    </div>
+
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__view">
+                            <div class="section-title">
+                                <h5>예약내역</h5>
+                            </div>
+                        </div>
+
+                        <div class="product__sidebar__comment">
+                            <div class="section-title">
+                                <h5>예약현황</h5>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-8" >
+                    <div class="restaurantName">
+                        <h4 th:text="${dto.restaurantName}" class="fw-bold"></h4>
+                        <span class="theme" th:each="theme:${theme}" th:text="${theme.theme_name}">
+                    </span>
+                        <div class="rating-wrap">
+                            <div class="rating">
+                                <input type="hidden" name="ratingVal" id="ratingVal" th:value="${star.avgScore}">
+                                <div class="overlay"></div>
+                            </div>
+                            <span th:text="${star.avgScore}" class="mt-1"></span>
+                            <span th:text="|(${star.reviewCount}) |" class="mt-1"></span>
+                        </div>
+                        <div><img th:src="${dto.restaurantMainPhoto}" alt="" id="mainImage"></div>
+                        <div></div>
+                    </div>
+
+                    <div class="restaurantMenu  mt-5">
+                        <h4 class="fw-bold">Menu</h4>
+                        <form action="/addMenu" method="post">
+                            <input type="text" name="name" id="name" placeholder="메뉴이름">
+                            <input type="text" name="price" id="price" placeholder="가격">
+                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                            <input type="submit" value="추가하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                        </form>
+                        <div th:each="list : ${list}" class="ml-3">
+
+                                <div th:text="|${list.menuName} ${list.menuPrice}| "  style="display: inline">
+                                </div>
+                                <span>
+                                    <form action="/removeMenu" method="post">
+                                        <input type="hidden" name="restaurantMenuId" th:value="${list.RestaurantMenuId}">
+                                        <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                        <input type="submit" class="btn btn-outline-danger"  th:value="삭제" />
+                                    </form>
+                                </span>
+
+                        </div>
+                    </div>
+                    <div class="starRating  mt-5">
+                        <h4 class="fw-bold">별점</h4>
+                        <div class="rating-wrap">
+                            <div class="rating2">
+                                <input type="hidden" name="ratingVal2" id="ratingVal2" th:value="${star.avgScore}">
+                                <div class="overlay2"></div>
+                            </div>
+
+                            <span th:text="${star.avgScore}" class="mt-1"></span>
+                            <span th:text="|(${star.reviewCount}) |" class="mt-1"></span>
+                            <div class="vr">
+                            </div>
+                            <div th:text="|&emsp; 맛 : ${star.reviewTeast}/5.0|" class="mt-1"></div>
+                            <div th:text="|&emsp; 분위기 : ${star.reviewMood}/5.0|" class="mt-1"></div>
+                            <div th:text="|&emsp; 서비스 : ${star.reviewService}/5.0|" class="mt-1"></div>
+                        </div>
+
+                    </div>
+                    <div class="info mt-5">
+                        <div class="row">
+                            <h4 class="fw-bold mb-3">About</h4>
+                            <div class="col-sm-5">
+                                <h5 class="fw-bold">주소</h5>
+                                <form action="/updateAdd" method="post">
+                                    <input type="text" name="address" id="address" th:value="${dto.restaurantAddress}">
+                                    <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                    <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                </form>
+                                <h5 class="fw-bold">지도</h5>
+                                <div id="map" style="width:250px;height:250px;"></div>
+                            </div>
+                            <div class="vr"></div>
+                            <div class="col-sm-5 ml-2">
+                                <h5 class="fw-bold">영업시간</h5>
+                                <div th:each="operatingTime:${operatingTime}">
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 1}">
+                                    <span>
+                                        <p class="week" th:text="월요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeMonOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeMonClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </span>
+                                    </th:block>
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 2}">
+                                        <p class="week" th:text="화요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeTueOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeTueClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 3}">
+                                        <p class="week" th:text="수요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeWedOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeWedClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 4}">
+                                        <p class="week" th:text="목요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeThuOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeThuClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 5}">
+                                        <p class="week" th:text="금요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeFriOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeFriClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 6}">
+                                        <p class="week" th:text="토요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeSatOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeSatClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </th:block>
+                                    <th:block th:if="${operatingTime.openingInfoWeek == 7}">
+                                        <p class="week" th:text="일요일" th:class="mb-2"></p>
+                                        <form action="/changeTime" method="post">
+                                            <input type="text" name="changeOpen" id="changeSunOpen" th:value="${operatingTime.openingInfoStartTime}">~
+                                            <input type="text" name="changeClose" id="changeSunClose" th:value="${operatingTime.openingInfoEndTime}">
+                                            <input type="hidden" name="openingInfoWeek" th:value="${operatingTime.openingInfoWeek}">
+                                            <input type="hidden" name="restaurantId" th:value="${dto.restaurantId}">
+                                            <input type="submit" value="변경하기" class="btn btn-outline-success mb-3" style="border-radius: 30px; border: solid 1px green; height: 40px;" >
+                                        </form>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+    <script layout:fragment="script" th:inline="javascript">
+
+        const starSize = 30, maxStar = 5, gutter = 2;//별 크기, 별 개수
+        let maskMax = 0; //오버레이 마스크 최대 너비
+        window.addEventListener('DOMContentLoaded', () => {
+            //별 이미지 SVG 개수만큼 생성
+            for (let i = 0; i < maxStar; i++) {
+                let el = document.createElement('div');
+                //el.classList.add('star');
+                el.style.width = starSize + 'px';
+                el.style.height = starSize + 'px';
+                el.style.marginRight = gutter + 'px';
+                //인라인 SVG 이미지 부착
+                el.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="none" class="starcolor" d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"/></svg>';
+                document.querySelector('.rating').appendChild(el);
+            }
+            for (let i = 0; i < maxStar; i++) {
+                let el = document.createElement('div');
+                //el.classList.add('star');
+                el.style.width = starSize + 'px';
+                el.style.height = starSize + 'px';
+                el.style.marginRight = gutter + 'px';
+                //인라인 SVG 이미지 부착
+                el.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="none" class="starcolor" d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"/></svg>';
+                document.querySelector('.rating2').appendChild(el);
+            }
+
+            maskMax = parseInt(starSize * maxStar + gutter * (maxStar - 1));//최대 마스크 너비 계산
+            document.querySelector('input[name=ratingVal]').max = maxStar;//입력 필드 최대값 재설정
+            setRating(document.querySelector('input[name=ratingVal]').value);//초기 별점 마킹
+
+            document.querySelector('input[name=ratingVal2]').max = maxStar;//입력 필드 최대값 재설정
+            setRating2(document.querySelector('input[name=ratingVal2]').value);//초기 별점 마킹
+
+
+            //별점 마킹 함수
+            function setRating(val = 0) {
+                document.querySelector('.overlay').style.width = parseInt(maskMax - val * starSize - Math.floor(val) * gutter) + 'px';//마스크 크기 변경해서 별점 마킹
+            }
+
+            function setRating2(val = 0) {
+                document.querySelector('.overlay2').style.width = parseInt(maskMax - val * starSize - Math.floor(val) * gutter) + 'px';//마스크 크기 변경해서 별점 마킹
+            }
+
+
+        })
+
+
+
+
+
+
+        var container = document.getElementById('map');
+        var options = {
+            center: new kakao.maps.LatLng([[${dto.restaurantLatitude}]], [[${dto.restaurantLongitude}]]),
+            level: 3
+        };
+
+        var map = new kakao.maps.Map(container, options);
+        var markerPosition = new kakao.maps.LatLng([[${dto.restaurantLatitude}]], [[${dto.restaurantLongitude}]]);
+
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+        marker.setMap(map);
+
+    </script>
+</div>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/mypage.css}">
+    <style>
+        .btn{
+            border-radius: 5px;
+        }
+        .btn-outline-danger{
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        #mainImage{
+            width:80%;
+            height: 300px;
+        }
+
+        .rating-wrap{
+            padding: 10px;
+            display: flex;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .rating2 {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .star {
+            width: 30px;
+            height: 30px;
+            margin-right: 2px;
+        }
+        .starcolor{
+            fill: #FFD700;
+        }
+        .star:last-of-type {
+            margin-right: 0;
+        }
+        .overlay {
+            background-color: #000;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            transition: all 0.3s ease-in-out;
+        }
+        .overlay2 {
+            background-color: #000;
+            opacity: 0.5;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            transition: all 0.3s ease-in-out;
+        }
+        @supports (mix-blend-mode: color) {
+            .overlay{
+                mix-blend-mode: color;
+                opacity: unset;
+            }
+            .overlay2{
+                mix-blend-mode: color;
+                opacity: unset;
+            }
+        }
+        span{
+            margin-left: 5px;
+        }
+        .vr{
+            margin-left: 20px;
+            width: 1px;
+        }
+        .restaurantName{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 30px;
+            border: solid 1px #FFD700;
+        }
+        .restaurantMenu{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 30px;
+            border: solid 1px #FFD700;
+        }
+        .starRating{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 30px;
+            border: solid 1px #FFD700;
+        }
+        .info{
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 30px;
+            border: solid 1px #FFD700;
+            margin-bottom: 20px;
+        }
+        .week{
+            margin-bottom: 0px;
+        }
+        .theme{
+            background-color: #FDFD96;
+            padding: 5px;
+            margin-right: 5px;
+            border-radius: 30px;
+        }
+    </style>
+
+</th:block>
+
+
+
+</html>

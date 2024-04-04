@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.dao.product.ProductDAO">
+
+    <select id="selectAllproducts" resultType="Hashmap" >
+        select product_id, meal_name, meal_price, meal_regist, meal_cnt, meal_manufacture_day, meal_description, meal_weight, meal_photo1, meal_photo2, meal_photo3
+        from product
+    </select>
+
+    <select id="select10NewMealKits" resultType="ProductDTO">
+        select product_id as productId, meal_name as mealName, meal_price as mealPrice, meal_regist as mealRegist, meal_cnt as mealCnt, meal_manufacture_day as mealMaufacture_day, meal_description as mealDescription, meal_weight as mealWeight, meal_photo1 as mealPhoto1, meal_photo2 as mealPhoto2, meal_photo3 as mealPhoto3
+        from product
+        order by meal_regist desc limit 10
+    </select>
+
+    <select id="selectKeyWord" resultType="ProductDTO" parameterType="String">
+        select product_id as productId, meal_name as mealName, meal_price as mealPrice, meal_regist as mealRegist, meal_cnt as mealCnt, meal_manufacture_day as mealMaufacture_day, meal_description as mealDescription, meal_weight as mealWeight, meal_photo1 as mealPhoto1, meal_photo2 as mealPhoto2, meal_photo3 as mealPhoto3
+        from product
+        where meal_name like concat('%', #{keyWord}, '%')
+    </select>
+
+    <select id="selectMealBasket" resultType="ProductDTO" parameterType="java.util.List">
+        select product_id as productId, meal_name as mealName, meal_price as mealPrice, meal_regist as mealRegist, meal_cnt as mealCnt, meal_manufacture_day as mealMaufacture_day, meal_description as mealDescription, meal_weight as mealWeight, meal_photo1 as mealPhoto1, meal_photo2 as mealPhoto2, meal_photo3 as mealPhoto3
+        from product
+        where product_id in
+        <foreach collection="list" item="productId" index="index" open="(" close=")" separator=",">
+            #{productId}
+        </foreach>
+    </select>
+
+    <select id="selectSaleHistory" resultType="saleHistoryDTO" parameterType="Long">
+        select sale.sale_id saleId, sale.saledate, sales_detail.sale_cnt saleCnt, product.meal_name mealName, product.meal_price mealPrice, meal_photo1 mealPhoto1, sale.sale_code saleCode
+        from sale
+        join sales_detail on sale.sale_id = sales_detail.sale_id
+        join product on product.product_id = sales_detail.product_id
+        where ub_id = #{ubId}
+        order by sale.saledate desc
+    </select>
+</mapper>

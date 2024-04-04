@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- top fragment -->
+    <th:block th:fragment="topFragment">
+        <header class="header ">
+            <!--<div class="container-xxl">-->
+            <div class="topWrap" style="display: flex">
+                    <!-- Header Section Begin -->
+                <div class="logoWrap" style="padding-top: 5px; margin-left: 10px;">
+                    <div class="header__logo" style="width: 450px !important;">
+                        <a href="/home" style="margin-left: 20px;">
+                            <img class="logo_img" src="/img/upload/yummy_logo.png" alt="">
+                            <img class="logo_img" src="/img/yummyBooking/write_logo_2.png" style="width: 200px">
+                        </a>
+                    </div>
+                 </div>
+
+                <div class="menuWrap" style="width: 100%; padding-left: 200px;">
+                    <div class="header__nav ">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li class="active"><a href="./index.html">Homepage</a></li>
+                                <li><a href="./categories.html">Categories <span class="arrow_carrot-down"></span></a>
+                                    <ul class="dropdown">
+                                        <li><a href="./categories.html">Categories</a></li>
+                                        <li><a href="./anime-details.html">Anime Details</a></li>
+                                        <li><a href="./anime-watching.html">Anime Watching</a></li>
+                                        <li><a href="./blog-details.html">Blog Details</a></li>
+                                        <li><a href="./signup.html">Sign Up</a></li>
+                                        <li><a href="./login.html">Login</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/search/theme">필터 검색</a></li>
+                                <li><a href="/meal/main">밀키트 </a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="searchWrap" style="display: flex; width: 400px; margin-right: 20px;">
+                    <div class="search" style="position: relative;">
+                        <form id="search_form" name="search_form" class="search_form" th:action="@{/meal/keyword}" method="get" style="display: inline-flex; padding-top: 24px;" >
+                            <input class="search_text" name="keyWord" type="text" placeholder="검색어를 입력해주세요" style="border-radius: 20px; border-width: 1px; padding-left: 10px; height: 30px; width: 220px;"/>
+                            <img class="searchImg" src="/img/yummyBooking/search.PNG" style="width: 20px; height: 20px; margin-top: 5px; position: absolute; margin-left: 190px; cursor: pointer;">
+                        </form>
+                    </div>
+                    <div th:if="${session.ubCommonDTOLogin != null}">
+                        <a th:href="@{/mypage(ubId=${session.ubCommonDTOLogin.getUbId()})}" id="myInfo1" style="margin-left: 6px;">
+                            <img id="people1" src="/img/yummyBooking/people.png" style="width: 45px; margin-top: 15px; margin-left: 5px;">
+                        </a>
+                    </div>
+                    <div th:if="${session.ubCommonDTOLogin == null}">
+                        <a href="/login/login" id="myInfo" style="margin-left: 10px; margin-right: 10px; text-decoration: none;">
+                            <span style="font-size: 25px; font-weight: 800; text-align: center; line-height: 65px; color: black;">Login</span>
+                        </a>
+                    </div>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </header>
+        <!-- Header End -->
+    </th:block>
+</html>

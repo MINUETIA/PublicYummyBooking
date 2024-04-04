@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layoutForMeal}">
+
+
+<th:block layout:fragment="content">
+    <script>
+        function findAddr(){
+            new daum.Postcode({
+                oncomplete: function(data) {
+
+                    console.log(data);
+
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                    // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var zonecode = data.zonecode;
+                    console.log(zonecode);
+                    var roadAddr = data.roadAddress; // 도로명 주소 변수
+                    var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+
+                    if(roadAddr !== ''){
+                        $("input[name=address]").val(roadAddr);
+                    }
+                    else if(jibunAddr !== ''){
+                        $("input[name=address]").val(jibunAddr);
+                    }
+                    $("input[name=zonecode]").val(zonecode);
+
+                }
+            }).open();
+        }
+
+        function requestPay() {
+            IMP.request_pay({
+                pg: 'html5_inicis', // 결제 gateway
+                pay_method: "card",
+                amount: $("input[name=totalProductPayment]").val(),
+                name: $("input[name=mealProducts]").val(),
+                merchant_uid: "store-dae3c197-99be-4aa4-b33e-d284361f3a9d",
+                buyer_name: "구매자",
+                buyer_email: 'test@gmail.com',
+                buyer_addr: "서울 종로구 율곡로10길 105 디아망 4층",
+                buyer_postcode: "01039"
+            });
+            console.log("버튼 클릭");
+
+        }
+        $(()=>{
+            let IMP = window.IMP;
+            IMP.init("imp75531265");
+        })
+    </script>
+
+
+
+    <!--
+    밀키트 결제창
+    1. 배송지 정보
+        이름
+        주소
+        휴대폰번호
+    2. 배송 요청사항
+    3. 결제 수단
+    4. 최종 결제 금액
+        총 상품 가격
+        배송비
+        총 결제 금액
+    5. 결제 버튼
+    -->
+    <div class="container">
+        <!--<form action="" method="post">-->
+                <h1 style="text-align: center">주문 / 결제</h1>
+            <table class="table caption-top" >
+                <tr >
+                    <th style="border: none"><h2>배송지</h2></th>
+                </tr>
+                <tr>
+                    <td style="border: none">받으시는 분 : </td>
+                    <td style="border: none"><input type="text" name="name" id="" placeholder="받는 사람"><br></td>
+                </tr>
+                <tr>
+                    <td style="border: none">주소 : </td>
+                    <td style="border: none">
+                        <input type="text" name="zonecode" style="width: 100px;" readonly>
+                        <input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-outline-dark"><br>
+                        <input type="text" name="address" placeholder="Address" style="width: 400px;" readonly><br>
+                        <input type="text" name="addressDetail" placeholder="AddressDetail" style="width: 400px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: none">전화번호 : </td>
+                    <td style="border: none">
+                        <input type="text" name="phone1" value="010" style="width: 50px;"> -
+                        <input type="text" name="phone2" style="width: 50px;"> -
+                        <input type="text" name="phone3" style="width: 50px;">
+                        <input type="hidden" name="phone">
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="border: none"><h2>배송 요청사항</h2></th>
+                    <th style="border: none"><input type="text" name="mealRequirement" placeholder="배송 요청사항" style="width: 400px; height: 40px;"></th>
+                </tr>
+
+                <tr>
+                    <th style="border: none"><h2>결제 정보</h2></th>
+                    <th style="border: none"></th>
+                </tr>
+                <tr>
+                    <td style="border: none">상품 : </td>
+                    <td style="border: none"><input type="text" name="mealProducts" th:value="${mealName}" style="width: 400px;" readonly></td>
+                </tr>
+                <tr>
+                    <td style="border: none">총 상품 가격 : </td>
+                    <td style="border: none"><input type="text" name="totalProductPayment" th:value="${sumPrice}" style="width: 400px;" readonly></td>
+                </tr>
+                <tr>
+                    <td style="border: none">배송비 : </td>
+                    <td style="border: none"><input type="text" name="delivery" value="0" style="width: 400px;" readonly></td>
+                </tr>
+                <tr>
+                    <td style="border: none">총 결제 가격 : </td>
+                    <td style="border: none"><input type="text" name="totalPayment" th:value="${sumPrice}" style="width: 400px;" readonly></td>
+                </tr>
+                <tr>
+                    <th style="border: none"></th>
+                    <th style="border: none; text-align: center"><button onclick="requestPay()" class="btn btn-dark">Pay Now!</button></th>
+                </tr>
+            </table>
+        <!--</form>-->
+    </div>
+
+</th:block>
+
+
+
+
+
+
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.dao.purchase.PurchaseDAO">
+    <select id="getAllPurchase" resultType="HashMap" >
+
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        order by p.regdate desc
+    </select>
+
+
+    <select id="getAllPurchaseByStatus" parameterType="int" resultType="HashMap">
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        and p.status= #{status}
+    </select>
+
+    <select id="getAllPurchaseByName"  parameterType="String" resultType="HashMap" >
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        and v.vendor_name=#{name}
+    </select>
+
+
+    <select id="getAllPurchaseByCode" parameterType="String" resultType="HashMap">
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        and p.purchaseno=#{code}
+    </select>
+
+
+    <select id="getAllPurchaseByStartDay" parameterType="String" resultType="HashMap">
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        and p.regdate &gt;= #{start}
+    </select>
+
+    <select id="getAllPurchaseByEndDay" parameterType="String" resultType="HashMap">
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        and p.regdate &lt;= #{end}
+    </select>
+    <select id="getAllPurchaseByStartDayEndDay" parameterType="String" resultType="HashMap">
+        select  p.purchaseno as purchaseno, p.vendorno as vendorno, p.status as status ,DATE_FORMAT(p.regdate, '%Y-%m-%d')  as regdate, p.type as type,
+        p.cnt as cnt, p.price as price, p.sprice as sprice, DATE_FORMAT(p.modifydate, '%Y-%m-%d') as modifydate, v.vendor_name as vendorname
+        from purchase p , vendors v
+        where v.vendor_id = p.vendorno
+        and p.regdate &gt;= #{start}
+        and p.regdate &lt;= #{end}
+    </select>
+
+    <select id="getOne" parameterType="String" resultType="boolean">
+        SELECT if(count(*) = 1, 1, 0)
+        FROM purchase
+        where purchaseno = #{purchaseno}
+    </select>
+    <update id="update" parameterType="Hashmap" >
+        update purchase
+        set  cnt = #{cnt}, price = #{price}, sprice= #{sprice} ,status =2, modifydate=now()
+        where purchaseno = #{purchaseno}
+    </update>
+
+
+    <insert id="insertOne" parameterType="Hashmap" >
+        INSERT INTO purchase (purchaseno, status, regdate, type, cnt , price, sprice, modifydate, vendorno)
+        VALUES ( #{purchaseno}, 1, now(), 1, #{cnt}, #{price}, #{sprice}, null, #{vendorno})
+    </insert>
+
+
+    <select  id="getVendorNo"  parameterType="String" resultType="int" >
+        SELECT vendor_id
+        FROM vendors
+        where vendor_name= #{vendorname}
+    </select>
+
+</mapper>

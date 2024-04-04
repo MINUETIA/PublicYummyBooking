@@ -1,0 +1,142 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{fragment/default_layout}">
+
+<div layout:fragment="content">
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="./cate">Categories</a>
+                        <span>MyPage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+    <!-- Product Section Begin -->
+    <section class="product-page spad">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-1"></div>
+
+                <div class="col-lg-2 col-md-6 col-sm-8" >
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__myprofile">
+                            <div class="section-title">
+                                <h5>마이페이지</h5>
+                            </div>
+                            <div class="product__sidebar__view">
+                                <div class="section-title" style="display: inline-block">
+                                    <div class="sidebar_text_div">
+                                        <a href="/mypage"><h6 class="sidebar_text">예약내역</h6></a>
+                                    </div>
+                                    <div class="sidebar_text_div">
+                                        <a href="/meal/history"><h6 class="sidebar_text">주문내역</h6></a>
+                                    </div>
+                                  <!--  <div class="sidebar_text_div">
+                                        <a href="/meal/mealbasket"><h6 class="sidebar_text">장바구니</h6></a>
+                                    </div>-->
+                                    <div class="sidebar_text_div">
+                                        <a th:href="@{/login/modify(ubId=${session.ubCommonDTOLogin.ubId})}"><h6 class="sidebar_text">정보수정</h6></a>
+                                    </div>
+                                    <div class="sidebar_text_div">
+                                        <a href="/logout"><h6 class="sidebar_text">로그아웃</h6></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product__sidebar__myprofile">
+                            <div class="section-title">
+                                <h5>마이레스토랑</h5>
+                            </div>
+                            <div class="product__sidebar__comment">
+                                <div class="section-title">
+                                    <div class="sidebar_text_div">
+                                        <a href="/calendar"><h6 class="sidebar_text" style="font-weight: 600">예약현황</h6></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="product__page__content">
+                        <!-- Container for the profile section -->
+                        <div class="col-lg-6">
+                            <div th:each="Rinfo : ${Rinfo}">
+                                <div class="profile-section">
+                                    <!-- Left section for profile picture -->
+                                    <div class="leftside">
+                                        <div class="profile-picture">
+                                            <!-- Replace the src attribute with the path to the profile picture -->
+                                            <img class="profile-pic" th:src="${Rinfo.restaurantMainPhoto}" alt="Profile Picture">
+                                        </div>
+                                    </div>
+                                    <!-- Right section for member information -->
+                                    <div class="member-info">
+                                        <h2 th:text="${Rinfo.restaurantName}"></h2>
+                                        <div class="contact-info">
+                                            <p th:text="${Rinfo.restaurantAddress}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="buttons">
+                                        <button class="btn review-btn">리뷰보기</button>
+                                        <button class="btn edit-btn">수정하기</button>
+                                    </div>
+                                    <!-- Add more member information as needed -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="section-upcommingReservation" style="text-align:left">
+                                <h4 class="upcomming_title">예정된 예약</h4>
+
+                                <!-- 시간대별로 반복 -->
+                                <div th:each="timeSlot : ${groupedBookings.keySet()}">
+                                    <h5 class="timeSlot" th:text="${timeSlot}"></h5>
+
+                                    <!-- 해당 시간대의 예약 정보를 출력하는 반복문 -->
+                                    <div class="swiper-slide">
+                                        <div class="swiper-section">
+                                            <div class="slide_text_area">
+                                                <div class="d-flex flex-row">
+                                                    <div th:each="booking : ${groupedBookings.get(timeSlot)}">
+                                                        <div class="mr-3">
+                                                            <img class="booking_img" th:src="${booking.profilePhoto}">
+                                                            <p class="booking_text" th:text="|예약자명:${booking.name}|"></p>
+                                                            <p class="booking_text" th:text="|예약시간:${booking.reservationDate}|"></p>
+                                                            <p class="booking_text" th:text="|인원수:${booking.reservationNum}명|"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
+</th:block>
+
+</html>

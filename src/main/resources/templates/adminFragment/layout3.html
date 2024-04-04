@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- 헤더 -->
+<!--<th:block th:replace="adminFragment/header :: headerFragment"></th:block>-->
+<th:block th:replace="~{adminFragment/header :: headerFragment}"></th:block>
+
+<!-- css, js 불러오기 -->
+<!-- th:replace="폴더 / 파일명 :: 이름" ==> 폴더 / 파일명에서 :: 이름 인것으로 대체 해줘 -->
+<!--<th:block th:replace="adminFragment/config :: configFragment"></th:block>-->
+<th:block th:replace="~{adminFragment/config :: configFragment2}"></th:block>
+
+<body>
+    <div class="body-container">
+
+        <!-- 사이드바 -->
+        <aside th:replace="~{adminFragment/sidebar :: sidebarFragment}"></aside>
+
+        <div class="main-container">
+            <div class="content-container">
+                <!-- 상단바 -->
+                <th:block th:replace="~{adminFragment/top :: topFragment}"></th:block>
+
+                <!-- 내용 -->
+                <th:block layout:fragment="content"></th:block>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

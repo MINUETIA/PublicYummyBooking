@@ -1,0 +1,318 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+.body-container {
+    margin: 0;
+    padding: 0;
+}
+.main-container {
+    margin: auto;
+    margin-left: 240px;
+    max-width: 100%;
+}
+.side-container {
+    height: 100%;
+    width: 265px;
+    position: fixed;
+    z-index: 1;
+    /*background-color: rgba(255 255 0 / 11%);*/
+    background-color: #313238;
+    overflow-x: hidden;
+    padding-top: 10px;
+    top: 0;
+    left: 0;
+    /*margin: 47px 0 0 0;*/
+    margin: 0px 0 0 0;
+    padding: 0;
+}
+.content-container {
+    padding: 4px 2px 14px 12px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+.main-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+.portlet {
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.vertical-menu {
+    width: 100%; /* Set a width if you like */
+    background-color: #313238;
+    color: black;
+}
+
+.vertical-menu a {
+    color: white;
+    display: block; /* Make the links appear below each other */
+    padding: 10px;
+    text-decoration: none; /* Remove underline from links */
+    border-bottom: 1px solid; /* 메뉴 구분밑줄 */
+    height: 73px;
+    width: 250px;
+}
+.vertical-menu a:hover {
+    color: black;
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+.tb-success {
+    border-collapse: collapse;
+    width: 100%;
+}
+.tb-success td, .tb-success th {
+    border: 1px solid #ddd;
+    padding: 4px;
+}
+.tb-success tr:nth-child(even){background-color: #f2f2f2;}
+.tb-success tr:hover {background-color: #ddd;}
+.tb-success th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+/* ----- modal ---- */
+.search-model {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    /*background: #000;*/
+    background: white;
+    z-index: 99999;
+}
+
+.search-model-form {
+    padding: 0 15px;
+}
+
+.search-model-form input {
+    width: 500px;
+    font-size: 40px;
+    border: none;
+    border-bottom: 2px solid #333;
+    background: 0 0;
+    color: #999;
+}
+
+.search-close-switch {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 28px;
+    line-height: 28px;
+    top: 30px;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.sidebar-divider{
+    color: lightgray;
+}
+
+/* top */
+#people{
+    width: 60px;
+    height: 60px;
+    float: right;
+    /*margin-top: 10px;*/
+}
+
+#myInfo{
+    width: 60px;
+    height: 60px;
+    cursor:pointer;
+    float: right;
+}
+
+#topFragment{
+    height: 73px;
+    background-color: white;
+   /* margin-left: 251px;*/
+}
+
+#infoDropdown{
+    display: inline-block;
+    width: auto;
+    float: right;
+    /*margin-top: 65px;
+    margin-right: -55px;*/
+    margin-right: 2px;
+    text-align: center;
+}
+
+/* login / join */
+.login_title, .join_title{
+    text-align: center;
+    color: black;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.loginBox, .containerBox{
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    margin: 0 auto;
+    border: 1px solid;
+}
+
+#loginWrap{
+    margin: 0 auto;
+    padding-top: 50px;
+    width: 450px;
+    height: 400px;
+}
+
+#joinWrap{
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 450px;
+    height: 100%;
+}
+
+.account, .pw, .bAdd{
+    padding-left: 5px;
+    margin-top: 10px;
+    width: 450px;
+    border-width: 0 0 1px;
+}
+
+#joinId, #joinPw, #pwValidation, #role, #classificationNum, #email, #certificate{
+    margin-bottom: 40px;
+}
+
+#loginButton, #joinButton{
+    border: 1px solid #cccccc !important;
+    color: #333333 !important;
+    height: 51px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.36;
+    text-align: center;
+    border: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 30px;
+    background-color: white;
+}
+
+.fakeButton{
+    border: 2px solid black;
+    padding: 5px;
+    color: black;
+    background-color: #fff !important;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+#loginId, #loginPw{
+    margin-bottom: 30px;
+}
+
+.businessAdd{
+    margin-bottom: 30px;
+}
+
+#containerWrap{
+    margin: 0 auto;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 450px;
+    height: 100%;
+}
+
+#accountDetail, #accountDetail1{
+    border: none;
+    width: 233px;
+}
+
+#purchaseDetail, #purchaseDetail1{
+    border: none;
+    width: 233px;
+}
+
+
+.bg-shell{
+    /*background-color: seashell;*/
+    background-color: beige;
+    border-bottom: 1px solid black;
+}
+
+.footer {
+    background: #070720;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    position: relative;
+    padding-left: 26px;
+    margin-top:15px;
+    width: 100%;
+    height: 197px;
+}
+
+.cen{
+    text-align: center;
+}
+
+.updateBtn, .insertBtn{
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: #A50034;
+    color: white;
+}
+
+.closeBtn{
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+    border-radius: 15px;
+    margin-left: 30px;
+}
+
+.bottom{
+    margin-bottom: 10px;
+    font-size: large;
+    font-weight: bold;
+    color: black;
+    margin-top: 30px;
+}
+
+.input{
+    padding-left: 5px;
+    margin-bottom: 10px;
+    width: 480px;
+    border-width: 0 0 1px;
+}
+
+.contract{
+    width: 365px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

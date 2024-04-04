@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layout}">
+
+    <!-- css 추가하는곳 -->
+    <!-- console.log에 에러 생기는데 얘때문임
+        <th:block layout:fragment="css">
+            <link rel="stylesheet" th:href="@{/css/hello.css}">
+        </th:block>
+    -->
+
+    <!-- js 추가하는곳 -->
+    <!-- console.log에 에러 생기는데 얘때문임
+        <th:block layout:fragment="script">
+            <script th:src="@{/js/hello.js}"></script>
+        </th:block>
+    -->
+
+    <div layout:fragment="content">
+
+        <div class="container">
+            <div>
+                <div>deptList.html</div>
+            </div>
+
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>deptno</th>
+                        <th>dname</th>
+                        <th>loc</th>
+                    </tr>
+                    <tr th:each="dept : ${list}">
+                        <td>[[${dept.deptno}]]</td>
+                        <td>[[${dept.dname}]]</td>
+                        <td>[[${dept.loc}]]</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+    </div><!-- layout:fragment end -->
+</html>

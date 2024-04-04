@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.web.dao.production.ProductionDAO">
+
+    <select id="getAllProduction"  resultType="Hashmap">
+        SELECT
+            product_id as productId,
+            meal_name as production,
+            meal_price as price,
+            meal_cnt as cnt,
+            meal_manufacture_day as createDate,
+            meal_description as description,
+            meal_weight as weight,
+            meal_photo1 as photo1,
+            meal_photo1 as photo2,
+            meal_photo1 as photo3
+        FROM product
+    </select>
+
+</mapper>

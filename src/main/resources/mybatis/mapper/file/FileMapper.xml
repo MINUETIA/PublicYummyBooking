@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.file.FileMapper">
+    <resultMap id="FileTableDTO" type="kr.co.jhta.web.file.FileTableDTO">
+        <result column="file_id" property="fileId" />
+        <result column="ub_id" property="ubId" />
+        <result column="restaurant_id" property="restaurantId" />
+        <result column="restaurant_menu_id" property="restaurantMenuId" />
+        <result column="original_file_name" property="originalFileName" />
+        <result column="save_file_name" property="saveFileName" />
+        <result column="size" property="size" />
+        <result column="delete_yn" property="deleteYn" />
+        <result column="created_date" property="createdDate" />
+        <result column="deleted_date" property="deleteDate" />
+    </resultMap>
+    <insert id="saveAll" parameterType="kr.co.jhta.web.file.FileTableDTO">
+        INSERT INTO file_table
+            (ub_id, original_file_name, save_file_name, size, delete_yn, created_date, deleted_date)
+        VALUES
+        <foreach collection="list" item="file" separator=",">
+            (#{file.ubId}, #{file.originalFileName}, #{file.saveFileName}, #{file.size}, 0, now(), NULL)
+        </foreach>
+        <!--
+        MyBatis에서 foreach 태그를 사용하면 Collection 타입의 객체를 처리할 수 있습니다.
+        item 속성의 file은 List에 담긴 각각의 FileRequest 객체이고,
+        collection 속성의 list는 파라미터 타입을 의미하며,
+        separator의 ' , '는 각 쿼리를 분리할 구분자를 의미합니다.
+
+        예를 들어 List에 세 개의 객체가 담겨있다고 했을 때 아래와 같은 형태로 SQL 쿼리가 실행되는데요.
+        이와 같이 다중으로 데이터를 INSERT 하는 쿼리를 보통 Bulk insert라고 표현합니다.
+            INSERT INTO file_table ( ...  )
+            VALUES ( ... ),
+            ( ... ),
+            ( ... )
+        -->
+    </insert>
+
+</mapper>

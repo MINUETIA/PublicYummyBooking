@@ -1,0 +1,212 @@
+
+
+
+.swiper {
+    width:1200px;
+    height: 400px;
+    margin: auto;
+}
+
+
+
+
+.theme1_img{
+    width: 350px;
+    height: 300px;
+    border-radius: 2%;
+}
+
+
+.cancelled_img,.last_img{
+    width: 300px;
+    height: 250px;
+    border-radius: 2%;
+
+}
+
+.last_text,.cancelled_text{
+    height: 100px;
+    line-height: 5px;
+    margin-top: 10px;
+    margin-left: 60px;
+
+
+}
+
+
+.section-lastbooking,.section-cancelledbooking{
+
+}
+
+
+p{
+    line-height: 10px;
+}
+
+.theme2_text{
+    height: 60px;
+    margin-top: 10px;
+    position: absolute;
+    top: 50px;
+    left: 400px;
+}
+.theme1_text{
+    height: 100px;
+    width: 200px;
+    margin-top: 40px;
+    position: absolute;
+    top: 30px;
+    left: 370px;
+}
+
+
+
+
+.swiper-section img{
+    float: left;
+    position: relative;
+}
+
+.swiper-slide{
+    margin-top: 30px;
+    position: relative;
+}
+
+
+
+.section-title{
+    margin-top: 10px;
+    display: inline-block;
+
+
+}
+
+.ongoing_restaurantName, .ongoing_restaurantLoc{
+    font-size: 22px;
+}
+
+
+
+.swiper-button-next {
+    background: url(/img/upload/right.png) no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    float: right;
+    margin-top: 80px;
+    margin-right: -50px;
+
+}
+
+.swiper-button-prev {
+    background: url(/img/upload/left.png) no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    margin-top: 80px;
+    margin-left: -50px;
+}
+
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    display: none;
+}
+
+
+.sidebar_text{
+    /*font-weight: 400;*/
+    text-align: center;
+}
+
+.sidebar_text_div{
+    text-align: center;
+    width: 100px;
+    margin-top: 10px;
+}
+
+
+
+/* 프로필 부분 */
+.profile-section {
+    width: 800px; /* 전체 넓이 설정 */
+    height: 200px; /* 전체 높이 설정 */
+    display: flex;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.profile-pic {
+    width: 100px; /* 사진 넓이 설정 */
+    height: 100px; /* 사진 높이 설정 */
+    border-radius: 50%; /* 동그랗게 만들기 */
+    overflow: hidden; /* 동그랗게 만들 때, 넘치는 부분을 잘라내기 위해 overflow 속성 사용 */
+}
+
+.member-info {
+    flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    margin: 0 20px; /* 좌우 여백 설정 */
+}
+
+.buttons {
+    width: 200px; /* 버튼 넓이 설정 */
+    display: flex;
+    flex-direction: column; /* 버튼들을 세로로 배치 */
+    justify-content: center; /* 버튼들을 수직 가운데로 정렬 */
+}
+
+.btn {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: #0b2e13;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-top: 10px; /* 버튼 위쪽 간격 추가 */
+}
+
+.btn:hover {
+    color: #0056b3;
+}
+
+.loadMoreBtn {
+    border: none;
+    background: none;
+    color: #000;
+    cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능한 것으로 보이도록 설정 */
+}
+
+
+
+
+/* 프로필 부분 */
+.profile-section {
+    width: 800px; /* 전체 넓이 설정 */
+    height: 200px; /* 전체 높이 설정 */
+    display: flex;
+    align-items: center;
+    margin-bottom: 80px;
+}
+
+.profile-pic {
+    width: 100px; /* 사진 넓이 설정 */
+    height: 100px; /* 사진 높이 설정 */
+    border-radius: 50%; /* 동그랗게 만들기 */
+    overflow: hidden; /* 동그랗게 만들 때, 넘치는 부분을 잘라내기 위해 overflow 속성 사용 */
+}
+
+.member-info {
+    flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+    margin: 0 20px; /* 좌우 여백 설정 */
+}
+
+.buttons {
+    width: 200px; /* 버튼 넓이 설정 */
+    display: flex;
+    flex-direction: column; /* 버튼들을 세로로 배치 */
+    justify-content: center; /* 버튼들을 수직 가운데로 정렬 */
+}
+
+.horizontal-line{
+    border-top: 2px solid #ccc; /* 가로 구분선 스타일 */
+
+}

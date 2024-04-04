@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+        <!-- 헤더 -->
+        <th:block th:replace="~{fragment/header :: headerFragment}"></th:block>
+
+        <!-- css, js 불러오기 -->
+        <!-- th:replace="폴더 / 파일명 :: 이름" ==> 폴더 / 파일명에서 :: 이름 인것으로 대체 해줘 -->
+        <th:block th:replace="~{fragment/config :: configFragment}"></th:block>
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!--Kakao 주소 찾기 API-->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script> <!--i'mport(PortOne) 결제 API  V1-->
+    <style>
+        td, th {
+            border-style: none;
+        }
+        tr>td:first-child, tr>th:first-child {
+            text-align: end
+        }
+
+    </style>
+</head>
+    <body>
+            <!--네비-->
+
+        <th:block th:replace="~{fragment/topformeal :: topFragment}"></th:block>
+
+        <!-- 내용 -->
+        <th:block layout:fragment="content"></th:block>
+
+        <!-- 푸터 -->
+        <th:block th:replace="~{fragment/footer :: footerFragment}"></th:block>
+            <script src="/js/main.js"></script>
+    </body>
+
+
+
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/plyr.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/player.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/mixitup.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+
+
+</head>
+
+<body>
+<script th:inline="javascript">
+    $(function (){
+        $("#themeSearch").on("click", function (){
+            $("#frm").submit();
+        })
+    });
+
+</script>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="/home">
+                            <img src="img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li class="active"><a href="/home">Homepage</a></li>
+                                <li><a href="/cate">Categories <span class="arrow_carrot-down"></span></a>
+                                    <ul class="dropdown">
+                                        <li><a href="/cate">Categories</a></li>
+                                        <li><a href="/anime_details">Anime Details</a></li>
+                                        <li><a href="/anime_watching">Anime Watching</a></li>
+                                        <li><a href="/blog_details">Blog Details</a></li>
+                                        <li><a href="/signup">Sign Up</a></li>
+                                        <li><a href="/login">Login</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="/blog">Our Blog</a></li>
+                                <li><a href="#">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="header__right">
+                        <a href="#" class="search-switch"><span class="icon_search"></span></a>
+                        <a href="/login"><span class="icon_profile"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="./cate">Categories</a>
+                        <span>Romance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Section Begin -->
+    <section class="product-page spad">
+        <div class="container-xxl">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-lg-3 col-md-6 col-sm-8" >
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__view">
+                            <div class="section-title">
+                                <h5>검색 필터</h5>
+                                <input class="btn-outline-danger" type="button" value="필터 검색" id="themeSearch">
+                            </div>
+                            <form action="/search/themes" method="get" id="frm">
+                                <div class="product__sidebar__comment__item" th:each=" theme: ${restaurantTheme}">
+                                    <th:block th:if="${theme.key} != 'reservation_type' ">
+                                        <h4>[[${theme.key}]]</h4>
+                                        <ul th:each="theme2 : ${theme.value}">
+                                            <li><input type="checkbox" class="search-filter" name="checkTheme" th:text="${theme2.value}" th:value="${theme2.key}"></li>
+                                        </ul>
+                                    </th:block>
+                                </div>
+                            </form>
+
+                        </div>
+
+                       <!-- <div class="product__sidebar__comment">
+                            <div class="section-title">
+                                <h5>New Comment</h5>
+                            </div>
+
+
+                        </div>-->
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-7">
+                    <div class="product__page__content">
+
+                        <div class="product__page__title">
+                            <div class="row">
+                                <div class="col-lg-10 col-md-8 col-sm-6">
+                                    <div class="section-title">
+                                        <h4>검색어 : [[${keyWord}]]</h4>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-4 col-sm-6">
+                                    <div class="product__page__filter">
+                                        정렬
+                                        <select>
+                                            <option value="">A-Z</option>
+                                            <option value="">1-10</option>
+                                            <option value="">10-50</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <th:block th:each="dto : ${resultList}" >
+                                <div class="row filtertype"   th:classappend="${dto['theme']}" th:value="${dto['theme']}" >
+
+                                    <div class="col-lg-5 col-md-6 col-sm-6">
+                                        <div class="product__item">
+                                            <div class="product__item__pic set-bg" th:data-setbg="${dto.restaurant_main_photo}">
+
+                                                <div class="comment"><i class="fa fa-comments"></i> [[${dto.review_count}]]</div>
+                                                <div class="view"><i class="fa fa-star"></i> [[${dto['avgscore']}]]</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li ></li>
+                                            </ul>
+                                            <h3><a href="#">[[${dto.restaurant_name}]]</a></h3>
+                                            <h5>[[${dto.restaurant_description}]]</h5>
+                                        </div>
+                                    </div>
+
+                                </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+           <!-- <div class="product__pagination">
+                <a href="#" class="current-page">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#"><i class="fa fa-angle-double-right"></i></a>
+            </div>-->
+        </div>
+        <div class="col-1"></div>
+    </section>
+<!-- Product Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="page-up">
+        <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="footer__logo">
+                    <a href="/home"><img src="img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="footer__nav">
+                    <ul>
+                        <li class="active"><a href="/home">Homepage</a></li>
+                        <li><a href="./cate">Categories</a></li>
+                        <li><a href="/blog">Our Blog</a></li>
+                        <li><a href="#">Contacts</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+  <!-- Footer Section End -->
+
+  <!-- Search model Begin -->
+<div class="search-model">
+    <div class="h-50 d-flex align-items-center justify-content-center">
+
+            <div class="search-close-switch">
+                <i class="icon_close"></i>
+            </div>
+            <form class="search-model-form" th:action="@{/search/keyword}" method="get" >
+                <input type="text" name="keyword" id="search-input" placeholder="Search here.....">
+                <input type="submit" value="검색">
+            </form>
+
+
+    </div>
+</div>
+<!-- Search model end -->
+
+<!-- Js Plugins -->
+<script src="/js/main.js"></script>
+
+
+
+</body>
+
+</html>

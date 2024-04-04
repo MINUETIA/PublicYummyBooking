@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminFragment/layout3}">
+
+    <div layout:fragment="content">
+        <div class="fragment_content">
+                <div class="title">
+                    <h2 style="color: black; text-align: center; margin-top: 15px;"><b>계정관리</b></h2>
+                </div>
+                <div id="containerWrap" style="width: 98%; margin-left: 10px;">
+                    <div class="search" style="float: right; margin-bottom: 20px;">
+                        <input id="searchId" type="text" placeholder="ID를 입력해주세요." style="height: 38px; width: 250px; padding-left: 5px;">
+                    </div>
+
+                    <div class="tableWrap">
+                        <table class="table" id="tbl" style="margin-top: 40px;">
+                           <thead id="thead">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>ID</th>
+                                    <th>계정생성일</th>
+                                    <th>직책</th>
+                                    <th>계정 삭제</th>
+                                </tr>
+                           </thead>
+                            <tbody id="tbody">
+                                <tr class="trList" th:each="list : ${list}">
+                                    <td id="adminId">[[${list.adminId}]]</td>
+                                    <td id="adId">[[${list.adId}]]</td>
+                                    <td id="date">[[${#temporals.format(list.adCDate, 'yyyy-MM-dd')}]]</td>
+                                    <td id="adClassificationNumber">
+                                        <span th:if="${list.adClassificationNumber == 1}">마스터</span>
+                                        <span th:if="${list.adClassificationNumber == 2}">관리자</span>
+                                    </td>
+                                    <td><input type="button" value="삭제" th:onclick="del([[${list.adminId}]])"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+        </div>
+
+        <script layout:fragment="script">
+            function del(num){
+                //let adminId = num;
+                $.ajax({
+                    url: 'accountDelete',
+                    type: "POST",
+                    data: {
+                        //"adminId" : adminId
+                        "num" : num
+                    },
+                    success: function (data){
+                        console.log('삭제성공');
+                        location.reload();
+                    }
+                });
+            }
+
+            $("#searchId").on("keyup",function(key) {
+
+                if (key.keyCode == 13) { // 엔터가 입력이 되면
+                    let searchText = $("#searchId").val();
+
+                    $.ajax({
+                        url: 'searchAccount',
+                        type: "post",
+                        data: {
+                            "searchText" : searchText
+                        },
+                        success: function (data){
+                            str = "";
+
+                            $.each(data, function(index, item) { // data =item
+                                $(".trList").empty();
+                                let date = item.adCDate.substring(0,10);
+
+                                str += "<tr>";
+                                str += "    <td>" + item.adminId + "</td>";
+                                str += "    <td>" + item.adId + "</td>";
+                                str += "    <td>" + date + "</td>";
+
+                                if (item.adClassificationNumber == 1) {
+                                    str += "<td>마스터</td>";
+                                } else {
+                                    str += "<td>관리자</td>";
+                                }
+
+                                str += '    <td><input type="button" value="삭제" th:onclick="del('+item.adminId+')"/></td>';
+                                str += "</tr>";
+                            });
+                            $("#tbl").append(str);
+                        }
+                    });
+
+                }
+            });
+        </script>
+    </div>
+</html>
+
+

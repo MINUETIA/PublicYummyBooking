@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminFragment/layout}">
+
+<div layout:fragment="content">
+    <th:block layout:fragment="css">
+        <style>
+            .modal, .modal-xl{
+                position:absolute;
+                display:none;
+                justify-content: center;
+
+                /*모달 중앙정렬*/
+                top: 48%;
+                left: 38%;
+
+                z-index: 2;
+
+                /*모달 크기*/
+                width:550px;
+                height:700px;
+
+                background-color: rgb(255,255,255); /*모달창 배경색 흰색*/
+                border-radius:10px; /*테두리*/
+                box-shadow:0 2px 3px 0 rgba(34,36,38,0.15); /*테두리 그림자*/
+                transform:translateY(-50%); /*모달창열었을때 위치설정 가운데로*/
+
+                overflow: hidden;
+            }
+
+            .modal-bg{
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                z-index: 1;
+            }
+        </style>
+    </th:block>
+
+    <div class="fragment_content" style="margin: 10px; margin-left:20px;">
+
+
+        <!-- modal insert-->
+        <div class="modal-xl modalInsert">
+            <div class="modal_body">
+                <div class="medal-wrap">
+                    <div class="modal-title cen" style="margin-bottom: 20px;">
+                        <h2 style="color:black; margin-top: 10px;"><b>사업자 정보 추가 등록</b></h2>
+                    </div>
+                    <hr>
+                    <form class="modalAdd" action="/admin/businessAdd" method="post">
+                        <div class="content" style="height: 475px;margin-bottom: 10px; overflow-y: auto; margin-left: 20px;">
+                            <div class="bottom" style="margin-top:0px;">
+                                <span>상호명</span><br>
+                                <input type="text" class="input" name="businessName" >
+                            </div>
+                            <div class="bottom">
+                                <span>사업자등록번호</span><br>
+                                <input type="text" class="input" name="businessCompanyRegistrationNum">
+                            </div>
+                            <div class="bottom">
+                                <span>사업장 주소</span><br>
+                                <div style="margin-bottom: 5px;">
+                                    <input type="text" name="zonecode" style="width: 100px; height: 37px; border-width: 0 0 1px;" readonly>
+                                    <input type="button" onclick="findAddr()" value="우편번호 찾기" class="btn btn-outline-dark" style="margin-bottom: 3px; background-color:#F0F0F0; "><br>
+                                </div>
+                                <div>
+                                    <input type="text" class="input" name="address" th:value="${address}" style="margin-bottom: 3px;" readonly>
+                                    <input type="text" class="input" name="addressDetail" th:value="${addressDetail}" style="margin-top: 10px;" placeholder="나머지 주소를 적어주세요.">
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <span>업태</span><br>
+                                <input type="text" class="input" name="businessType">
+                            </div>
+                            <div class="bottom">
+                                <span>매장 전화번호</span><br>
+                                <input type="text" class="input" name="businessTel">
+                            </div>
+                            <div class="bottom">
+                                <span>식당 설명</span><br>
+                                <input type="text" class="input" name="businessDescription">
+                            </div>
+                            <div class="bottom">
+                                <span>안내사항</span><br>
+                                <input type="text" class="input" name="businessInfo">
+                            </div>
+                            <div class="bottom">
+                                <span>계약 시작일</span><br>
+                                <input type="text" class="input" name="businessContractStartDate">
+                            </div>
+                            <div class="bottom">
+                                <span>계약기간(개월)</span><br>
+                                <input type="text" class="input" name="businessContractPeriod">
+                            </div>
+                            <div class="bottom">
+                                <span>계약서 이미지 파일</span><br>
+                            </div>
+                            <div class="bottom">
+                                <span>비고</span><br>
+                                <input type="text" class="input" name="businessEtc">
+                            </div>
+                            <div class="bottom">
+                                <span>약관동의</span><br>
+                                <input type="text" class="input" name="businessAgreement">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="btn" style="display: flex; margin-top: 28px;">
+                            <input type="submit" class="insertBtn" style="width: 100%;" value="저장">
+                            <button class="closeBtn" onclick="close();">닫기</button>
+                        </div>
+                    </form>
+                </div>
+                <!--<hr>
+                <div class="btn" style="display: flex; margin-top: 28px;">
+                    <button class="insertBtn" style="width: 100%;">저장</button>
+                    <button class="closeBtn">닫기</button>
+                </div>-->
+            </div>
+        </div>
+
+        <script layout:fragment="script">
+            // java에서 가져온 값을 json타입으로 변환시키려면 th:inline="javascript" 추가해야됨 안하면 hashmap 타입으로 준다...
+            $(document).ready(function (){
+                //let list = [[${list}]];
+                //console.log(list);
+
+                /*$(".addBtn").on("click", function (){
+                    $(".modalInsert").show();
+                    $(".modal-bg").show();
+                });*/
+
+                /*$(".editBtn").on("click", function (){
+                    $(".modalEdit").show();
+                    $(".modal-bg").show();
+                });*/
+
+                /*$(".closeBtn").on("click",function (){
+                    $(".modalInsert").hide();
+                    $(".modalEdit").hide();
+                    $(".modal-bg").hide();
+                });*/
+
+            }); //ready end
+
+            // modal open
+            function openAdd(ubId){
+                console.log("오픈add");
+                console.log("ubId >>> " + ubId);
+                $(".modalInsert").show();
+                $(".modal-bg").show();
+            }
+
+            // modal 닫기
+            function close(){
+                console.log(1);
+                $(".modalInsert").hide();
+                $(".modal-bg").hide();
+            }
+
+            // modal submit
+            $(".insertBtn").on("click", function (){
+                $("form").submit();
+            });
+
+            // 파일 추가
+            /*function addFile() {
+                const fileDiv = document.createElement('tr');
+                fileDiv.innerHTML = "<tr class=\"file_list\">\n" +
+                    "                    <th>프로필 사진 : </th>\n" +
+                    "                    <td>\n" +
+                    "                        <input type=\"file\" name=\"files\" onchange=\"selectFile(this);\" />\n" +
+                    "                        <button type=\"button\" onclick=\"removeFile(this);\" class=\"btns del_btn\">삭제</button>\n" +
+                    "                    </td>\n" +
+                    "                </tr>";
+                document.querySelector("tbody").appendChild(fileDiv);
+            }
+
+            // 파일 삭제
+            function removeFile(element) {
+                const fileAddBtn = element.nextElementSibling;
+                if ( fileAddBtn ) {
+                    const inputs = element.previousElementSibling.querySelectorAll('input');
+                    inputs.forEach(input => input.value = '');
+                    return false;
+                }
+                element.parentElement.parentElement.remove();
+            }*/
+
+            // 주소찾기
+            function findAddr(){
+                new daum.Postcode({
+                    oncomplete: function(data) {
+
+                        console.log(data);
+
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var zonecode = data.zonecode;
+                        console.log(zonecode);
+                        var roadAddr = data.roadAddress; // 도로명 주소 변수
+                        var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+
+                        if(roadAddr !== ''){
+                            $("input[name=address]").val(roadAddr);
+                        }
+                        else if(jibunAddr !== ''){
+                            $("input[name=address]").val(jibunAddr);
+                        }
+                        $("input[name=zonecode]").val(zonecode);
+                    }
+                }).open();
+            }
+
+            // 초기화
+            function init(){
+                $(".input").empty();
+            }
+        </script>
+    </div>
+</div>
+</html>
+
+

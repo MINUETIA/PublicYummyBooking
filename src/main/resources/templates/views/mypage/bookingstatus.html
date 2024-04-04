@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layout}">
+
+<div layout:fragment="content">
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="./cate">Categories</a>
+                        <span>MyPage</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+
+    <!-- Product Section Begin -->
+    <section class="product-page spad">
+
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-1"></div>
+
+
+                <div class="col-lg-2 col-md-6 col-sm-8">
+                    <div class="product__sidebar__myprofile">
+                        <div class="section-title">
+                            <h5>마이페이지</h5>
+                        </div>
+                    </div>
+
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__view">
+                            <div class="section-title">
+                                <a href="/bookinghistory"><h5>예약내역</h5></a>
+                            </div>
+                        </div>
+
+                        <div class="product__sidebar__comment">
+                            <div class="section-title">
+                                <h5>예약현황</h5>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-8">
+                    <div class="product__page__content">
+
+                        <div class="product__page__title">
+                            <div class="row">
+                                <div class="col-lg-10 col-md-8 col-sm-6">
+                                    <div class="section-title">
+                                        <h4>진행예정 예약</h4> <br>
+
+                                        <div class="swiper">
+                                            <!-- Additional required wrapper -->
+                                            <div class="swiper-wrapper">
+                                                <th:block th:each="list:${list} ">
+                                                    <div class="swiper-slide" >
+
+                                                        <div class="swiper-section">
+                                                            <a href="#">
+                                                                <img class="theme1_img" th:src="${list.profilePhoto}">
+                                                                <div class="theme1_text" >
+                                                                    <p class="theme1_restaurantName" th:text="|예약자명:${list.name}|"></p>
+                                                                    <p class="theme1_restaurantName" th:text="|시간:${list.reservationDate}|"></p>
+                                                                    <p class="theme1_restaurantName" th:text="|인원:${list.reservationNum}명|"></p>
+
+                                                                </div>
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="product__pagination">
+                 <a href="#" class="current-page">1</a>
+                 <a href="#">2</a>
+                 <a href="#">3</a>
+                 <a href="#">4</a>
+                 <a href="#">5</a>
+                 <a href="#"><i class="fa fa-angle-double-right"></i></a>
+             </div>-->
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+
+
+
+
+
+
+</div>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/mypage.css}">
+</th:block>
+
+
+</html>

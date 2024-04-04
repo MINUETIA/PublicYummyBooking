@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminFragment/layout3}">
+
+
+<div layout:fragment="content" style="margin-left: 10px; margin-right: 10px;">
+    <div style="text-align: center; margin-top:20px;">
+        <h2 style="color: black"><b>재고 관리</b></h2>
+    </div>
+
+    <div style="float: right; margin-top: 15px;">
+        <input type="button" id="appendBtn" value="새로운데이터추가">
+        <input type="button" value="엑셀 다운로드" id="downloadBtn">
+    </div>
+
+    <form id="frm" method="get" style="margin-top: 20px; margin-bottom: 20px;">
+        <table>
+            <tr>
+                <th>구매서등록일</th>
+                <td><input type="text" id="start" name="start" >  <input type="button" value="검색" id="searchBtn">
+                <td>
+<!--                    <input type="text" name="end" id="end">-->
+                </td>
+                <th>
+<!--                    날짜-->
+                </th>
+                <td>
+<!--                    <select name="year" id="year" >-->
+<!--                        <option value="" >&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+<!--                        <option value="1" >미입고</option>-->
+<!--                        <option value="2" >입고</option>-->
+<!--                    </select>-->
+                </td>
+                <td>
+<!--                    <select name="month" id="month" >-->
+<!--                        <option value="" >&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+<!--                        <option value="1" >미입고</option>-->
+<!--                        <option value="2" >입고</option>-->
+<!--                    </select>-->
+                </td>
+            </tr>
+<!--            <tr>-->
+<!--                <th>거래처</th>-->
+<!--                <td><input type="text" name="code" id="code" placeholder="CODE"></td>-->
+
+<!--                <td>-->
+<!--                    <input type="text" name="name"  placeholder="NAME">-->
+
+<!--                </td>-->
+<!--            </tr>-->
+        </table>
+    </form>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function($)
+        {
+            let ajax_data = [[${list}]];
+
+            var random_id = function  ()
+            {
+                var id_num = Math.random().toString(9).substr(2,3);
+                var id_str = Math.random().toString(36).substr(2);
+
+                return id_num + id_str;
+            }
+
+
+            //--->create data table > start
+            var tbl = '';
+            tbl +='<table class="table table-hover" id="chead">'
+
+            //--->create table header > start
+            tbl +='<thead >';
+            tbl +='<tr>';
+            // tbl +='<th>번호</th>';
+            tbl +='<th>입출고날짜</th>';
+            tbl +='<th>구분</th>';
+            tbl +='<th>거래처</th>';
+            tbl +='<th>제품코드</th>';
+            tbl +='<th>제품명</th>';
+            tbl +='<th>규격</th>';
+            tbl +='<th>상태</th>';
+            tbl +='<th>     </th>';
+            tbl +='</tr>';
+            tbl +='</thead>';
+            //--->create table header > end
+
+            //--->create table body > start
+            tbl +='<tbody>';
+            //--->create table body rows > start
+            $.each(ajax_data, function(index, val)
+            {
+                //you can replace with your database row id
+                var row_id = random_id();
+
+                //loop through ajax row data
+                tbl +='<tr row_id="'+row_id+'">';
+                // tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val['num']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val['receiveDate']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname">'+val['inputoutput']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="lname">'+val['vendorname']+'</div></td>';
+                // tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['standardType']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['materialId']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['materialName']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['standardType']+'</div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="email">'+val['status']+'</div></td>';
+
+                //--->edit options > start
+                tbl +='<td>';
+
+                tbl +='<span class="btn_edit" > <a href="#" class="btn btn-link " row_id="'+row_id+'" > Edit</a> </span>';
+
+                //only show this button if edit button is clicked
+                tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'"> Save</a> | </span>';
+                tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'"> Cancel</a> | </span>';
+
+                tbl +='</td>';
+                //--->edit options > end
+
+                tbl +='</tr>';
+            });
+
+            //--->create table body rows > end
+
+            tbl +='</tbody>';
+            //--->create table body > end
+
+            tbl +='</table>'
+            //--->create data table > end
+
+            //out put table data
+            $(document).find('.tbl_user_data').html(tbl);
+
+            $(document).find('.btn_save').hide();
+            $(document).find('.btn_cancel').hide();
+
+
+            //--->make div editable > start
+            $(document).on('click', '.row_data', function(event)
+            {
+                event.preventDefault();
+
+                if($(this).attr('edit_type') == 'button')
+                {
+                    return false;
+                }
+
+                //make div editable
+                $(this).closest('div').attr('contenteditable', 'true');
+                //add bg css
+                $(this).addClass('bg-warning').css('padding','5px');
+
+                $(this).focus();
+            })
+            //--->make div editable > end
+
+
+            //--->save single field data > start
+            $(document).on('focusout', '.row_data', function(event)
+            {
+                event.preventDefault();
+
+                if($(this).attr('edit_type') == 'button')
+                {
+                    return false;
+                }
+
+                var row_id = $(this).closest('tr').attr('row_id');
+
+                var row_div = $(this)
+                    .removeClass('bg-warning') //add bg css
+                    .css('padding','')
+
+                var col_name = row_div.attr('col_name');
+                var col_val = row_div.html();
+
+                var arr = {};
+                arr[col_name] = col_val;
+
+                //use the "arr"	object for your ajax call
+                $.extend(arr, {row_id:row_id});
+
+                //out put to show
+                $('.post_msg').html( '<pre class="bg-success">'+JSON.stringify(arr, null, 2) +'</pre>');
+
+            })
+            //--->save single field data > end
+
+
+            //--->button > edit > start
+            $(document).on('click', '.btn_edit', function(event)
+            {
+                event.preventDefault();
+                var tbl_row = $(this).closest('tr');
+
+                var row_id = tbl_row.attr('row_id');
+
+                tbl_row.find('.btn_save').show();
+                tbl_row.find('.btn_cancel').show();
+
+                //hide edit button
+                tbl_row.find('.btn_edit').hide();
+
+                //make the whole row editable
+                tbl_row.find('.row_data')
+                    .attr('contenteditable', 'true')
+                    .attr('edit_type', 'button')
+                    .addClass('bg-warning')
+                    .css('padding','3px')
+
+                //--->add the original entry > start
+                tbl_row.find('.row_data').each(function(index, val)
+                {
+                    //this will help in case user decided to click on cancel button
+                    $(this).attr('original_entry', $(this).html());
+                });
+                //--->add the original entry > end
+
+            });
+            //--->button > edit > end
+
+
+            //--->button > cancel > start
+            $(document).on('click', '.btn_cancel', function(event)
+            {
+                event.preventDefault();
+
+                var tbl_row = $(this).closest('tr');
+
+                var row_id = tbl_row.attr('row_id');
+
+                //hide save and cacel buttons
+                tbl_row.find('.btn_save').hide();
+                tbl_row.find('.btn_cancel').hide();
+
+                //show edit button
+                tbl_row.find('.btn_edit').show();
+
+                //make the whole row editable
+                tbl_row.find('.row_data')
+                    .attr('edit_type', 'click')
+                    .removeClass('bg-warning')
+                    .css('padding','')
+
+                tbl_row.find('.row_data').each(function(index, val)
+                {
+                    $(this).html( $(this).attr('original_entry') );
+                });
+            });
+            //--->button > cancel > end
+
+
+            //--->save whole row entery > start
+            $(document).on('click', '.btn_save', function(event)
+            {
+                event.preventDefault();
+                var tbl_row = $(this).closest('tr');
+
+                var row_id = tbl_row.attr('row_id');
+
+
+                //hide save and cacel buttons
+                tbl_row.find('.btn_save').hide();
+                tbl_row.find('.btn_cancel').hide();
+
+                //show edit button
+                tbl_row.find('.btn_edit').show();
+
+
+                //make the whole row editable
+                tbl_row.find('.row_data')
+                    .attr('edit_type', 'click')
+                    .removeClass('bg-warning')
+                    .css('padding','')
+
+                //--->get row data > start
+                var arr = {};
+                tbl_row.find('.row_data').each(function(index, val)
+                {
+                    var col_name = $(this).attr('col_name');
+                    var col_val  =  $(this).html();
+                    arr[col_name] = col_val;
+                });
+                //--->get row data > end
+
+                //use the "arr"	object for your ajax call
+                $.extend(arr, {row_id:row_id});
+
+                console.log(arr);
+                console.log("버튼눌림");
+                var tdArr = new Array();
+                let tr = $(this).parent().parent();
+                let td = tr.children();
+
+                console.log("클릭한 row의 모든 데이터 : " + tr.text());
+
+                td.each(function(i){
+                    tdArr.push(td.eq(i).text());
+                });
+
+                let data = {
+                    "purchaseno" :  td.eq(2).text().trim(),
+                    "vendorname" : td.eq(1).text().trim(),
+                    "cnt": td.eq(7).text().trim(),
+                    "price": td.eq(8).text().trim(),
+                    "sprice": td.eq(9).text().trim(),
+                    "type" : td.eq(5).text().trim()
+                }
+
+                console.log(data);
+
+                $.ajax({
+                    url : "/admin/purchase/modify",
+                    data : data,
+                    type: "GET",
+                    dataType: "json",
+                    success : function (data, status, xhr){
+                        console.log("data : " + data);
+                        console.log("status : " + data);
+                        console.log("xhr : " + xhr);
+                        // location.reload(true);
+                    },
+                    error : function(request, status, error){
+                        // alert("code = " + request.status + "message = " + request.responseText );
+                        location.reload(true);
+                    }
+                })
+
+            });
+            //--->save whole row entery > end
+
+
+        });
+        $(function(){
+            //   $('.jquery-datepicker').datepicker();
+
+            $("#appendBtn").on("click", function (){
+
+                var id_num = Math.random().toString(9).substr(2,3);
+                var id_str = Math.random().toString(36).substr(2);
+                var row_id = id_num + id_str;
+
+                let tbl = '';
+                //loop through ajax row data
+                tbl +='<tr row_id="'+row_id+'">';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td ><div class="row_data" edit_type="click" col_name="fname"> </div></td>';
+                tbl +='<td colspan="2">';
+                tbl +='<span class="btn_edit" > <a href="#" class="btn btn-link " row_id="'+row_id+'" >Edit</a> </span>';
+                tbl +='<span class="btn_save"> <a href="#" class="btn btn-link"  row_id="'+row_id+'">Save</a> | </span>';
+                tbl +='<span class="btn_cancel"> <a href="#" class="btn btn-link" row_id="'+row_id+'">Cancel</a> | </span>';
+                tbl +='</td>';
+                tbl +='</tr>';
+
+
+                // $("#chead").appendTo(tbl);
+                var tbody = $("#chead").children()[1];
+                $(tbody).prepend(tbl);
+
+                $(".btn_save").hide()
+                $(".btn_cancel").hide()
+
+            })
+
+
+            $("#start").removeAttr("style");
+            $("#start").datepicker({
+                monthNames: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                monthNamesShort: [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'yy-mm',
+                onChangeMonthYear: function (year, month, inst) {
+                    $(this).val($.datepicker.formatDate('yy-mm', new Date(year, month - 1, 1)));
+                },
+                onClose: function(dateText, inst) {
+                    var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+                    var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+                    $(this).datepicker('setDate', new Date(year, month, 1));
+                },
+                beforeShow : function(input, inst) {
+                    if ((datestr = $(this).val()).length > 0) {
+                        actDate = datestr.split('-');
+                        year = actDate[0];
+                        month = actDate[1]-1;
+                        $(this).datepicker('option', 'defaultDate', new Date(year, month));
+                        $(this).datepicker('setDate', new Date(year, month));
+                    }
+                }
+            });
+
+            // $("#end").datepicker({
+            //     dateFormat: "yyyy",
+            //     language: "kr",
+            //     showOtherMonths: true,
+            //     selectOtherMonths: true,
+            //     changeMonth: true,
+            //     changeYear: true,
+            //     onSelect: function ()
+            //     {
+            //         this.focus();
+            //     }
+            // });
+
+            $("#month").on("change", function(){
+                $("#frm").submit();
+            })
+            $("#searchBtn").on("click", function(){
+                $("#frm").submit();
+            });
+
+            $("#downloadBtn").on("click", function(){
+                console.log("hahaha");
+                let url = "/admin/purchase/downloadExcel?";
+                let params =
+                    "code=" + [[${code}]] + "&name="+[[${name}]] +
+                    "&start="+[[${start}]] + "&end="+[[${end}]] +
+                    "&status="+ [[${status}]];
+
+
+                location.href=url+params;
+
+
+            })
+
+
+            // $(".btn_save").on("click", function(){
+            // console.log("버튼눌림");
+            // var tdArr = new Array();
+            // let tr = $(this).parent().parent();
+            // let td = tr.children();
+            //
+            // console.log("클릭한 row의 모든 데이터 : " + tr.text());
+            //
+            // td.each(function(i){
+            //     tdArr.push(td.eq(i).text());
+            // });
+            //
+            // let data = {
+            //     "purchaseno" :  td.eq(2).text(),
+            //     "vendorname" : td.eq(1).text(),
+            //     "cnt": td.eq(7).text(),
+            //     "price": td.eq(8).text(),
+            //     "sprice": td.eq(9).text(),
+            //     "type" : td.eq(5).text()
+            // }
+            //
+            // console.log(data);
+            //
+            // $.ajax({
+            //     url : "/admin/purchase/modify",
+            //     data : data,
+            //     type: "GET",
+            //     dataType: "json",
+            //     success : function (data){
+            //         location.reload(true);
+            //     }
+            // })
+            // });
+
+
+        })
+    </script>
+
+    <div class="panel panel-default">
+        <div class="panel-heading"> </div>
+        <div class="panel-body">
+            <div class="tbl_user_data"></div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="css">
+    <style>
+        /*#ui-datepicker-div{*/
+        /*    background-color: red;*/
+        /*}*/
+
+        .ui-datepicker-div {
+            z-index: 1600 !important; /* has to be larger than 1050 */
+        }
+
+    </style>
+
+</th:block>
+
+<th:block layout:fragment="javascript">
+    <script>
+
+    </script>
+</th:block>
+</div>
+</html>
+
+

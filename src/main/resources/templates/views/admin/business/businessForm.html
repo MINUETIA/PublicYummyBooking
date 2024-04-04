@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminFragment/layout}">
+
+    <div layout:fragment="content">
+
+        <div class="container">
+            <div class="title">
+                <h2><b>businessForm</b></h2>
+            </div>
+
+            <div class="containerBox" style="width: 70%; height: 70%; !important;">
+                <div id="containerWrap">
+                    <form action="/admin/" method="post" name="Form">
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>상호명 : </b></span><br>
+                            <input class="bAdd" id="businessName" name="businessName" type="text" placeholder="상호명">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>사업자 등록번호 : </b></span><br>
+                            <input class="bAdd" id="businessCompanyRegistrationNum" name="businessCompanyRegistrationNum" type="text" placeholder="사업자 등록번호">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>대표자명 : </b></span><br>
+                            <input class="bAdd" id="representativeName" name="representativeName" type="text" placeholder="대표자명">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>가게주소 : </b></span><br>
+                            <input class="bAdd" type="text" name="businessAddress1" placeholder="address" readonly style="margin-bottom: 5px; width: 330px;">
+                            <a class="fakeButton check" href="javascript:findAddr()">우편번호 검색</a><br>
+                            <input class="bAdd" type="text" name="businessAddress2" placeholder="addrDetail">
+                            <span><i class="fa-solid fa-location-dot"></i></span>
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>업종 : </b></span><br>
+                            <input class="bAdd" id="businessType" name="businessType" type="text" placeholder="업종">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>가게테마 : </b></span><br>
+                            <input class="bAdd" id="businessTheme" name="businessTheme" type="text" placeholder="상호명">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>계약서 : </b></span><br>
+                            <input class="bAdd" id="businessContract" name="businessContract" type="text" placeholder="계약서">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>사업자 연락처 : </b></span><br>
+                            <input class="bAdd" id="representativeNum" name="representativeNum" type="text" placeholder="상호명">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>E-mail : </b></span><br>
+                            <input class="bAdd" id="representativeEmail" name="representativeEmail" type="text" placeholder="상호명">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>PW : </b></span><br>
+                            <input class="bAdd" id="representativePW" name="representativePW" type="text" placeholder="상호명">
+                        </div>
+
+                        <div class="businessAdd">
+                            <span class="bAdd"><b>매장 전화번호 : </b></span><br>
+                            <input class="bAdd" id="businessTel" name="businessTel" type="text" placeholder="상호명">
+                        </div>
+
+                        <input type="submit" value="사업자 접수 신청" id="joinButton">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script>
+            function findAddr(){
+                new daum.Postcode({
+                    oncomplete: function(data) {
+
+                        console.log(data);
+
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                        // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                        var roadAddr = data.roadAddress; // 도로명 주소 변수
+                        var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+
+                        if(roadAddr !== ''){
+                            $("input[name=address]").val(roadAddr);
+                        }
+                        else if(jibunAddr !== ''){
+                            $("input[name=address]").val(jibunAddr);
+                        }
+                    }
+                }).open();
+            }
+        </script>
+    </div>
+</html>

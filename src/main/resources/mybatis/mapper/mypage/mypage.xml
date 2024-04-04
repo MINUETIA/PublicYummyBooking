@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.dao.mypage.MypageDAO">
+
+    <select id="getReservationHistory" resultType="Hashmap" parameterType="Long">
+        SELECT r.restaurant_id as restaurantId, r.reservation_id as reservationId, r.reservation_date as reservationDate ,
+        r.ub_id as ubId, r.reservation_num as reservationNum,ub.classification_number as classificationNumber,
+        rest.restaurant_name as restaurantName , rest.restaurant_main_photo as restaurantMainPhoto,
+        rest.restaurant_address as restaurantAddress
+        FROM reservation r
+        INNER JOIN restaurant rest ON r.restaurant_id = rest.restaurant_id
+        INNER JOIN ub_common ub ON r.ub_id = ub.ub_id
+        WHERE
+        (r.reservation_status = 1 OR r.reservation_status = 0)
+        AND ub.ub_id = #{ub_id}
+        ORDER BY r.reservation_date ASC
+    </select>
+
+
+    <select id="getLastBookingHistory" resultType="Hashmap" parameterType="Long">
+        SELECT r.restaurant_id as restaurantId, r.reservation_id as reservationId, r.reservation_date as reservationDate ,
+        r.ub_id as ubId, r.reservation_num as reservationNum,
+        rest.restaurant_name as restaurantName , rest.restaurant_main_photo as restaurantMainPhoto,
+        rest.restaurant_address as restaurantAddress,ub.classification_number as classificationNumber
+        FROM reservation r
+        INNER JOIN restaurant rest ON r.restaurant_id = rest.restaurant_id
+        INNER JOIN ub_common ub ON r.ub_id = ub.ub_id
+        WHERE
+        (r.reservation_status = 1 OR r.reservation_status = 2)
+        AND ub.ub_id = #{ub_id}
+        AND r.reservation_date &lt; NOW()
+        ORDER BY r.reservation_date ASC
+
+    </select>
+
+
+    <select id="getCancelledBookingHistory" resultType="Hashmap" parameterType="Long">
+        SELECT r.restaurant_id as restaurantId, r.reservation_id as reservationId, r.reservation_date as reservationDate ,
+        r.ub_id as ubId, r.reservation_num as reservationNum,
+        rest.restaurant_name as restaurantName , rest.restaurant_main_photo as restaurantMainPhoto,
+        rest.restaurant_address as restaurantAddress,ub.classification_number as classificationNumber
+        FROM reservation r
+        INNER JOIN restaurant rest ON r.restaurant_id = rest.restaurant_id
+        INNER JOIN ub_common ub ON r.ub_id = ub.ub_id
+        WHERE
+        r.reservation_status = 3
+        AND ub.ub_id = #{ub_id}
+        ORDER BY r.reservation_date ASC
+
+
+    </select>
+
+
+
+    <select id="locationByRestaurantId" resultType="kr.co.jhta.web.dto.RestrantByTheme" parameterType="java.util.List">
+        select restaurant_theme.restaurant_id,comm_theme.theme_name,comm_theme.theme_classify_code
+        from restaurant_theme
+        join comm_theme on restaurant_theme.theme_id = comm_theme.theme_id
+        where theme_classify_code='location'
+        and restaurant_theme.restaurant_id in
+        <foreach collection="list" item="restaurantId" index="index" open="(" close=")" separator=",">
+            ${restaurantId}
+        </foreach>
+    </select>
+
+
+
+
+    <select id="getBookingStatus"  resultType="Hashmap" parameterType="Long">
+        SELECT
+        r.restaurant_name as restaurantName,
+        r.restaurant_main_photo as restaurantMainPhoto,
+        res.reservation_date as reservationDate,
+        res.reservation_num as reservationNum,
+        ub.name,
+        ub.profile_photo as profilePhoto
+        FROM
+        reservation res
+        JOIN
+        restaurant r ON res.restaurant_id = r.restaurant_id
+        JOIN
+        ub_common ub ON res.ub_id = ub.ub_id
+        WHERE
+        res.reservation_status = 1
+        AND res.reservation_date >= now()
+        AND r.restaurant_id = ${restaurantId}
+    </select>
+
+
+    <select id="getBookingStatusForCalendar"  resultType="Hashmap" parameterType="java.util.Map">
+        SELECT
+        res.reservation_date as reservationDate,
+        res.reservation_num as reservationNum,
+        ub.name,
+        ub.profile_photo as profilePhoto
+        FROM
+        reservation res
+        JOIN
+        restaurant r ON res.restaurant_id = r.restaurant_id
+        JOIN
+        ub_common ub ON res.ub_id = ub.ub_id
+        WHERE
+        res.reservation_status = 1
+        AND DATE(res.reservation_date) = DATE(#{selectedDate})
+        AND r.restaurant_id = ${restaurantId}
+    </select>
+
+
+    <select id="checkBookingRequest"  parameterType="Long" resultType="Hashmap">
+        SELECT reservation_id as reservationId , reservation_num as  reservationNum ,
+                reservation_date as reservationDate, reservation_request as reservationRequest
+        FROM  reservation
+        where restaurant_id=#{restaurant_id}
+        and reservation_date > now()
+        and reservation_status = 0
+    </select>
+
+
+    <update id="acceptBooking" parameterType="Long" >
+        UPDATE reservation SET reservation_status=1
+        where reservation_id=#{reservationId}
+    </update>
+
+
+    <update id="rejectBooking" parameterType="Long" >
+        UPDATE reservation SET reservation_status=3
+        where reservation_id=#{reservationId}
+    </update>
+
+
+    <select id="getProfileInfo" parameterType="Long" resultType="UbCommonDTO">
+        SELECT ub_id as ubId,name,email,phone,profile_photo as profilePhoto, join_date as joinDate
+        FROM ub_common
+        WHERE ub_id = #{ub_id}
+    </select>
+
+
+    <select id="restaurantInfo" parameterType="Long" resultType="RestaurantDTO">
+        SELECT restaurant_name as restaurantName,restaurant_address as restaurantAddress, restaurant_main_photo as restaurantMainPhoto
+        FROM restaurant
+        WHERE restaurant_id = #{restaurantId}
+    </select>
+
+
+    <select id="getRestaurantIdByUbId" resultType="Long" parameterType="Long">
+        SELECT restaurant_id as restaurantId
+        FROM restaurant r
+        INNER JOIN ub_common u ON r.ub_id =u.ub_id
+        WHERE u.ub_id = #{ubId}
+        LIMIT 1
+    </select>
+
+</mapper>

@@ -1,0 +1,157 @@
+.swiper {
+    width:1600px;
+    height: 350px;
+    margin: auto;
+}
+
+.middle{
+    width: 1700px;
+    margin: auto;
+}
+
+.theme1_img{
+    height: 300px;
+    width: 500px;
+    border-radius: 2%;
+}
+
+
+.theme1_text{
+    /*height: 100px;*/
+    display: inline-block;
+    height: 60px;
+}
+
+.theme1_restaurantName{
+    /*position: absolute;
+    top:75%;*/
+    /*font-size:20px;*/
+    color: black;
+    height: 15px;
+    /*font-family: "oto+Sans+KR";*/
+    /*margin-left: 5px;*/
+
+
+}
+
+.theme1_description{
+    color: black;
+    font-size: 12px;
+    height: 15px;
+}
+
+
+
+.vanner{
+    width: 1700px;
+    height: 500px;
+    margin: auto;
+    position: relative;
+
+
+}
+
+.vanner_border{
+    width: 1700px;
+    height: 500px;
+    float: left;
+}
+
+.search_part{
+    width: 1200px;
+    height: 500px;
+    float: right;
+    background-color: #fde045;
+
+
+}
+
+/*.img_part{
+    width: 100%;
+    height: 500px;
+    float: left;
+}*/
+
+.search_div {
+    width: 700px;
+    height: 300px;
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 100px;
+
+
+}
+
+.text{
+    color: white;
+    /*
+    text-shadow: 1px 0 #4a5464;
+    */
+    text-align: center;
+    font-family: "Bree Serif";
+}
+
+.search_form{
+    height: 40px;
+    width: 400px;
+    background-color: white;
+    border-radius: 40px;
+    padding: 10px;
+    border: 1px solid #f9deec;
+    margin-top: 40px;
+    margin-left: 130px;
+}
+
+.search_text{
+    border: none;
+    outline: none;
+    float: left;
+    padding: 0px;
+    color: #797979;
+    font-size: 16px;
+    line-height: 25px;
+    width: 350px;
+
+
+}
+.search_btn{
+    color: grey;
+    float: right;
+    width: 40px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    margin-top: -22px;
+
+
+}
+
+.swiper-button-next {
+    background: url(/img/upload/right.png) no-repeat;
+    background-size: 80% auto;
+    background-position: center;
+    float: right;
+    margin-top: 450px;
+    margin-right: 100px;
+
+}
+
+.swiper-button-prev {
+    background: url(../img/upload/left.png) no-repeat;
+    background-size: 80% auto;
+    background-position: center;
+    margin-top: 450px;
+    margin-left: 80px;
+}
+
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    display: none;
+}

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://kit.fontawesome.com/664fc9aad8.js" crossorigin="anonymous"></script>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="description" content="Anime Template">
+    <meta name="keywords" content="Anime, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Yummy Booking</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Sans+KR&family=Karla:ital,wght@0,200..800;1,200..800&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Bree+Serif&family=IBM+Plex+Sans+KR&family=Karla:ital,wght@0,200..800;1,200..800&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Bree+Serif&family=Gothic+A1&family=IBM+Plex+Sans+KR&family=Karla:ital,wght@0,200..800;1,200..800&family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Noto+Sans+KR:wght@100..900&display=swap"
+          rel="stylesheet">
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/plyr.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<script>
+    $(function (){
+        $("#hotPlace").on("click", function (){
+            console.log("test")
+        })
+    })
+
+</script>
+<style>
+
+
+    .swiper {
+        width:1600px;
+        height: 350px;
+        margin: auto;
+    }
+
+    .middle{
+        width: 1700px;
+        margin: auto;
+    }
+
+    .theme1_img{
+        height: 300px;
+        width: 500px;
+        border-radius: 2%;
+    }
+
+
+    .theme1_text{
+        /*height: 100px;*/
+        display: inline-block;
+        height: 60px;
+    }
+
+    .theme1_restaurantName{
+        /*position: absolute;
+        top:75%;*/
+        /*font-size:20px;*/
+        color: black;
+        height: 15px;
+        /*font-family: "oto+Sans+KR";*/
+        /*margin-left: 5px;*/
+
+
+    }
+
+    .theme1_description{
+        color: black;
+        font-size: 12px;
+        height: 15px;
+    }
+
+
+
+    .vanner{
+        width: 1700px;
+        height: 500px;
+        margin: auto;
+        position: relative;
+
+
+    }
+
+    .vanner_border{
+        width: 1700px;
+        height: 500px;
+        float: left;
+    }
+
+    .search_part{
+        width: 1200px;
+        height: 500px;
+        float: right;
+
+        /*
+        background-image:url("/img/upload/main_color.PNG");
+        */
+
+        background-color: #fde045;
+    }
+
+    .img_part{
+        width: 500px;
+        height: 500px;
+        float: left;
+    }
+
+    .search_div {
+        width: 700px;
+        height: 300px;
+        position: absolute;
+        margin-left: 0px;
+        margin-top: 100px;
+    }
+
+    .text{
+        color: white;
+        /*
+        text-shadow: 1px 0 #4a5464;
+        */
+        text-align: center;
+        font-family: "Bree Serif";
+    }
+
+    .search_form{
+        height: 40px;
+        width: 400px;
+        background-color: white;
+        border-radius: 40px;
+        padding: 10px;
+        border: 1px solid #f9deec;
+        margin-top: 40px;
+        margin-left: 130px;
+    }
+
+    .search_text{
+        border: none;
+        outline: none;
+        float: left;
+        padding: 0px;
+        color: #797979;
+        font-size: 16px;
+        line-height: 25px;
+        width: 350px;
+
+
+    }
+    .search_btn{
+        color: grey;
+        float: right;
+        width: 40px;
+        height: 100%;
+        border-radius: 50%;
+        background-color: white;
+        border: none;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 40px;
+        margin-top: -22px;
+
+    }
+
+    .first-swiper-button-prev {
+        margin-top: 450px;
+        margin-left: 50px;
+        background: url(/img/upload/left.png) no-repeat;
+        background-size: 100% auto;
+        background-position: center;
+    }
+
+    .first-swiper-button-next {
+        margin-top: 450px;
+        margin-right: 50px;
+        background: url(/img/upload/right.png) no-repeat;
+        background-size: 100% auto;
+        background-position: center;
+    }
+
+    .second-swiper-button-prev {
+        margin-top: 930px;
+        margin-left: 50px;
+        background: url(/img/upload/left.png) no-repeat;
+        background-size: 100% auto;
+        background-position: center;
+    }
+
+    .second-swiper-button-next {
+        margin-top: 930px;
+        margin-right: 50px;
+        background: url(/img/upload/right.png) no-repeat;
+        background-size: 100% auto;
+        background-position: center;
+    }
+
+    .third-swiper-button-prev {
+        margin-top: 1400px;
+        margin-left: 50px;
+        background: url(/img/upload/left.png) no-repeat;
+        background-size: 100% auto;
+        background-position: center;
+        }
+
+
+    .third-swiper-button-next {
+        margin-top: 1400px;
+        margin-right: 50px;
+        background: url(/img/upload/right.png) no-repeat;
+        background-size: 100% auto;
+        background-position: center;
+        }
+
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        display: none;
+    }
+
+
+</style>
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header" style="display: flex; height: 75px;">
+        <div class="header__logo" style="display: flex; margin-top: 5px;">
+            <div class="write_logo">
+                <a href="/home" style="width: 90px;">
+                    <img class="logo_img" src="img/upload/yummy_logo.png" alt="" style="margin-left: 30px;">
+                </a>
+            </div>
+            <div class="write_logo" style="z-index: 1;">
+                <a href="/home" style="width: 200px;">
+                    <img class="logo_img" src="/img/yummyBooking/write_logo_2.png" style="width: 200px">
+                </a>
+            </div>
+        </div>
+
+        <div class="header__nav" style="width: 100%;">
+            <nav class="header__menu mobile-menu" style="text-align: center;">
+                <div class="categories">
+                    <div class="categories_div">
+                        <ul>
+                            <li class="active"><a href="./index.html">Homepage</a></li>
+                            <li><a href="./categories.html">Categories <span class="arrow_carrot-down"></span></a>
+                                <ul class="dropdown">
+                                <li><a href="./categories.html">Categories</a></li>
+                                <li><a href="./anime-details.html">Anime Details</a></li>
+                                <li><a href="./anime-watching.html">Anime Watching</a></li>
+                                <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/search/theme">필터검색</a></li>
+                            <li><a href="/meal/main">밀키트</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="header__right" style="display: flex; margin-right: 20px; padding:15px 2px 10px 5px;">
+            <div th:if="${session.ubCommonDTOLogin != null}">
+                <a th:href="@{/mypage(ubId=${session.ubCommonDTOLogin.getUbId()})}" id="myInfo1" style="margin-left: 6px;">
+                    <img id="people1" src="/img/yummyBooking/people.png" style="width: 45px; display: block; margin: auto;">
+                </a>
+            </div>
+
+            <div th:if="${session.ubCommonDTOLogin == null}">
+                <a href="/login/login">
+                    <span style='font-size: 25px; font-weight: 900; text-align: center; line-height: 41px; margin-left: 5px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";'>Login</span>
+                </a>
+            </div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="container-xxl">
+            <div class="search_section">
+                <div class="vanner">
+                    <div class="vanner_border">
+                        <div style="border-radius: 0 20px 20px 0 " class="search_part">
+                            <div class="search_div" >
+                                <h1 class="text" >Discover and book the best restaurant</h1>
+                                <form id="search_form" name="search_form" class="search_form" th:action="@{/search/keyword}" method="get">
+                                    <input class="search_text" name="keyword" type="text" />
+                                    <button class="search_btn" type="submit">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="img_part">
+                            <img style="border-radius: 20px 0 0 20px" src="img/upload/main.jpg"  height="500px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+
+
+        <div class="middle">
+            <div class="container-xxl">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="section-title">
+                            <h4>핫플레이스 BEST</h4>
+                            <a href="/search/maintheme?theme=hotplace" class="primary-btn" style="color: black">View All <span class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+                    <div class="swiper-container first-swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <th:block th:each="Hlist:${Hlist} ">
+                            <div class="swiper-slide">
+
+                                <a th:href="@{'/restaurantDetails?restaurantId='+ ${Hlist.restaurantId}}">
+                                    <img class="theme1_img" th:src="${Hlist.restaurantMainPhoto}">
+                                    <div class="theme1_text">
+                                    <p class="theme1_restaurantName" th:text="${Hlist.restaurantName}"></p>
+                                    <p class="theme1_description" th:text="${Hlist.restaurantDescription}"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </th:block>
+                    </div>
+                        <div class="swiper-button-prev first-swiper-button-prev"></div>
+                        <div class="swiper-button-next first-swiper-button-next"></div>
+                </div>
+
+
+
+
+                <div class="row" style="margin-top: 50px">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="section-title">
+                            <h4>NEW OPEN</h4>
+                            <a href="/search/maintheme?theme=newopen" class="primary-btn"style="color: black">View All <span class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+                    <div class="swiper-container second-swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <th:block th:each="Nlist:${Nlist} ">
+                            <div class="swiper-slide">
+
+                                <a th:href="@{'/restaurantDetails?restaurantId='+ ${Nlist.restaurantId}}">
+                                    <img class="theme1_img" th:src="${Nlist.restaurantMainPhoto}">
+                                    <div class="theme1_text">
+                                        <p class="theme1_restaurantName" th:text="${Nlist.restaurantName}"></p>
+                                        <p class="theme1_description" th:text="${Nlist.restaurantDescription}"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </th:block>
+                    </div>
+                        <div class="swiper-button-prev second-swiper-button-prev"></div>
+                        <div class="swiper-button-next second-swiper-button-next"></div>
+                    </div>
+
+
+
+
+                <div class="row" style="margin-top: 50px">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="section-title">
+                            <h4 th:text="${username != null ? username + '님이 좋아할 매장' : '회원님을 위한 추천매장'}"></h4>
+                            <a href="/search/maintheme?theme=random" class="primary-btn"style="color: black">View All <span class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+                    <div class="swiper-container third-swiper">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <th:block th:each="Rlist:${Rlist} ">
+                            <div class="swiper-slide">
+
+                                <a th:href="@{'/restaurantDetails?restaurantId='+ ${Rlist.restaurantId}}">
+                                    <img class="theme1_img" th:src="${Rlist.restaurantMainPhoto}">
+                                    <div class="theme1_text">
+                                        <p class="theme1_restaurantName" th:text="${Rlist.restaurantName}"></p>
+                                        <p class="theme1_description" th:text="${Rlist.restaurantDescription}"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </th:block>
+                    </div>
+                        <div class="swiper-button-prev third-swiper-button-prev"></div>
+                        <div class="swiper-button-next third-swiper-button-next"></div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="page-up">
+            <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer__logo">
+                        <a href="/home"><img src="/img/yummyBooking/write_logo_10-1.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="footer__nav">
+                        <ul>
+                            <li class="active"><a href="/home">Homepage</a></li>
+                            <li><a href="/cate">Categories</a></li>
+                            <li><a href="/blog">Our Blog</a></li>
+                            <li><a href="#">Contacts</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!--<div class="col-lg-3">
+                    <p>&lt;!&ndash; Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. &ndash;&gt;
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        &lt;!&ndash; Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. &ndash;&gt;</p>
+
+                </div>-->
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch"><i class="icon_close"></i></div>
+            <form class="search-model-form" th:action="@{/search/keyword}" method="get" >
+                <input type="text" name="keyword" id="search-input" placeholder="Search here.....">
+                <input type="submit" value="검색">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+</body>
+<script>
+
+    // 첫 번째 슬라이더
+    const firstswiper = new Swiper('.first-swiper', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        direction: 'horizontal',
+        loop: true,
+        autoplay: true,
+        navigation: {
+            nextEl: '.first-swiper-button-next',
+            prevEl: '.first-swiper-button-prev',
+        },
+    });
+
+    // 두 번째 슬라이더
+    const secondswiper = new Swiper('.second-swiper', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        direction: 'horizontal',
+        loop: true,
+        autoplay: true,
+        navigation: {
+            nextEl: '.second-swiper-button-next',
+            prevEl: '.second-swiper-button-prev',
+        },
+    });
+
+    // 세 번째 슬라이더
+    const thirdswiper = new Swiper('.third-swiper', {
+        slidesPerView: 4,
+        spaceBetween: 30,
+        direction: 'horizontal',
+        loop: true,
+        autoplay: true,
+        navigation: {
+            nextEl: '.third-swiper-button-next',
+            prevEl: '.third-swiper-button-prev',
+        },
+    });
+
+</script>
+</html>

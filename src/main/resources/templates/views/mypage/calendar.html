@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{fragment/default_layout}">
+
+<div layout:fragment="content">
+
+
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="./cate">Categories</a>
+                        <span>MyPage</span>
+                    </div>                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+    <!-- Product Section Begin -->
+    <section class="product-page spad">
+
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-1"></div>
+
+
+                <div class="col-lg-2 col-md-6 col-sm-8">
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__myprofile">
+                            <div class="section-title">
+                                <h5>마이페이지</h5>
+                            </div>
+                            <div class="product__sidebar__view">
+                                <div class="section-title" style="display: inline-block">
+                                    <div class="sidebar_text_div">
+                                        <a href="/mypage"><h6 class="sidebar_text">예약내역</h6></a>
+                                    </div>
+                                    <div class="sidebar_text_div">
+                                        <a href="/meal/history"><h6 class="sidebar_text">주문내역</h6></a>
+                                    </div>
+                                  <!--  <div class="sidebar_text_div">
+                                        <a href="/meal/mealbasket"><h6 class="sidebar_text">장바구니</h6></a>
+                                    </div>-->
+                                    <div class="sidebar_text_div">
+                                        <a th:href="@{/login/modify(ubId=${session.ubCommonDTOLogin.ubId})}"><h6 class="sidebar_text">정보수정</h6></a>
+                                    </div>
+                                    <div class="sidebar_text_div">
+                                        <a href="/logout"><h6 class="sidebar_text">로그아웃</h6></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="product__sidebar__myprofile">
+                            <div class="section-title">
+                                <h5>마이레스토랑</h5>
+                            </div>
+                            <div class="product__sidebar__comment">
+                                <div class="section-title">
+                                    <div class="sidebar_text_div">
+                                        <a href="/calendar"><h6 class="sidebar_text" style="font-weight: 600">예약현황</h6></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-6"  >
+                    <div class="product__page__content">
+                        <!-- Container for the profile section -->
+                        <div class="col-lg-6">
+                        <div th:each="Rinfo : ${Rinfo}">
+                            <div class="profile-section">
+                                <!-- Left section for profile picture -->
+                                <div class="leftside">
+                                    <div class="profile-picture">
+                                        <!-- Replace the src attribute with the path to the profile picture -->
+                                        <img class="profile-pic" th:src="${Rinfo.restaurantMainPhoto}" alt="Profile Picture">
+                                    </div>
+                                </div>
+                                <!-- Right section for member information -->
+                                <div class="member-info">
+                                    <h2 th:text="${Rinfo.restaurantName}"></h2>
+                                    <div class="contact-info">
+
+                                        <p th:text="${Rinfo.restaurantAddress}"></p>
+                                    </div>
+                                </div>
+                                <div class="buttons">
+                                    <a href=""><button class="btn review-btn">리뷰보기</button></a>
+                                    <a th:href="@{/restaurantModify(restaurantId=${restaurantId})}"><button class="btn edit-btn">수정하기</button></a>
+                                </div>
+                                <!-- Add more member information as needed -->
+                            </div>
+                        </div>
+                        </div>
+
+                        <hr class="horizontal-line">
+
+
+                        <div>
+
+                            <br/>
+                            <div class="calendar_div">
+                            <table class="scriptCalendar" style="margin-top: -80px">
+                                <thead>
+                                <tr>
+                                    <td class="calendarBtn" id="btnPrevCalendar">&#60;&#60;</td>
+                                    <td colspan="5">
+                                        <span id="calYear">YYYY</span>년
+                                        <span id="calMonth">MM</span>월
+                                    </td>
+                                    <td class="calendarBtn" id="nextNextCalendar">&#62;&#62;</td>
+                                </tr>
+                                <tr>
+                                    <td>일</td><td>월</td><td>화</td><td>수</td><td>목</td><td>금</td><td>토</td>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+
+                    <h2>New 예약요청</h2>
+
+
+                    <div id="reservationInfoContainer"></div>
+
+
+                </div>
+
+            </div>
+
+            <hr class="horizontal-line2">
+
+
+            <div class="col-lg-12"  >
+
+                <div class="section-upcommingReservation">
+                    <h4>예정된 예약 <span th:text="${date}"></span></h4> <br>
+<!--                    <button class="btn view-all" onclick="viewAllReservations()">전체보기</button>-->
+<!--                    <a th:href="/viewAllReservations" ><button class="btn view-all" >전체보기</button></a>-->
+                    <a th:href="@{/viewAllReservations(selectedDate=${date})}" class="btn view-all" >전체보기</a>
+                    <div class="swiper">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <th:block th:each="list:${list} ">
+                                <div class="swiper-slide" >
+
+                                    <div class="swiper-section">
+                                            <img class="profilePhoto_img" th:src="@{/login/display(fileName=${list.profilePhoto})}">
+                                            <div class="slide_text_area" >
+                                                <p class="slide_text" th:text="|예약자명:${list.name}|"></p>
+                                                <p class="slide_text" th:text="|예약시간:${list.reservationDate}|"></p>
+                                                <p class="slide_text" th:text="|인원수:${list.reservationNum}명|"></p>
+                                            </div>
+                                    </div>
+                                </div>
+                            </th:block>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <script layout:fragment="script">
+        document.addEventListener("DOMContentLoaded", function() {
+            buildCalendar();
+
+            document.getElementById("btnPrevCalendar").addEventListener("click", function(event) {
+                prevCalendar();
+            });
+
+            document.getElementById("nextNextCalendar").addEventListener("click", function(event) {
+                nextCalendar();
+            });
+        });
+
+        var toDay = new Date(); // @param 전역 변수, 오늘 날짜 / 내 컴퓨터 로컬을 기준으로 toDay에 Date 객체를 넣어줌
+        var nowDate = new Date();  // @param 전역 변수, 실제 오늘날짜 고정값
+
+        /**
+         * @brief   이전달 버튼 클릭시
+         */
+        function prevCalendar() {
+            this.toDay = new Date(toDay.getFullYear(), toDay.getMonth() - 1, toDay.getDate());
+            buildCalendar();    // @param 전월 캘린더 출력 요청
+        }
+
+        /**
+         * @brief   다음달 버튼 클릭시
+         */
+        function nextCalendar() {
+            this.toDay = new Date(toDay.getFullYear(), toDay.getMonth() + 1, toDay.getDate());
+            buildCalendar();    // @param 명월 캘린더 출력 요청
+        }
+
+        /**
+         * @brief   캘린더 오픈
+         * @details 날짜 값을 받아 캘린더 폼을 생성하고, 날짜값을 채워넣는다.
+         */
+        function buildCalendar() {
+
+            let doMonth = new Date(toDay.getFullYear(), toDay.getMonth(), 1);
+            let lastDate = new Date(toDay.getFullYear(), toDay.getMonth() + 1, 0);
+
+            let tbCalendar = document.querySelector(".scriptCalendar > tbody");
+
+            document.getElementById("calYear").innerText = toDay.getFullYear();                       // @param YYYY월
+            document.getElementById("calMonth").innerText = autoLeftPad((toDay.getMonth() + 1), 2);   // @param MM월
+
+
+            // @details 이전 캘린더의 출력결과가 남아있다면, 이전 캘린더를 삭제한다.
+            while(tbCalendar.rows.length > 0) {
+                tbCalendar.deleteRow(tbCalendar.rows.length - 1);
+            }
+
+            // @param 첫번째 개행
+            let row = tbCalendar.insertRow();
+
+            // @param 날짜가 표기될 열의 증가값
+            let dom = 1;
+
+            // @details 시작일의 요일값( doMonth.getDay() ) + 해당월의 전체일( lastDate.getDate())을  더해준 값에서
+            //               7로 나눈값을 올림( Math.ceil() )하고 다시 시작일의 요일값( doMonth.getDay() )을 빼준다.
+            let daysLength = (Math.ceil((doMonth.getDay() + lastDate.getDate()) / 7) * 7) - doMonth.getDay();
+
+            // @param 달력 출력
+            // @details 시작값은 1일을 직접 지정하고 요일값( doMonth.getDay() )를 빼서 마이너스( - )로 for문을 시작한다.
+            for(let day = 1 - doMonth.getDay(); daysLength >= day; day++) {
+
+                let column = row.insertCell();
+
+                // @param 평일( 전월일과 익월일의 데이터 제외 )
+                if(Math.sign(day) == 1 && lastDate.getDate() >= day) {
+
+                    // @param 평일 날짜 데이터 삽입
+                    column.innerText = autoLeftPad(day, 2);
+
+                    // @param 일요일인 경우
+                    if(dom % 7 == 1) {
+                        column.style.color = "#FF4D4D";
+                    }
+
+                    // @param 토요일인 경우
+                    if(dom % 7 == 0) {
+                        column.style.color = "#4D4DFF";
+                        row = tbCalendar.insertRow();   // @param 토요일이 지나면 다시 가로 행을 한줄 추가한다.
+                    }
+
+                }
+
+                // @param 평일 전월일과 익월일의 데이터 날짜변경
+                else {
+                    let exceptDay = new Date(doMonth.getFullYear(), doMonth.getMonth(), day);
+                    column.innerText = autoLeftPad(exceptDay.getDate(), 2);
+                    column.style.color = "#A9A9A9";
+                }
+
+                // @brief   전월, 명월 음영처리
+                // @details 현재년과 선택 년도가 같은경우
+                if(toDay.getFullYear() == nowDate.getFullYear()) {
+
+                    // @details 현재월과 선택월이 같은경우
+                    if(toDay.getMonth() == nowDate.getMonth()) {
+
+                        // @details 현재일보다 이전인 경우이면서 현재월에 포함되는 일인경우
+                        if(nowDate.getDate() > day && Math.sign(day) == 1) {
+                            column.style.backgroundColor = "#E5E5E5";
+                        }
+
+                        // @details 현재일보다 이후이면서 현재월에 포함되는 일인경우
+                        else if(nowDate.getDate() < day && lastDate.getDate() >= day) {
+                            column.style.backgroundColor = "#FFFFFF";
+                            column.style.cursor = "pointer";
+                            column.onclick = function(){ calendarChoiceDay(this); }
+                        }
+
+                        // @details 현재일인 경우
+                        else if(nowDate.getDate() == day) {
+                            column.style.backgroundColor = "#FFFFE6";
+                            column.style.cursor = "pointer";
+                            column.onclick = function(){ calendarChoiceDay(this); }
+                        }
+
+                        // @details 현재월보다 이전인경우
+                    } else if(toDay.getMonth() < nowDate.getMonth()) {
+                        if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                            column.style.backgroundColor = "#E5E5E5";
+                        }
+                    }
+
+                    // @details 현재월보다 이후인경우
+                    else {
+                        if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                            column.style.backgroundColor = "#FFFFFF";
+                            column.style.cursor = "pointer";
+                            column.onclick = function(){ calendarChoiceDay(this); }
+                        }
+                    }
+                }
+
+                // @details 선택한년도가 현재년도보다 작은경우
+                else if(toDay.getFullYear() < nowDate.getFullYear()) {
+                    if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                        column.style.backgroundColor = "#E5E5E5";
+                    }
+                }
+
+                // @details 선택한년도가 현재년도보다 큰경우
+                else {
+                    if(Math.sign(day) == 1 && day <= lastDate.getDate()) {
+                        column.style.backgroundColor = "#FFFFFF";
+                        column.style.cursor = "pointer";
+                        column.onclick = function(){ calendarChoiceDay(this); }
+                    }
+                }
+                dom++;
+            }
+        }
+
+        /**
+         * @brief   날짜 선택
+         * @details 사용자가 선택한 날짜에 체크표시를 남긴다.
+         */
+        function calendarChoiceDay(column) {
+
+            // @param 기존 선택일이 존재하는 경우 기존 선택일의 표시형식을 초기화 한다.
+            if(document.getElementsByClassName("choiceDay")[0]) {
+
+                // @see 금일인 경우
+                if(document.getElementById("calMonth").innerText == autoLeftPad((nowDate.getMonth() + 1), 2) && document.getElementsByClassName("choiceDay")[0].innerText == autoLeftPad(toDay.getDate(), 2)) {
+                    document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFE6";
+                }
+
+                // @see 금일이 아닌 경우
+                else {
+                    document.getElementsByClassName("choiceDay")[0].style.backgroundColor = "#FFFFFF";
+                }
+                document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");
+            }
+
+            // @param 선택일 체크 표시
+            column.style.backgroundColor = "#FF9999";
+
+            // @param 선택일 클래스명 변경
+            column.classList.add("choiceDay");
+
+
+
+        }
+
+
+
+        /**
+         * @brief   숫자 두자릿수( 00 ) 변경
+         * @details 자릿수가 한자리인 ( 1, 2, 3등 )의 값을 10, 11, 12등과 같은 두자리수 형식으로 맞추기위해 0을 붙인다.
+         * @param   num     앞에 0을 붙일 숫자 값
+         * @param   digit   글자의 자릿수를 지정 ( 2자릿수인 경우 00, 3자릿수인 경우 000 … )
+         */
+        function autoLeftPad(num, digit) {
+            if(String(num).length < digit) {
+                num = new Array(digit - String(num).length + 1).join("0") + num;
+            }
+            return num;
+        }
+
+
+
+
+
+        function calendarChoiceDay(column) {
+            var selectedDate = document.getElementById("calYear").innerText + "-" + document.getElementById("calMonth").innerText + "-" + column.innerText;
+            // 선택한 날짜를 yyyy-MM-dd 형식으로 구성
+
+            // 선택한 날짜를 URL에 추가하여 컨트롤러에 전달
+            window.location.href = "/getReservationDate?date=" + encodeURIComponent(selectedDate);
+        }
+
+
+
+
+
+        //slider js
+        const swiper = new Swiper('.swiper', {
+
+            slidesPerView: 5,
+            spaceBetween: 30,
+            direction: 'horizontal',
+
+            loop: true,
+
+            /*   autoplay: {
+                   delay: 2500,
+                   disableOnInteraction: false,
+               },*/
+
+            // If we need pagination
+            pagination: {
+                el: '.swiper-pagination',
+                //type:'bullets',
+                clickable:true,
+            },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+
+
+        //Reservation_date 포맷변경
+        function formatDate(dateString) {
+            var date = new Date(dateString);
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1);
+            var day = (date.getDate() < 10 ? '0' : '') + date.getDate();
+            var hour = (date.getHours() < 10 ? '0' : '') + date.getHours();
+            var minute = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
+
+            return year + '년 ' + month + '월 ' + day + '일 ' + hour + ':' + minute;
+        }
+
+
+        //예약요청 js
+        $(function(){
+            $.ajax({
+                type: "GET",
+                url: "/getNotYetReservationDate",
+                dataType : 'json',
+                // data : {
+                //     "restaurantId" : restaurantId,
+                // },
+                success: function(data){
+                    console.log("data"+data);
+                    if(data.length > 0) {
+                        $.each(data, function (index, reservation) {
+                            // 예약 정보를 HTML 요소로 만들기
+                            var formattedDate = formatDate(reservation.reservationDate);
+                            var reservationInfo = "<div class='reservation-info' style='border: 2px solid yellow;'>";
+                            reservationInfo += "<p >예약번호: " + reservation.reservationId + "</p>";
+                            reservationInfo += "<p>인원수: " + reservation.reservationNum + "</p>";
+                            reservationInfo += "<p>날짜: " + formattedDate + "</p>";
+                            /*reservationInfo += "<p>요청사항: " + reservation.reservationRequest + "</p>";*/
+
+                            reservationInfo += "<button class='btn accept' onclick='acceptReservation(" + reservation.reservationId + ")'>승인</button>";
+                            reservationInfo += "<button class='btn reject' onclick='rejectReservation(" + reservation.reservationId + ")'>거절</button>";
+                            reservationInfo += "</div>";
+
+                            // 만든 예약 정보를 HTML에 추가
+                            $("#reservationInfoContainer").append(reservationInfo);
+                        });
+                    }else{
+                        $("#reservationInfoContainer").text("예약 요청이 없습니다.");
+                    }
+                },
+                error: function() {
+                    // 에러 처리
+                    $("#reservationInfoContainer").text("데이터를 불러오는 중에 오류가 발생했습니다.");
+                }
+
+            });
+        })
+
+
+        // 예약 수락 함수
+        function acceptReservation(reservationId) {
+
+
+            $.ajax({
+                type: "GET",
+                url: "/acceptReservation",
+                data: {"reservationId": reservationId},
+
+                success: function(response){
+                    console.log(response);
+                    location.reload();
+                },
+                error: function(){
+                    console.log("데이터를 불러오는 중에 오류가 발생했습니다.");
+                }
+            });
+        }
+
+        // 예약 거절 함수
+        function rejectReservation(reservationId) {
+            $.ajax({
+                type: "POST",
+                url: "/rejectReservation",
+                data: {"reservationId":4 },
+                success: function(response){
+                    console.log(response);
+                    location.reload();
+                },
+                error: function(){
+                    console.log("데이터를 불러오는 중에 오류가 발생했습니다.");
+                }
+            });
+        }
+
+
+
+
+    </script>
+</div>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/calendar.css}">
+</th:block>
+
+
+</html>

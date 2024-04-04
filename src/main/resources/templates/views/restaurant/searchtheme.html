@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layout}">
+
+<th:block layout:fragment="content">
+    <script th:inline="javascript">
+        $(function (){
+            $("#themeSearch").on("click", function (){
+                $("#frm").submit();
+            })
+        });
+    </script>
+
+    <section class="product-page spad">
+        <div class="container-xxl">
+            <div class="row">
+
+
+                    <div class="product__sidebar" style="height: 500px">
+                        <div class="product__sidebar__view">
+                            <div class="section-title">
+                                <h5>검색 필터</h5>
+                                <input class="btn-outline-danger" type="button" value="검색" id="themeSearch" style="margin-left: 20px; border-radius: 10px">
+                            </div>
+                            <form action="/search/themes" method="get" id="frm" style="display: flex" >
+                                <div class="product__sidebar__comment__item col-2" th:each=" theme: ${restaurantTheme}" >
+                                    <th:block th:if="${theme.key=='atmosphere'}"><h4>분위기</h4></th:block>
+                                    <th:block th:if="${theme.key=='country'}"><h4>국가별</h4></th:block>
+                                    <th:block th:if="${theme.key=='food'}"><h4>음식 종류</h4></th:block>
+                                    <th:block th:if="${theme.key=='location'}"><h4>지역</h4></th:block>
+                                    <th:block th:if="${theme.key=='facility'}"><h4>편의시설</h4></th:block>
+                                            <ul>
+                                                <th:block th:each="theme2: ${theme.value}">
+                                                        <li><input type="checkbox" class="search-filter" name="checkTheme" th:text="${theme2.getTheme_name()}" th:value="${theme2.getTheme_id()}" >
+                                                            <span th:text="${theme2.getNum()}"></span>
+                                                        </li>
+
+                                                </th:block>
+                                            </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+            </div>
+        </div>
+
+    </section>
+</th:block>
+</html>

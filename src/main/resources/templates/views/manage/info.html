@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminFragment/layout3}">
+
+
+    <div class="fragment_content" id="topdiv" layout:fragment="content" style="margin-left: 10px; margin-right: 10px;">
+        <div style="text-align: center; margin-top:20px;">
+            <h2 style="color: black; margin-bottom: 30px;"><b>경영정보</b></h2>
+        </div>
+
+    <!--    <canvas id="doughnut-chart2"  ></canvas>-->
+        <div class="space">
+            <div class="chart">
+                <canvas id="bar-chart" width="500" height="300"></canvas>
+            </div>
+
+            <div class="chart">
+                <canvas id="bar-chart2" width="500" height="300"></canvas>
+            </div>
+        </div>
+
+        <div class="space">
+            <div class="chart">
+                <canvas id="bar-chart-grouped" style="height: 303px; !important; width: 500px; margin-right: 100px;"></canvas>
+            </div>
+
+            <div class="chart">
+                <canvas id="doughnut-chart" style="margin-right: 100px;" ></canvas>
+            </div>
+        </div>
+
+        <div class="space">
+            <div class="chart">
+                <canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+            </div>
+        </div>
+
+        <script type="text/javascript" th:inline="javascript">
+
+            $(function () {
+                new Chart(document.getElementById("bar-chart-horizontal"), {
+                    type: 'bar',
+                    data: {
+                        labels: ["서울", "경기", "인천", "울산", "부산", "대전", "광주" ,"대구" ,"세종"],
+                        datasets: [
+                            {
+                                label: "이번달 지역별 상품 출고 현황",
+                                backgroundColor: ["#73B1D1", "#CD6565","#EBC452","#90C968","#E585B0","#4EA429","#ADD22C","#FF9900","#FF6600"],
+                                data: [3251,3126,1234,784,933,513,294,352,519]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive : false, // 차트 크기 조절을 위해 fasle
+                        indexAxis: 'y',
+                    }
+                });
+
+
+
+                new Chart(document.getElementById("bar-chart"), {
+                    type: 'bar',
+                    data: {
+                        labels: ["23년 1분기", "23년 2분기", "23년 3분기", "23년 4분기"],
+                        datasets: [
+                            {
+                                label: "분기별 매출",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                data: [2478, 3267, 734, 5433]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive : false, // 차트 크기 조절을 위해 fasle
+                        legend: {display: false},
+                        title: {
+                            display: true,
+                            text: 'Predicted world population (millions) in 2050'
+                        }
+                    }
+                });
+
+                new Chart(document.getElementById("bar-chart2"), {
+                    type: 'bar',
+                    data: {
+                        labels: ["23년 1분기", "23년 2분기", "23년 3분기", "23년 4분기"],
+                        datasets: [
+                            {
+                                label: "총영업 이익",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                data: [248, 327, 74, 533]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive : false, // 차트 크기 조절을 위해 fasle
+                        legend: {display: false},
+                        title: {
+                            display: true,
+                            text: 'Predicted world population (millions) in 2050'
+                        }
+                    }
+                });
+
+
+                new Chart(document.getElementById("bar-chart-grouped"), {
+                    type: 'bar',
+                    data: {
+                        labels: ["23년 1분기", "23년 2분기", "23년 3분기", "23년 4분기"],
+                        datasets: [
+                            {
+                                label: "1공장",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                data: [133, 221, 783, 2478]
+                            }, {
+                                label: "2공장",
+                                backgroundColor: ["#699B37", "#CA56A7", "#C75252", "#2E598E", "#C75252"],
+                                data: [408, 547, 675, 734]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive : false, // 차트 크기 조절을 위해 fasle
+                        title: {
+                            display: true,
+                            text: 'Population growth (millions)'
+                        }
+                    }
+                });
+
+                new Chart(document.getElementById("doughnut-chart"), {
+                    type: 'doughnut',
+                    data: {
+                        // labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+                        labels: [[${productList}]],
+
+                        datasets: [
+                            {
+                                label: "5대납품업체",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                // data: [2478,5267,734,784,433]
+                                data: [[${data}]]
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive : false, // 차트 크기 조절을 위해 fasle
+                        title: {
+                            display: true,
+                            text: 'Predicted world population (millions) in 2050'
+                        }
+                    }
+                });
+
+                // new Chart(document.getElementById("doughnut-chart2"), {
+                //     type: 'doughnut',
+                //     data: {
+                //         labels: [[${productList}]],
+                //
+                //         datasets: [
+                //             {
+                //                 label: "판매수량",
+                //                 backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                //                 // data: [2478,5267,734,784,433]
+                //                 data: [[${data}]]
+                //             }
+                //         ]
+                //     },
+                //     options: {
+                //         title: {
+                //             display: true,
+                //             text: 'Predicted world population (millions) in 2050'
+                //         }
+                //     }
+                // });
+
+            })
+        </script>
+
+
+        <th:block layout:fragment="css">
+
+        <style>
+
+            #topdiv, div#topdiv  {
+                background-color: #F2F7FB;
+            }
+            canvas {
+                background-color: white;
+
+
+            }
+
+        </style>
+
+    </th:block>
+
+    <th:block layout:fragment="javascript">
+        <script>
+
+        </script>
+    </th:block>
+    </div>
+</html>
+
+

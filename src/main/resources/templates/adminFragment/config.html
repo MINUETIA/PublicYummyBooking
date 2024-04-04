@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- css, javascript 파일 불러오기 위해서 -->
+<th:block th:fragment="configFragment">
+    <!-- @{/}는 thymeleaf에서 static을 가르킨다. -->
+
+    <!-- static 아래 css 불러오기, 공통으로 적용될 css -->
+    <link rel="stylesheet" th:href="@{/css/admin-main.css}">
+    <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}">
+
+    <!-- static 아래 js 불러오기, 공통으로 적용될 js --->
+    <script th:src="@{/js/sb-admin-2.js}"></script>
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+    <script th:src="@{/js/admin-bar.js}"></script>
+
+    <!-- 각 페이지에서 사용할 css, js를 위한 자리 - 이름만 정의함 -->
+    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="script"></th:block>
+
+</th:block>
+
+<th:block th:fragment="configFragment2">
+    <!-- @{/}는 thymeleaf에서 static을 가르킨다. -->
+
+    <!-- static 아래 css 불러오기, 공통으로 적용될 css -->
+    <link rel="stylesheet" th:href="@{/css/admin-main-2.css}">
+    <link rel="stylesheet" th:href="@{/css/sb-admin-2.min.css}">
+
+    <!-- i태그 before가 sidebar에 생겨서 제거 -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+
+    <!-- static 아래 js 불러오기, 공통으로 적용될 js --->
+    <script th:src="@{/js/sb-admin-2.js}"></script>
+    <script th:src="@{/js/sb-admin-2.min.js}"></script>
+    <script th:src="@{/js/admin-bar.js}"></script>
+
+    <!-- 각 페이지에서 사용할 css, js를 위한 자리 - 이름만 정의함 -->
+    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="script"></th:block>
+
+</th:block>
+
+</html>

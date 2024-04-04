@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.dao.admin.AdminDAO">
+
+    <!-- id 중복검사 -->
+    <select id="findOne" parameterType="String" resultType="AdminAccountDTO">
+        select admin_id as adminId, ad_id as adId, ad_pw as adPw, ad_security_role as adSecurityRole, ad_classification_number as adClassificationNumber, ad_c_date as adCDate, ad_m_date as adMDate, email
+        from admin_account
+        where ad_id = #{ad_id}
+    </select>
+
+    <!-- 회원가입 -->
+    <insert id="addOne" parameterType="AdminAccountDTO">
+        insert into admin_account ( ad_id, ad_pw, ad_security_role, ad_classification_number, ad_c_date, email )
+        values (#{adId},#{adPw},#{adSecurityRole},#{adClassificationNumber}, now(), #{email})
+    </insert>
+
+    <!-- 계정 목록 -->
+    <select id="selectAll" resultType="AdminAccountDTO">
+        select admin_id as adminId, ad_id as adId, ad_pw as adPw, ad_security_role as adSecurityRole, ad_classification_number as adClassificationNumber, ad_c_date as adCDate, ad_m_date as adMDate, email
+        from admin_account
+    </select>
+
+    <!-- 삭제 -->
+    <delete id="deleteId" parameterType="int">
+        delete from admin_account where admin_id = #{adminId}
+    </delete>
+
+    <!-- 계정 검색 -->
+    <select id="searchAccount" parameterType="String" resultType="AdminAccountDTO">
+        select admin_id as adminId, ad_id as adId, ad_pw as adPw, ad_security_role as adSecurityRole,
+               ad_classification_number as adClassificationNumber,
+               DATE_FORMAT(ad_c_date, '%Y-%m-%d') as adCDate, ad_m_date as adMDate, email
+        from admin_account
+        where ad_id like concat('%', #{adId}, '%')
+    </select>
+
+    <!-- 프랜차이즈 리스트 dto 두개조인 resultType은 HashMap -->
+    <select id="classificationNumber3" resultType="HashMap">
+        select
+        ub.ub_id as ubId,
+        ub.user_id as userId,
+        ub.user_pw as userPw,
+        ub.email, name, birthdate, phone,
+        ub.classification_number as classificationNumber,
+        ub.security_role as securityRole,
+        ub.profile_photo as profilePhoto,
+        ub.u_agreement as uAgreement,
+        ub.introduction,
+        ub.customer_rating as customerRating,
+        ub.follow_on_off as followOnOff,
+        ub.address,
+        ub.join_date as joinDate,
+        ub.modify_date as modifyDate,
+        ub.latitude, ub.longitude,
+        ub.business_add_check as businessAddCheck,
+        b.business_name as businessName,
+        b.business_company_registration_num as businessCompanyRegistrationNum,
+        b.business_address as businessAddress,
+        b.business_type as businessType,
+        b.business_tel as businessTel,
+        b.business_description as businessDescription,
+        b.business_info as businessInfo,
+        b.business_contract_file2 as businessContractFile2,
+        b.business_contract_file3 as businessContractFile3,
+        b.business_contract_file4 as businessContractFile4,
+        b.business_contract_file5 as businessContractFile5,
+        b.business_contract_period as businessContractPeriod,
+        b.business_contract_start_date as businessContractStartDate,
+        b.business_etc as businessEtc,
+        b.business_c_date as businessCDate,
+        b.b_m_date as businessMDate,
+        b.business_status as businessStatus
+        from ub_common ub
+        left outer join business_add b on ub.ub_id = b.ub_id
+        where classification_number = 3;
+    </select>
+
+    <!-- UBID로 값 한개만 찾아오기 *로 select 컬럼 하면 안됨.... 일치하지 않아서 dto가 못찾음 -->
+    <select id="findUbid" parameterType="Long" resultType="BusinessAddDTO">
+        select
+            business_name as businessName,
+            business_company_registration_num as businessCompanyRegistrationNum,
+            zone_code as zoneCode,
+            business_address as businessAddress,
+            business_type as businessType,
+            business_tel as businessTel,
+            business_description as businessDescription,
+            business_info as businessInfo,
+            business_contract_file2 as businessContractFile2,
+            business_contract_file3 as businessContractFile3,
+            business_contract_file4 as businessContractFile4,
+            business_contract_file5 as businessContractFile5,
+            business_contract_period as businessContractPeriod,
+            business_contract_start_date as businessContractStartDate,
+            business_etc as businessEtc,
+            business_c_date as businessCDate,
+            b_m_date as businessMDate,
+            business_status as businessStatus
+        from business_add
+        where ub_id = #{ubId}
+    </select>
+
+    <!-- businessAdd insert -->
+    <insert id="businessAdd2" parameterType="BusinessAddDTO">
+        insert into business_add
+        (ub_id, business_name, business_company_registration_num, zone_code, business_address,
+        business_type, business_tel, business_description, business_info, business_contract_file2,
+        business_contract_file3, business_contract_file4, business_contract_file5, business_contract_period,
+        business_contract_start_date, business_etc, business_c_date, business_status)
+        values
+        (#{ubId}, #{businessName}, #{businessCompanyRegistrationNum}, #{zoneCode}, #{businessAddress},
+        #{businessType}, #{businessTel}, #{businessDescription}, #{businessInfo}, #{businessContractFile2},
+        #{businessContractFile3}, #{businessContractFile4}, #{businessContractFile5}, #{businessContractPeriod},
+        #{businessContractStartDate}, #{businessEtc}, now(), #{businessStatus} )
+    </insert>
+
+    <!-- businessAdd update -->
+    <update id="businessAdd" parameterType="BusinessAddDTO">
+        UPDATE
+            business_add
+        SET
+            business_name = #{businessName},
+            business_company_registration_num = #{businessCompanyRegistrationNum},
+            zone_code = ${zoneCode},
+            business_address = #{businessAddress},
+            business_type = #{businessType},
+            business_tel = #{businessTel},
+            business_description = #{businessDescription},
+            business_info = #{businessInfo},
+            business_contract_file2 = #{businessContractFile2},
+            business_contract_file3 = #{businessContractFile3},
+            business_contract_file4 = #{businessContractFile4},
+            business_contract_file5 = #{businessContractFile5},
+            business_contract_period = #{businessContractPeriod},
+            business_contract_start_date = #{businessContractStartDate},
+            business_etc = #{businessEtc},
+            business_c_date = now(),
+            business_status = #{businessStatus}
+        WHERE
+            ub_id = ${ubId}
+    </update>
+
+    <!-- 로그인 -->
+    <!--<select id="getSelectOne" parameterType="AdminAccountDTO" resultType="AdminAccountDTO">
+        select ad_id as adId, ad_pw as adPw
+        from admin_account
+        where ad_id = #{ad_id}
+        and ad_pw = #{ad_pw}
+    </select>-->
+
+    <!-- 비밀번호 찾기 - 현재 이멜 컬럼이 없어서 불가능 -->
+    <!--<select id="findPw" resultType="AdminAccountDTO">
+        select ad_id as adId, ad_email as adEmail
+        from admin_account
+        where ad_id = #{ad_id}
+        and ad_email = #{ad_email}
+    </select>-->
+
+</mapper>

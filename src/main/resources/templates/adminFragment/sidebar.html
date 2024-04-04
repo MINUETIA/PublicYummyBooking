@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="sidebarFragment">
+        <aside class="side-container">
+            <div class="vertical-menu">
+
+                <!-- Page Wrapper -->
+                <div id="wrapper">
+
+                    <!-- Sidebar -->
+                    <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
+
+                        <!-- Sidebar - Brand -->
+                        <div class="home" th:if="${session.dto != null}">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/management/info" style="border-bottom: 1px solid white;">
+                                <div class="sidebar-brand-icon rotate-n-15">
+                                    <i class="fas fa-laugh-wink"></i>
+                                </div>
+                                <img class="logo_write" src="/img/yummyBooking/write_logo_6-7.png" style="width: 250px; height: 60px; float: left; padding-left: 3px;">
+                            </a>
+                        </div>
+
+                        <div class="home" th:if="${session.dto == null}">
+                            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin/login" style="border-bottom: 1px solid white;">
+                                <div class="sidebar-brand-icon rotate-n-15">
+                                    <i class="fas fa-laugh-wink"></i>
+                                </div>
+                                <img class="logo_write" src="/img/yummyBooking/write_logo_6-7.png" style="width: 250px; height: 60px; float: left; padding-left: 3px;">
+                            </a>
+                        </div>
+
+                        <li class="nav-item">
+                            <a class="sales" href="/admin/management/info" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>경영정보 시스템</span>
+                            </a>
+                            <div id="managementUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Pages Collapse Menu -->
+                        <li class="nav-item">
+                            <a class="affiliateStore" href="/admin/franchiseeList" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-cog"></i>
+                                <span>가맹점관리</span>
+                            </a>
+                        </li>
+
+                        <!-- Nav Item - Utilities Collapse Menu -->
+                        <li class="nav-item">
+                            <a class="purchase" id="purchaseBtn" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="purchaseUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>구매관리</span><span class="sort" style="margin-left: 140px;">▲</span>
+                            </a>
+                            <div id="purchaseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-shell py-2 collapse-inner" style="width: 248px;">
+                                    <a class="collapse-item" id="purchaseDetail1" href="/admin/purchase/list">구매</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" id="salesBtn" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>판매관리</span><span class="sort" style="margin-left: 140px;">▲</span>
+                            </a>
+                            <div id="salesUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-shell py-2 collapse-inner" style="width: 235px;">
+                                    <a class="collapse-item" id="salesDetail" href="/admin/lv2Join">Lv2 계정등록</a>
+                                    <hr>
+                                    <a class="collapse-item" id="salesDetail1" href="/admin/home">계정 리스트</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" id="accountBtn" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>계정관리</span><span class="sort" style="margin-left: 140px;">▲</span>
+                            </a>
+                            <div id="accountUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-shell py-2 collapse-inner" style="width: 248px; margin: 0">
+                                    <a class="collapse-item" id="accountDetail" href="/admin/lv2Join">Lv2 계정등록</a>
+                                    <hr style="margin: 5px;">
+                                    <a class="collapse-item" id="accountDetail1" href="/admin/accountList">계정 리스트</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>재고관리</span>
+                            </a>
+                            <div id="inventoryUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="purchase" id="storageBtn" href="/admin/warehouse/list" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="storageUtilities" style="display: flex; align-items: center;">
+                                <!--                            <a class="warehouse" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="storageUtilities" style="display: flex; align-items: center;">-->
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>창고관리</span>
+                            </a>
+                            <div id="storageUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" id="storageDetail" href="/admin/warehouse/list">창고</a>
+
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Divider -->
+                        <li class="nav-item">
+                            <a class="sales" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>공급 및 조달</span>
+                            </a>
+                            <div id="supplyUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" href="/admin/productionplan/plan" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>생산계획</span>
+                            </a>
+                            <div id="productionUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>주문 처리</span>
+                            </a>
+                            <div id="orderUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>현금흐름</span>
+                            </a>
+                            <div id="cashUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="sales" href="/admin/inventory/list" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="salesUtilities" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-wrench"></i>
+                                <span>고객관리</span>
+                            </a>
+                            <div id="customerUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <a class="collapse-item" href="utilities-color.html">Colors</a>
+                                    <a class="collapse-item" href="utilities-border.html">Borders</a>
+                                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                                    <a class="collapse-item" href="utilities-other.html">Other</a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Heading -->
+                        <!--<div class="sidebar-heading">
+                            Addons
+                        </div>-->
+
+                        <!-- Nav Item - Pages Collapse Menu -->
+                        <!--<li class="nav-item">
+                            <a class=" collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages" style="display: flex; align-items: center;">
+                                <i class="fas fa-fw fa-folder"></i>
+                                <span>계정관리</span><span class="sort" style="margin-left: 140px;">▲</span>
+                            </a>
+                            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div class="bg-white py-2 collapse-inner rounded">
+                                    <h6 class="collapse-header">Login Screens:</h6>
+                                    <a class="collapse-item" href="login.html">Login</a>
+                                    <a class="collapse-item" href="register.html">Register</a>
+                                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                                    <div class="collapse-divider"></div>
+                                    <h6 class="collapse-header">Other Pages:</h6>
+                                    <a class="collapse-item" href="404.html">404 Page</a>
+                                    <a class="collapse-item" href="blank.html">Blank Page</a>
+                                </div>
+                            </div>
+                        </li>-->
+
+                        <!-- Nav Item - Charts -->
+                        <!--<li class="nav-item">
+                            <a class="" href="charts.html">
+                                <i class="fas fa-fw fa-chart-area"></i>
+                                <span>Charts</span></a>
+                        </li>-->
+
+                        <!-- Nav Item - Tables -->
+                        <!--<li class="nav-item">
+                            <a class="" href="tables.html">
+                                <i class="fas fa-fw fa-table"></i>
+                                <span>Tables</span></a>
+                        </li>-->
+
+                        <!-- Divider -->
+                        <!--<hr class="sidebar-divider d-none d-md-block">-->
+
+                        <!-- Sidebar Toggler (Sidebar) -->
+                        <!--<div class="text-center d-none d-md-inline">
+                            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                        </div>-->
+
+                    </ul>
+                    <!-- End of Sidebar -->
+
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_2.png" style="width: 250px; height: 40px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_6-1.png" style="width: 250px; height: 100px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_4.png" style="width: 250px; height: 40px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_5.png" style="width: 250px; height: 40px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_6.png" style="width: 250px; height: 40px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_7.png" style="width: 250px; height: 40px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<img id="logo_write" src="/img/yummyBooking/write_logo_8.png" style="width: 250px; height: 40px; float: left; padding-left: 3px; border-bottom: 1px solid black;">-->
+                <!--<div>
+                    <a href="/movie/list"><i class="fas fa-arrow-alt-circle-right"></i><span>&nbsp; Movie</span></a>
+                    <a href="#"><i class=" fas fa-user-circle"></i><span>&nbsp; User</span></a>
+                </div>-->
+                </div> <!-- vertical-menu -->
+            </div> <!-- vertical-menu -->
+        </aside>
+    </th:block>
+</html>

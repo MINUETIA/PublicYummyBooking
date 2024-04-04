@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.dao.restaurant.RestaurantModifyDAO">
+    <insert id="addMenu" parameterType="RestaurantMenuDTO">
+        insert into restaurant_menu(menu_name, menu_price, menu_c_date, restaurant_id) values ('${menuName}', ${menuPrice}, now(),${restaurantId})
+    </insert>
+    <delete id="removeMenu" parameterType="RestaurantMenuDTO">
+        delete from restaurant_menu where restaurant_menu_id = ${RestaurantMenuId}
+    </delete>
+    <update id="updateAdd" parameterType="RestaurantDTO">
+        update restaurant set restaurant_address='${restaurantAddress}' where restaurant_id = ${restaurantId}
+    </update>
+    <update id="updateTime" parameterType="RestaurantOpeningDTO">
+        update restaurant_opening set opening_info_startTime='${openingInfoStartTime}', opening_info_endTime='${openingInfoEndTime}', opening_info_m_date=now()
+        where restaurant_id = ${restaurantId}
+        and opening_info_week = ${openingInfoWeek}
+    </update>
+
+</mapper>

@@ -1,0 +1,34 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- css, javascript 파일 불러오기 위해서 -->
+<th:block th:fragment="configFragment">
+    <!-- @{/}는 thymeleaf에서 static을 가르킨다. -->
+
+    <!-- static 아래 css 불러오기, 공통으로 적용될 css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/css/elegant-icons.css}">
+    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plyr.css}">
+
+    <!--<link rel="stylesheet" th:href="@{/nice-select.css}">-->
+    <!--<link rel="stylesheet" th:href="@{/slicknav.min.css}">-->
+    <script src="https://kit.fontawesome.com/664fc9aad8.js" crossorigin="anonymous"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- static 아래 js 불러오기, 공통으로 적용될 js --->
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- 각 페이지에서 사용할 css, js를 위한 자리 - 이름만 정의함 -->
+    <th:block layout:fragment="css"></th:block>
+    <th:block layout:fragment="script"></th:block>
+
+</th:block>
+
+</html>

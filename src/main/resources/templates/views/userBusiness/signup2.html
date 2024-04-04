@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layout}">
+<th:block layout:fragment="content">
+    <script th:inline="javascript">
+        $(()=>{
+            $('#checkDuplication').on("click",()=>{
+                checkId();
+            })
+
+            $("#user_pw").on("keyup",()=>{
+                checkPw();
+            })
+        })
+        function checkId() {
+            let status = $('#member_id').attr('status'); //아이디 중복체크 상태
+            let memberId = $('#member_id').val(); //입력한 아이디값
+            console.log(memberId);
+            $('.checkIdSpan').remove(); //기존에 중복체크한 이력 지워주기
+
+            //아이디를 입력하지 않았다면
+            if(memberId == ""){
+                $('#member_id').after("<div class='checkIdSpan' style='color:lightgray'>아이디를 입력해주세요.</div>");
+                $('#member_id').focus();
+                return
+            }
+
+            $.ajax({
+                url: 'checkId',
+                type: 'POST',
+                async: true,
+                data: {
+                    userId: memberId
+                },
+                success: function(data){
+                    //기존 아이디가 존재한다면
+                    if(data.cnt > 0){
+                        $('#member_id').attr('status', 'no');
+                        $('#member_id').after("<div class='checkIdSpan' style='color:red'>이미 존재하는 아이디입니다.</div>")
+                        $('#member_id').focus();
+
+                        //기존 아이디가 존재하지 않으면
+                    }else{
+                        $('#member_id').attr('status', 'yes');
+                        $('#member_id').after("<div class='checkIdSpan' style='color:blue'>사용 가능한 아이디입니다.</div>")
+                    }
+                },
+                error: function(e){
+                    alert("error");
+                }
+            });
+        }
+        function checkPw() {
+            let id = $("#member_id").val();
+            let pw = $("#user_pw").val();
+            let number = pw.search(/[0-9]/g);
+            let english = pw.search(/[a-z]/ig);
+            let spece = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+            let reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+
+            if (pw.length < 8 || pw.length > 20) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>8자리 ~ 20자리 이내로 입력해주세요.</div>")
+                // alert("8자리 ~ 20자리 이내로 입력해주세요.");
+                return false;
+
+            } else if (pw.search(/\s/) != -1) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>비밀번호는 공백 없이 입력해주세요.</div>")
+                // alert("비밀번호는 공백 없이 입력해주세요.");
+                return false;
+
+            } else if (number < 0 || english < 0 || spece < 0) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>영문,숫자,특수문자를 혼합하여 입력해주세요.</div>")
+                // alert("영문,숫자,특수문자를 혼합하여 입력해주세요.");
+                return false;
+
+            } else if ((number < 0 && english < 0) || (english < 0 && spece < 0) || (spece < 0 && number < 0)) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.</div>")
+                // alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+                return false;
+
+            } else if (/(\w)\1\1\1/.test(pw)) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>같은 문자를 4번 이상 사용하실 수 없습니다.</div>")
+                // alert('같은 문자를 4번 이상 사용하실 수 없습니다.');
+                return false;
+
+            } else if (pw.search(id) > -1) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>비밀번호에 아이디가 포함되었습니다.</div>")
+                // alert("비밀번호에 아이디가 포함되었습니다.");
+                return false;
+            } else {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>비밀번호가 정상적으로 입력되었습니다.</div>")
+                // alert("비밀번호가 정상적으로 입력되었습니다.");
+                return true;
+            }
+
+            if (false === reg.test(pw)) {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.</div>")
+                // alert('비밀번호는 8자 이상이어야 하며, 숫자/대문자/소문자/특수문자를 모두 포함해야 합니다.');
+                return false;
+            } else {
+                $('.checkPwSpan').remove();
+                $("#user_pw").after("<div class='checkPwSpan' style='color:blue'>비밀번호가 정상적으로 입력되었습니다.</div>")
+                // alert("비밀번호가 정상적으로 입력되었습니다.");
+                return true;
+            }
+        }
+    </script>
+
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="normal__breadcrumb__text">
+                    <h2>Sign Up</h2>
+                    <p>Welcome to the Yummy Booking.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Normal Breadcrumb End -->
+
+<!-- Signup Section Begin -->
+<section class="signup spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form">
+                    <h3>Sign Up</h3>
+                    <form action="signup" method="post">
+                        <div class="input__item">
+                            <input type="text" placeholder="ID" name="userId" id="member_id">
+                            <button type="button" id="checkDuplication" class="btn btn-outline-primary">중복 확인</button>
+                            <span><i class="fa-solid fa-pen"></i></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="text" placeholder="Your Name" name="name">
+                            <span class="icon_profile"></span>
+                        </div>
+                        <div class="input__item">
+                            <input type="text" placeholder="Password" name="userPw" id="user_pw">
+                            <span class="icon_lock"></span>
+                        </div>
+                        <button type="submit" class="site-btn" id="signInButton">Sign In Now</button>
+                    </form>
+                    <h5>Already have an account? <a href="login">Log In!</a></h5>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__social__links">
+                    <h3>Login With:</h3>
+                    <ul>
+                        <li><a href="/oauth2/authorization/naver" class="facebook"><i class="fa fa-solid fa-n"></i> Sign in With Naver</a></li>
+                        <li><a href="/oauth2/authorization/google" class="google"><i class="fa fa-solid fa-g"></i> Sign in With Google</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Signup Section End -->
+
+<!-- Search model Begin -->
+<div class="search-model">
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="search-close-switch"><i class="icon_close"></i></div>
+        <form class="search-model-form">
+            <input type="text" id="search-input" placeholder="Search here.....">
+        </form>
+    </div>
+</div>
+<!-- Search model end -->
+
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/player.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+</th:block>
+</html>

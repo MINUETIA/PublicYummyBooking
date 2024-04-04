@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <!-- 헤더 -->
+    <th:block th:replace="~{adminFragment/header :: headerFragment}"></th:block>
+
+    <!-- swiper CDN header에 두면 동작안해서 가지고 나옴 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- css, js 불러오기 -->
+    <!-- th:replace="폴더 / 파일명 :: 이름" ==> 폴더 / 파일명에서 :: 이름 인것으로 대체 해줘 -->
+    <th:block th:replace="~{fragment/config :: configFragment}"></th:block>
+
+    <body>
+        <div class="body-container">
+            <div class="main-container">
+                <div class="content-container">
+                    <!-- 상단바 -->
+                    <th:block th:replace="~{fragment/topformeal :: topFragment}"></th:block>
+
+                    <!-- 내용 -->
+                    <th:block layout:fragment="content">
+                        <th:block layout:fragment="css">
+                            <style>
+                                .swiper {
+                                    width:1600px;
+                                    height: 350px;
+                                    margin: auto;
+                                }
+
+                                .middle{
+                                    width: 1700px;
+                                    margin: auto;
+                                }
+
+                                .theme1_img{
+                                    height: 250px;
+                                    width: 500px;
+                                    border-radius: 2%;
+                                }
+                                .theme1_text{
+                                    display: inline-block;
+                                    height: 60px;
+                                }
+
+                                .theme1_restaurantName{
+                                    color: black;
+                                    height: 15px;
+                                }
+
+                                .theme1_description{
+                                    color: black;
+                                    font-size: 12px;
+                                    height: 15px;
+                                }
+                                .vanner{
+                                    width: 1700px;
+                                    height: 500px;
+                                    margin: auto;
+                                    position: relative;
+                                }
+
+                                .vanner_border{
+                                    width: 1700px;
+                                    height: 500px;
+                                    float: left;
+                                }
+                                .search_part{
+                                    width: 1200px;
+                                    height: 500px;
+                                    float: right;
+                                    background-color: #fde045;
+                                }
+                                .img_part{
+                                    width: 500px;
+                                    height: 500px;
+                                    float: left;
+                                }
+                                .search_div {
+                                    width: 700px;
+                                    height: 300px;
+                                    position: absolute;
+                                    margin-left: 0px;
+                                    margin-top: 100px;
+                                }
+
+                                .text{
+                                    color: white;
+                                    text-align: center;
+                                    font-family: "Bree Serif";
+                                }
+
+                                .search_btn{
+                                    color: grey;
+                                    float: right;
+                                    width: 40px;
+                                    height: 100%;
+                                    border-radius: 50%;
+                                    background-color: white;
+                                    border: none;
+                                    font-size: 16px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    margin-top: 40px;
+                                    margin-top: -22px;
+                                }
+
+                                .swiper-button-next {
+                                    background: url(/img/upload/right.png) no-repeat;
+                                    background-size: 80% auto;
+                                    background-position: center;
+                                    float: right;
+                                    /*margin-top: 100px;
+                                    margin-right: 100px;*/
+                                }
+
+                                .swiper-button-prev {
+                                    background: url(/img/upload/left.png) no-repeat;
+                                    background-size: 80% auto;
+                                    background-position: center;
+                                    /*margin-top: 100px;
+                                    margin-left: 100px;*/
+                                }
+                                .swiper-button-next::after,
+                                .swiper-button-prev::after {
+                                    display: none;
+                                }
+                            </style>
+                        </th:block>
+                        <div>
+                            <!--<section class="hero">
+                                <div>
+                                    <div class="search_section">
+                                        <div class="vanner">
+                                                <div class="img_part" style="width: 100%;">
+                                                    <img style="border-radius: 20px; background-color: #fde045; width: 100%" src="../img/upload/meal1.png"  height="500px">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                &lt;!&ndash;</div>&ndash;&gt;
+                            </section>-->
+                            <!-- Hero Section End -->
+
+                            <!-- Product Section Begin -->
+                            <section class="product spad" style="position: relative; padding-top: 30px; padding-bottom: 20px;">
+                                <div class="middle">
+                                    <div>
+                                        <div class="swiper-button-prev" style="margin-left: 95px;"></div>
+                                        <div class="swiper-button-next" style="margin-right: 95px;"></div>
+
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <div class="section-title">
+                                                    <h4>New MealKit!</h4>
+                                                    <a href="/theme" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper">
+                                            <!--  Additional required wrapper  -->
+                                            <div class="swiper-wrapper">
+                                                <th:block th:each="list:${list}">
+                                                    <div class="swiper-slide">
+                                                        <a th:href="@{'/meal/mealDetails?productId='+ ${list.productId}}">
+                                                            <img class="theme1_img" th:src="${list.mealPhoto1}">
+                                                            <div class="theme1_text">
+                                                                <h3 class="theme1_restaurantName" th:text="${list.mealName}"></h3>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="product spad" style="position: relative; padding-top: 0; padding-bottom: 20px;">
+                                <div class="middle">
+                                    <div>
+                                        <div class="swiper-button-prev" style="margin-left: 95px;"></div>
+                                        <div class="swiper-button-next" style="margin-right: 95px;"></div>
+
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <div class="section-title">
+                                                    <h4>MealKit Top10</h4>
+                                                    <a href="/theme" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper">
+                                            <!--  Additional required wrapper  -->
+                                            <div class="swiper-wrapper">
+                                                <th:block th:each="list:${list}">
+                                                    <div class="swiper-slide">
+                                                        <a href="#">
+                                                            <img class="theme1_img" th:src="${list.mealPhoto1}">
+                                                            <div class="theme1_text">
+                                                                <h3 class="theme1_restaurantName" th:text="${list.mealName}"></h3>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="product spad" style="position: relative; padding-top: 0; padding-bottom: 20px;">
+                            <div class="middle">
+                                <div>
+                                    <div class="swiper-button-prev" style="margin-left: 95px;"></div>
+                                    <div class="swiper-button-next" style="margin-right: 95px;"></div>
+
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="section-title">
+                                                <h4>New Restaurants</h4>
+                                                <a href="/theme" class="primary-btn">View All <span class="arrow_right"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper">
+                                        <!--  Additional required wrapper  -->
+                                        <div class="swiper-wrapper">
+                                            <th:block th:each="list:${list}">
+                                                <div class="swiper-slide">
+                                                    <a href="#">
+                                                        <img class="theme1_img" th:src="${list.mealPhoto1}">
+                                                        <div class="theme1_text">
+                                                            <h3 class="theme1_restaurantName" th:text="${list.mealName}"></h3>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </section>
+                        </div>
+
+                        <script layout:fragment="script">
+                            $(document).ready(function (){
+
+                                const swiper = new Swiper('.swiper', {
+                                    slidesPerView: 4,
+                                    spaceBetween: 30,
+                                    direction: 'horizontal',
+                                    loop: true,
+                                    autoplay : true, //자동 재생 여부
+                                    observer: true,
+                                    observeParents: true,
+
+                                    // If we need pagination
+                                    pagination: {
+                                        el: '.swiper-pagination',
+                                        //type:'bullets',
+                                        clickable:true,
+                                    },
+
+                                    // Navigation arrows
+                                    navigation: {
+                                        nextEl: '.swiper-button-next',
+                                        prevEl: '.swiper-button-prev',
+                                    },
+                                });
+                            });
+                        </script>
+                    </th:block>
+                </div>
+                <footer th:replace="~{fragment/footer :: footerFragment}"></footer>
+            </div>
+        </div>
+        <script src="/js/main.js"></script>
+    </body>
+</html>

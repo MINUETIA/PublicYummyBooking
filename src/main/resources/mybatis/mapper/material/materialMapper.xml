@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.jhta.web.dao.material.MaterialsDAO">
+    <select id="getAllByDate" parameterType="Hashmap" resultType="Hashmap">
+        SELECT m.materials_id as materialId, "1" as  inputoutput ,v.vendor_name as vendorname, m.warehouse_no as warehouseNo, m.materials_name as materialName, m.materials_price as price ,
+        m. materials_qtybox as standardType , m.materials_loc as loc , DATE_FORMAT(m.material_receive_date, '%Y-%m-%d')  as receiveDate, m.material_exp_date as expire , m.material_status as status
+        from materials m , vendors v
+        where m.vendor_material_list_id = v.vendor_id
+        <if test="start != null">and m.material_receive_date &gt;= #{start} </if>
+        <if test="end != null">and m.material_receive_date &lt;= #{end} </if>
+
+    </select>
+</mapper>

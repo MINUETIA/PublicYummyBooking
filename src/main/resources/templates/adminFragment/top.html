@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- top fragment -->
+<div th:fragment="topFragment">
+    <div id="topFragment">
+        <ul class="navbar-top" style="display: flex; float: right;">
+            <li class="nav-item dropdown no-arrow show" style="list-style:none; display: flex;">
+                <div class="Id3" style="width: 80px; height: 50px; padding-top: 25px; color: black;">
+                    <div class="Id2" th:if="${session.dto != null}">
+                        <b class="Id1">[[${session.dto.adId}]]</b>
+                    </div>
+                </div>
+                <div th:if="${session.dto != null}">
+                    <div class="topbar-divider" style="width: 30px; height: 50px; text-align: center; padding-top: 10px; font-size: xx-large; color: black;">|</div>
+                </div>
+                <a class="nav-link dropdown-toggle" href="#" id="myInfo" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left: 6px;">
+                    <img id="people" src="/img/yummyBooking/people.png">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" id="infoDropdown" aria-labelledby="userDropdown" style="display: none;">
+                    <a class="dropdown-item" href="/account/profile">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        정보수정
+                    </a>
+                    <hr>
+                    <!--<a class="dropdown-item" href="#">
+                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Settings
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Activity Log
+                    </a>
+                    <div class="dropdown-divider"></div>-->
+                    <a class="dropdown-item" href="/admin/logout" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</html>

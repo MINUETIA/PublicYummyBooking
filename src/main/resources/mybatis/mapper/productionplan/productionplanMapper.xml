@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybaits.org//DTD Mapper 3.0//EN"
+        "http://mybatis.rog/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.jhta.web.dao.productioplan.ProductionPlanDAO">
+    <select id="getAll" resultType="Hashmap">
+        SELECT
+            no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+            DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+            productionplan
+    </select>
+
+    <select id="getOne" parameterType="int" resultType="boolean">
+        SELECT if(count(*) = 1, 1, 0)
+        FROM productionplan
+        where no = #{no}
+    </select>
+
+
+
+    <update id="modifyData" parameterType="Hashmap">
+        UPDATE productionplan
+        <set>
+            <if test="productionId != null">production_id = #{productionId}, </if>
+            <if test="production != null">production = #{production}, </if>
+            <if test="cnt != null"> cnt = #{cnt}, </if>
+            <if test="plandate != null"> plandate= #{plandate}, </if>
+            <if test="factory != null">factory = #{factory}, </if>
+        </set>
+        WHERE no = #{no}
+
+    </update>
+
+    <insert id="insertOne" parameterType="Hashmap">
+        INSERT INTO productionplan (production_id, production, cnt, plandate, factory, maxproduction)
+        VALUES (#{productionId}, #{production}, #{cnt}, #{plandate}, #{factory}, #{maxproduction})
+    </insert>
+
+    <select id="getByFactory" parameterType="int" resultType="Hashmap">
+        SELECT
+        no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+        DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+        productionplan
+        WHERE factory = #{factory}
+    </select>
+
+
+
+    <select id="getByProduction" parameterType="String" resultType="Hashmap">
+        SELECT
+            no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+            DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+         productionplan
+        WHERE
+            production = #{production}
+
+    </select>
+
+    <select id="getByProductionId" parameterType="String" resultType="Hashmap">
+        SELECT
+            no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+            DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+            productionplan
+        WHERE
+            production_id = #{productId}
+    </select>
+
+    <select id="getByStartDate" parameterType="String" resultType="Hashmap">
+        SELECT
+            no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+            DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+            productionplan
+        WHERE
+            plandate &gt; #{start}
+    </select>
+
+    <select id="getByEndDate" parameterType="String" resultType="Hashmap">
+        SELECT
+            no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+            DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+            productionplan
+        WHERE
+            plandate &lt;= #{end}
+    </select>
+
+    <select id="getByStartDateEndDate" parameterType="String" resultType="Hashmap">
+        SELECT
+            no , production_id as productionId, production , cnt , DATE_FORMAT(plandate, '%Y-%m-%d') as plandate ,
+            DATE_FORMAT(createdate, '%Y-%m-%d') as createdate, factory, maxproduction
+        FROM
+            productionplan
+        WHERE
+            plandate between #{start} and #{end}
+
+    </select>
+
+</mapper>

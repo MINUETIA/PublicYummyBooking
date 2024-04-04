@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragment/default_layoutForMeal}">
+
+
+<th:block layout:fragment="content">
+
+    <script th:inline="javascript">
+    $(function (){
+        let cookies = getCookie("cart");
+
+        //초기 쿠키값에서 넘어온 아이템의 합계
+        let sum = 0;
+         $(".totalPrice").each(function (){
+
+             sum += parseInt($(this).html().split(" ")[2])
+         })
+
+        $("#sumPrice").html("합계 "+sum+" 원");
+
+         //아이템 수치의 변화에 따른 합계
+        $(".form-control").on("change", function (){
+
+            const price = $(this).parent().next().val();
+            const cnt = $(this).val();
+
+            $(this).parent().nextAll(".totalPriceDiv").children().html(" 총 "+price * cnt+" 원");
+
+            let sum = sumPrice();
+            $("#sumPrice").html("합계 "+sum+" 원");
+        })
+
+        //체크박스 선택에 따른 합계 변화
+        $("input:checkbox").on("change", function (){
+            let sum = sumPrice();
+            $("#sumPrice").html("합계 "+sum+" 원");
+        })
+
+        function sumPrice(){
+            let sum =0;
+            $("input:checkbox:checked").each(function (){
+                    sum += parseInt($(this).parent().nextAll(".totalPriceDiv").children().html().split(" ")[2])
+                }
+            );
+            return sum;
+        }
+
+        function getCookie(name) {
+            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+            return value? value[2] : null;
+        };
+
+
+        $(".btn").on("click",function (){
+            let mealNameArry = [];
+            let mealName;
+            $("input:checkbox:checked").each(function (){
+                mealNameArry.push($(this).parent().nextAll(".mealName").children().html());
+            })
+
+            if(mealNameArry==0){
+                swal("상품을 체크해주세요!~")
+                return
+            }else if(mealNameArry.length==1){
+                 mealName = mealNameArry[0];
+            }else if(mealNameArry.length>1){
+                mealName = mealNameArry[0]+" 외"+(mealNameArry.length-1)+"개";
+
+            }
+
+           let mealSumPrice= $("#sumPrice").html().split(" ")[1];
+
+            $("#frmMealName").val(mealName)
+            $("#frmMealSumPrice").val(mealSumPrice)
+
+            $("#mealPaymentFrm").submit();
+        })
+    })
+    </script>
+
+    <section class="product-page spad">
+        <div class="container-xxl">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-8">
+                    <div class="product__sidebar">
+                        <div class="product__sidebar__view">
+
+                            <div class="section-title">
+                                <h5>장바구니</h5>
+                            </div>
+
+
+                            <div class="product__sidebar__comment__item" >
+
+                                <ul>
+                                    <a href="/meal/history"> 주문 목록</a>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-9">
+                    <div class="product__page__content">
+
+                        <div class="product__page__title">
+                            <div class="row">
+                                <div class="col-lg-9 col-md-8 col-sm-6">
+                                    <div class="section-title">
+                                        <h4>장바구니</h4>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="product__page__filter">
+
+                                    </div>
+                                    <div class="product__page__filter">
+                                         <input class="btn btn-outline-success" type="button" value="결제">
+                                        <form id="mealPaymentFrm" action="/meal/mealPayment">
+                                            <input id="frmMealName" type="hidden" name="mealName" >
+                                            <input id="frmMealSumPrice" type="hidden" name="sumPrice">
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                            <div class="row filtertype" style="min-height: 600px">
+
+
+
+                                <div class="col-lg-12">
+
+                                   <div>
+                                       <ul style="border-top: 1px solid black">
+
+                                           <th:block th:each="dto : ${list}">
+                                           <li style="display: flex; margin: 5px; justify-content: space-between">
+                                               <div style="display: flex; align-items: center; text-align: center">
+                                                   <div><input type="checkbox" name="" id="" checked></div>
+                                                   <div class="col-2"><img th:src="${dto.mealPhoto1}" style="width: 50%"></div>
+                                                   <div class="col-4 mealName"><span>[[${dto.mealName}]]</span></div>
+
+                                                   <div class="col-1"><input type="number" class="form-control" name="cnt" id="cnt" min="1" max="100" value="1"  style="width: 50px"></div>
+                                                   <input class="price" type="hidden" name="" th:value="${dto.mealPrice}">
+                                                   <div class="col-2"><span th:text="| ${dto.mealPrice} 원|"> </span></div>
+                                                   <div class="totalPriceDiv col-3"> <span class="totalPrice" th:text="| 총 ${dto.mealPrice} 원|" > </span></div>
+                                               </div>
+                                           </li>
+                                           </th:block>
+                                           <li style="border-top: 1px solid black">
+                                               <span id="sumPrice" style="float: right; margin-right: 20px; font-weight: bold "></span>
+                                           </li>
+                                       </ul>
+                                   </div>
+
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+</th:block>
+</html>

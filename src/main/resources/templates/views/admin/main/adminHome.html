@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminFragment/layout}">
+
+    <div layout:fragment="content">
+        <div class="container">
+            <div>adminHome</div>
+        </div>
+
+        <!-- thymeleaf사용시 top, sidebar에서 사용할 스크립트를 layout:fragment="content"안에 적어줘야 먹음 안그럼 안먹는다. -->
+        <script layout:fragment="script">
+
+        </script>
+    </div>
+</html>

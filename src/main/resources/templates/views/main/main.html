@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main.html</title>
+</head>
+<body>
+
+    <th:block th:text="${list}"></th:block>
+
+    <table>
+        <tr>
+            <th>지역</th>
+            <th>식당명</th>
+            <th>리뷰</th>
+        </tr>
+        <tr th:each="dto : ${list }">
+            <td th:text="${dto.address}"></td>
+            <td th:text="${dto.restaurant_name}"></td>
+            <td th:text="${dto.review_description}"></td>
+
+        </tr>
+    </table>
+
+    <div th:each="dto : ${list}">
+        <div>
+            <div th:text="${dto.restaurant_name}"></div>
+            <div th:text="${dto.restaurant_description}"></div>
+            <div th:text="${dto.avgscore}"></div>
+            <div th:text="${dto.review_count}"></div>
+        </div>
+
+    </div>
+
+
+    <div> 
+        <div>
+            <h2></h2>
+        </div>
+
+    </div>
+
+</body>
+</html>
